@@ -1,0 +1,170 @@
+[
+{
+    "batiment": "Salle_TP_Informatique",
+    "ressource": "electricite",
+    "valeur": 152.40,
+    "seuil": 120.00,
+    "date": "2026-09-20",
+    "alerte": true
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "eau",
+    "valeur": 185.20,
+    "seuil": 150.00,
+    "date": "2026-09-20",
+    "alerte": true
+},
+{
+    "batiment": "Administration",
+    "ressource": "electricite",
+    "valeur": 110.50,
+    "seuil": 120.00,
+    "date": "2026-09-20",
+    "alerte": false
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "electricite",
+    "valeur": 135.80,
+    "seuil": 120.00,
+    "date": "2026-09-21",
+    "alerte": true
+},
+{
+    "batiment": "Amphitheatre",
+    "ressource": "electricite",
+    "valeur": 98.00,
+    "seuil": 120.00,
+    "date": "2026-09-21",
+    "alerte": false
+},
+{
+    "batiment": "Salle_TP_Chimie",
+    "ressource": "eau",
+    "valeur": 112.70,
+    "seuil": 100.00,
+    "date": "2026-09-21",
+    "alerte": true
+},
+{
+    "batiment": "Residence_Etudiants_A",
+    "ressource": "electricite",
+    "valeur": 118.90,
+    "seuil": 120.00,
+    "date": "2026-09-22",
+    "alerte": false
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "electricite",
+    "valeur": 245.00,
+    "seuil": 180.00,
+    "date": "2026-09-22",
+    "alerte": true
+},
+{
+    "batiment": "Gymnase",
+    "ressource": "chauffage",
+    "valeur": 121.00,
+    "seuil": 120.00,
+    "date": "2026-09-22",
+    "alerte": true
+},
+{
+    "batiment": "Bibliotheque",
+    "ressource": "electricite",
+    "valeur": 176.30,
+    "seuil": 150.00,
+    "date": "2026-09-23",
+    "alerte": true
+},
+{
+    "batiment": "Salle_TP_Physique",
+    "ressource": "eau",
+    "valeur": 92.50,
+    "seuil": 100.00,
+    "date": "2026-09-23",
+    "alerte": false
+},
+{
+    "batiment": "Salle_TP_Informatique",
+    "ressource": "electricite",
+    "valeur": 143.20,
+    "seuil": 140.00,
+    "date": "2026-09-23",
+    "alerte": true
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "eau",
+    "valeur": 99.90,
+    "seuil": 100.00,
+    "date": "2026-09-24",
+    "alerte": false
+},
+{
+    "batiment": "Residence_Etudiants_B",
+    "ressource": "electricite",
+    "valeur": 125.00,
+    "seuil": 120.00,
+    "date": "2026-09-24",
+    "alerte": true
+},
+{
+    "batiment": "Amphitheatre",
+    "ressource": "chauffage",
+    "valeur": 88.60,
+    "seuil": 100.00,
+    "date": "2026-09-24",
+    "alerte": false
+},
+{
+    "batiment": "Salle_TP_Chimie",
+    "ressource": "electricite",
+    "valeur": 160.00,
+    "seuil": 150.00,
+    "date": "2026-09-25",
+    "alerte": true
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "eau",
+    "valeur": 155.40,
+    "seuil": 150.00,
+    "date": "2026-09-25",
+    "alerte": true
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "electricite",
+    "valeur": 119.50,
+    "seuil": 120.00,
+    "date": "2026-09-25",
+    "alerte": false
+},
+{
+    "batiment": "Gymnase",
+    "ressource": "eau",
+    "valeur": 131.70,
+    "seuil": 125.00,
+    "date": "2026-09-26",
+    "alerte": true
+},
+{
+    "batiment": "Salle_TP_Physique",
+    "ressource": "electricite",
+    "valeur": 149.00,
+    "seuil": 150.00,
+    "date": "2026-09-26",
+    "alerte": false
+},
+{
+    "batiment": "test",
+    "ressource": "eau",
+    "valeur": 150.00,
+    "seuil": 1150.00,
+    "date": "2026-12-18",
+    "alerte": false
+}
+]
