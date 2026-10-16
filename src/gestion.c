@@ -44,12 +44,7 @@ int chargerMesures(const char *nomFichier , Mesure **mesures){
 
     while (fgets(ligne, sizeof(ligne), f) != NULL)
     {
-        if (sscanf(ligne, "%99[^,],%99[^,],%lf,%lf,%99[^\r\n]",
-                   batiment,
-                   ressource,
-                   &valeur,
-                   &seuil,
-                   date) == 5)
+        if (sscanf(ligne, "%99[^,],%99[^,],%lf,%lf,%99[^\r\n]",batiment,ressource,&valeur,&seuil,date) == 5)
         {
             temp = realloc(*mesures, (n + 1) * sizeof(Mesure));
 
@@ -114,8 +109,7 @@ int chargerMesures(const char *nomFichier , Mesure **mesures){
     return n;
 }
 
-int rechercherMesure(const Mesure *mesures , int nbMesures,
-const char *batiment , const char *ressource){
+int rechercherMesure(const Mesure *mesures , int nbMesures,const char *batiment , const char *ressource){
     int i;
 
     for (i = 0; i < nbMesures; i++)
@@ -199,7 +193,7 @@ int supprimerMesure(Mesure **mesures, int *nbMesures, int indice){
     free((*mesures)[indice].batiment);
     free((*mesures)[indice].ressource);
     free((*mesures)[indice].date);
-    //decalage à gauche des mesures après l'indice supprimé
+    //decalage ï¿½ gauche des mesures aprï¿½s l'indice supprimï¿½
     for(int i=indice;i< *nbMesures-1;i++){
         (*mesures)[i]=(*mesures)[i+1];
     }
