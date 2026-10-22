@@ -1076,8 +1076,19 @@ body.splashing .wrap {
 <body class="splashing">
 <div id="splash" aria-hidden="true">
  <div class="sp-in">
-  <i class="sp-logo"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>
-  <div class="sp-ttl"><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></div>
+  <i class="sp-logo">
+     <svg viewBox="0 0 24 24">
+        <path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>
+  <div class="sp-ttl">
+     <span style="--i:0">E</span>
+     <span style="--i:1">c</span>
+     <span style="--i:2">o</span>
+     <span class="g" style="--i:3">C</span>
+     <span class="g" style="--i:4">a</span>
+     <span class="g" style="--i:5">m</span>
+     <span class="g" style="--i:6">p</span>
+     <span class="g" style="--i:7">u</span>
+     <span class="g" style="--i:8">s</span></div>
   <p class="sp-tag">Suivi de la consommation du campus</p>
   <div class="sp-line"><b></b></div>
  </div>
@@ -1087,8 +1098,13 @@ body.splashing .wrap {
 <header>
  <a class="logo" href="#dashboard"><i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>EcoCampus</a>
  <div class="right">
-  <nav id="nav"><span id="pill"></span>
-   <a href="#dashboard">Tableau de bord</a><a href="#mesures">Mesures</a><a href="#graphique">Graphique</a><a href="#alertes">Alertes</a></nav>
+  <nav id="nav">
+     <span id="pill"></span>
+   <a href="#dashboard">Tableau de bord</a>
+     <a href="#mesures">Mesures</a>
+     <a href="#graphique">Graphique</a>
+     <a href="#alertes">Alertes</a></nav>
+    
   <button class="round" id="theme" aria-label="Basculer le mode sombre" title="Mode sombre / clair">
    <svg viewBox="0 0 24 24" id="ic"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg></button>
   <a class="round" href="#login" aria-label="Compte"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg></a>
@@ -1098,45 +1114,109 @@ body.splashing .wrap {
 <section class="page" id="dashboard">
  <h1 class="t" id="range"></h1>
  <div class="grid3">
-  <div class="card total"><div class="lab">Consommation totale</div><div class="big" id="tot">0</div><i class="c1"></i><i class="c2"></i></div>
-  <div class="card avg"><div class="lab">Moyenne</div><div class="big" id="avg">0</div><svg class="spark" viewBox="0 0 280 80" preserveAspectRatio="none"><path id="sp"/></svg></div>
-  <div class="card alert pulse"><div class="lab">Alertes</div><div class="big" id="nal">0</div><div>seuils dépassés</div></div>
+  <div class="card total">
+     <div class="lab">Consommation totale</div>
+     <div class="big" id="tot">0</div>
+     <i class="c1"></i><i class="c2"></i>
+  </div>
+  <div class="card avg">
+     <div class="lab">Moyenne</div>
+     <div class="big" id="avg">0</div><svg class="spark" viewBox="0 0 280 80" preserveAspectRatio="none"><path id="sp"/></svg>
+  </div>
+  <div class="card alert pulse">
+     <div class="lab">Alertes</div>
+     <div class="big" id="nal">0</div>
+     <div>seuils dépassés</div>
+  </div>
  </div>
  <div class="grid2">
-  <div class="card"><h2>Valeur vs seuil</h2><p class="sub">Le trait vertical marque le seuil de chaque mesure</p><div id="bars"></div></div>
-  <div class="card"><h2 style="margin-bottom:22px">Anomalies détectées</h2><div id="anos"></div></div>
+  <div class="card">
+     <h2>Valeur vs seuil</h2>
+     <p class="sub">Le trait vertical marque le seuil de chaque mesure</p>
+     <div id="bars"></div>
+  </div>
+  <div class="card">
+     <h2 style="margin-bottom:22px">Anomalies détectées</h2>
+     <div id="anos"></div>
+  </div>
  </div>
 </section>
 
 <section class="page" id="mesures">
  <h1 class="t">Mesures</h1>
- <div class="filters"><select id="fb"></select><select id="fr"></select><select id="fp"></select><input id="fs" type="search" placeholder="Rechercher"></div>
- <div class="card"><div class="scroll"><table><thead><tr><th>BÂTIMENT<th>RESSOURCE<th>VALEUR<th>SEUIL<th>DATE<th>STATUT</tr></thead><tbody id="tb"></tbody></table></div></div>
+ <div class="filters">
+    <select id="fb"></select>
+    <select id="fr"></select>
+    <select id="fp"></select>
+    <input id="fs" type="search" placeholder="Rechercher">
+ </div>
+ <div class="card">
+    <div class="scroll"><table>
+       <thead>
+          <tr>
+             <th>BÂTIMENT<th>RESSOURCE<th>VALEUR<th>SEUIL<th>DATE<th>STATUT</tr>
+       </thead>
+       <tbody id="tb"></tbody>
+    </table>
+    </div></div>
 </section>
 
 <section class="page" id="graphique">
  <h1 class="t">Graphiques</h1>
- <div class="card"><h2>Consommation par bâtiment</h2><p class="sub">Somme des mesures de chaque bâtiment</p><div class="cols" id="cb"></div><div class="names" id="nb"></div></div>
- <div class="card" style="margin-top:26px"><h2>Par ressource</h2><p class="sub" style="margin-bottom:26px">Somme des mesures de chaque ressource</p><div id="rb"></div></div>
+ <div class="card">
+    <h2>Consommation par bâtiment</h2>
+    <p class="sub">Somme des mesures de chaque bâtiment</p>
+    <div class="cols" id="cb"></div>
+    <div class="names" id="nb"></div>
+ </div>
+ <div class="card" style="margin-top:26px">
+   <h2>Par ressource</h2>
+    <p class="sub" style="margin-bottom:26px">Somme des mesures de chaque ressource</p>
+    <div id="rb"></div>
+ </div>
 </section>
 
 <section class="page" id="alertes">
  <h1 class="t">Alertes</h1>
  <div class="grid3" style="grid-template-columns:1fr 2fr">
-  <div class="card alert"><div class="lab">Alertes actives</div><div class="big" id="na2">0</div><div id="na3"></div></div>
-  <div class="card total"><div class="lab">Consommation totale</div><div class="big" id="tot2" style="font-size:80px">0</div><p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p><i class="c1"></i><i class="c2"></i></div>
+  <div class="card alert">
+     <div class="lab">Alertes actives</div>
+     <div class="big" id="na2">0</div>
+     <div id="na3"></div>
+</div>
+  <div class="card total">
+     <div class="lab">Consommation totale</div>
+     <div class="big" id="tot2" style="font-size:80px">0</div>
+     <p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p>
+     <i class="c1"></i>
+     <i class="c2"></i>
+  </div>
  </div>
  <div id="al"></div>
 </section>
 
 <section class="page" id="login">
  <div class="hero">
-  <i class="orb o1"></i><i class="orb o2"></i>
-  <h1 class="ttl" aria-label="EcoCampus"><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></h1>
+  <i class="orb o1"></i>
+    <i class="orb o2"></i>
+  <h1 class="ttl" aria-label="EcoCampus">
+     <span style="--i:0">E</span>
+     <span style="--i:1">c</span>
+     <span style="--i:2">o</span>
+     <span class="g" style="--i:3">C</span>
+     <span class="g" style="--i:4">a</span>
+     <span class="g" style="--i:5">m</span>
+     <span class="g" style="--i:6">p</span>
+     <span class="g" style="--i:7">u</span>
+     <span class="g" style="--i:8">s</span></h1>
   <div class="bar"></div>
  <div class="card login">
-  <div class="logo" style="justify-content:center;margin-bottom:14px"><i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i></div>
-  <h2>Bienvenue</h2><p class="sub" style="margin-bottom:26px">Connectez-vous pour accéder à votre compte</p>
+  <div class="logo" style="justify-content:center;margin-bottom:14px">
+     <i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg>
+     </i>
+  </div>
+  <h2>Bienvenue</h2>
+    <p class="sub" style="margin-bottom:26px">Connectez-vous pour accéder à votre compte</p>
   <label>Nom d’utilisateur ou e-mail<input type="email" placeholder="votrenom@gmail.com"></label>
   <label>Mot de passe<input type="password" placeholder="Entrez mot de passe"></label>
   <button class="btn" onclick="location.hash='dashboard'">Se connecter</button>
