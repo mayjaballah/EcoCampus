@@ -126,11 +126,7 @@ function remplirGraphiques() {
             <i style="height: ${(val / maxValB) * 100}%;"></i>
         </div>`).join('');
 
- nour
     getEl('#nb').innerHTML = Object.keys(sommetsB).map(bat => `<div>${bat}</div>`).join('');
-  
-    getEl('#nb').innerHTML = Object.keys(sommetsB).map(bat => `<div>${bat}</div>`).join('');
- main
 
     // Ressources
     const sommetsR = {};
@@ -155,11 +151,7 @@ function calculerPageAlertes() {
     const anomalies=D.filter(m => m.alerte || m.valeur > m.seuil);
 
     if(getEl('#na2')) getEl('#na2').textContent=anomalies.length;
- nour
-    if(getEl('#na3')) getEl('#na3').textContent=`sur ${D.length} mesures`;
-
     if (getEl('#na3')) getEl('#na3').textContent = `sur ${D.length} mesures`;
- main
     if(getEl('#tot2')) getEl('#tot2').textContent = arrondir(totalConsom);
 
     if(getEl('#al')) {
