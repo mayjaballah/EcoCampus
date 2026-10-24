@@ -111,3 +111,125 @@ function filtrer() {
     remplirTableau(resultat);
 }
 
+function remplirGraphiques() {
+    // Bâtiments
+    const sommetsB={};//objet vide 
+    D.forEach(m => {
+        sommetsB[m.batiment]=(sommetsB[m.batiment] || 0) + Number(m.valeur);
+    });//ken sommetsB[m.batiment] indefind besh yekhou 0 w yzid l valeur mteaa l batiment
+    const maxValB=Math.max(...Object.values(sommetsB), 1);
+    //ken l tab vide yaatina 1
+
+    getEl('#cb').innerHTML=Object.entries(sommetsB).map(([bat, val]) => `
+        <div class="col">
+            <span class="val-label">${arrondir(val)}</span>
+            <i style="height: ${(val / maxValB) * 100}%;"></i>
+        </div>`).join('');
+
+    getEl('#nb').innerHTML = Object.keys(sommetsB).map(bat => `<div>${bat}</div>`).join('');
+
+    // Ressources
+    const sommetsR = {};
+    D.forEach(m => {
+        const name=m.ressource.charAt(0).toUpperCase() + m.ressource.slice(1);//awel harf f ressource yhoutou majus w yzidou l beki mteouu b slice(1)
+        sommetsR[name]=(sommetsR[name] || 0)+Number(m.valeur);
+    });
+    const maxValR = Math.max(...Object.values(sommetsR), 1);
+
+    getEl('#rb').innerHTML = Object.entries(sommetsR).map(([res, val]) => `
+        <div class="row">
+            <span class="res-name">${res}</span>
+            <div class="track">
+                <div class="fill" style="width: ${(val / maxValR) * 100}%;"></div>
+            </div>
+            <b class="res-val">${arrondir(val)}</b>
+        </div>`).join('');
+}
+
+function calculerPageAlertes() {
+    const totalConsom=D.reduce((acc, m) => acc + Number(m.valeur), 0);
+    const anomalies=D.filter(m => m.alerte || m.valeur > m.seuil);
+
+    if(getEl('#na2')) getEl('#na2').textContent=anomalies.length;
+    if(getEl('#na3')) getEl('#na3').textContent=`sur ${D.length} mesures`;
+    if(getEl('#tot2')) getEl('#tot2').textContent = arrondir(totalConsom);
+
+    if(getEl('#al')) {
+        getEl('#al').innerHTML=anomalies.map(m => {
+            const pc=((m.valeur / m.seuil - 1) * 100).toFixed(1);
+            return `
+            <div class="card-alert-row">
+                <div class="ex">!</div>
+                <div class="alert-info">
+                    <strong>${m.batiment} : ${m.ressource}</strong>
+                    <small>${m.date} · valeur ${arrondir(m.valeur)} · seuil ${arrondir(m.seuil)}</small>
+                </div>
+                <span class="pct">+${pc}%</span>
+            </div>`;
+        }).join('');
+    }
+}
+let isLoggedIn=false; // pour connaitre que l user est inscrit
+//tlem w tnadhem navigation mtaa site
+function gererRouter() {
+    //besh nshoufou anehi l page li besh nemshoulha
+    function route() {
+        //location.h =>tjib ay haja maktouba #ayhaja
+        //.slice(1) => tfassakh awel lettre (#)
+        //ken l user moush aamel login awel page todhher hiya login
+        let h=location.hash.slice(1) || (isLoggedIn ? 'dashboard' : 'login'); 
+        //ken l user maamalsh login w yheb yemshi l paga okhra yraj3ou bessif ll login
+        if (!isLoggedIn && h!=='login') {
+            h='login';
+            location.hash='#login';
+        }
+        //ken l page moush mawjouda yafichi dashbord wala login kenou moush connecté
+        if (!document.getElementById(h)) h = isLoggedIn ? 'dashboard' : 'login';
+        //si p.id hiya nafsha l h yzid l classe show ll page hedhika
+        document.querySelectorAll('.page').forEach(p => p.classList.toggle('show', p.id===h));
+    }
+    //lors de changement de page (lktiba li baad #) naaytou ll fct rooter
+    window.addEventListener('hashchange', route);
+    //yaayet ll fct rooter meghir matbadel l page (expl ki taamel refresh) wala ki tabda awel marra
+    route();
+}
+
+//gestion de form login w verif user name w l password 
+document.addEventListener("DOMContentLoaded", ()=>{
+    const formLog=getEl('#form-login');
+    if (formLog) {
+        formLog.onsubmit=(e)=>{
+            e.preventDefault(); //yamnaa l rechargement de page
+            const u=getEl('#login-user').value;
+            const p=getEl('#login-pass').value;
+            //test simple tnajem mbaad tbadlou bl bd wala l condition mteeek
+            if (u==='admin' && p==='1234') {
+                isLoggedIn=true;
+                alert("Connexion réussite ! Bienvenue");
+                location.hash='#dashboard'; //yhezna direct l dashboard
+            }
+            else{
+                alert('Nom d utilisateur ou mot de passe incorrecte !');
+            }
+        };
+    }
+});
+
+const root=document.documentElement;//yjib l html
+getEl('#theme').onclick = () => {
+    const current=root.dataset.theme;//recupere theme actuel
+    root.dataset.theme=current==='dark' ? 'light' : 'dark';//nhoutou theme jdid f 
+};
+
+getEl('#btn-pdf').onclick = () => {
+    window.print();//ouvre la fenetre d'impression
+};
+
+setTimeout(() => {
+    const splash=getEl('#splash');
+    if (splash) {
+        splash.style.opacity = '0';//rendre la page transparente (tadrijian)
+        setTimeout(() => splash.remove(), 500);//supprime la page apres 0.5s
+        document.body.classList.remove('splashing');//supprime la class splashing 
+    }
+}, 1500);
