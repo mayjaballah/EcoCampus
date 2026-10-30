@@ -1115,3 +1115,17 @@ body.splashing .wrap {
   .page.show > *,
   .card:hover { animation: none; transform: none; box-shadow: none; }
 }
+#btn-filter-alert .warn{
+  width:22px;
+  height:22px;
+  vertical-align:-5px;
+  margin-right:8px;
+}
+
+/* non cliqué : dayra 7amra + ! abyadh */
+#btn-filter-alert .wc{ fill:var(--bad); transition:fill .3s; }
+#btn-filter-alert .wx{ stroke:#fff; transition:stroke .3s; }
+
+/* cliqué : nafs la7keya, loun yetbaddel */
+#btn-filter-alert.on .wc{ fill:var(--badink); }
+#btn-filter-alert.on .wx{ stroke:var(--badbg); }
