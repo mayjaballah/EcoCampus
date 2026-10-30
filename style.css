@@ -1,4 +1,23 @@
-:root {
+/* =====================================================
+   EcoCampus - style.css (version fusionnée)
+   Sommaire :
+   1. Variables (couleurs + thème clair / sombre)
+   2. Base (reset, body, fond animé)
+   3. Layout (wrap, header, logo, navigation, boutons ronds)
+   4. Pages et animations d'apparition
+   5. Cartes (grilles, card, total, moyenne, alerte)
+   6. Barres de progression (valeur vs seuil)
+   7. Anomalies / alertes
+   8. Mesures (filtres + tableau)
+   9. Graphiques (colonnes)
+   10. Page de connexion (hero + formulaire)
+   11. Responsive + accessibilité
+   ===================================================== */
+
+
+/* ---------- 1. VARIABLES ---------- */
+
+:root { /* el racine: houni n7ottou el variables mta3 el couleurs lel thème clair kol manest7a9ou loun n3aytoulou bl varable mte3ou */
   --bg: #eef3ec;
   --card: #fff;
   --ink: #12372a;
@@ -15,30 +34,15 @@
   --badink: #a8321f;
   --glow: #d7ecc6;
   --acc: #2f8a5e;
-  color-scheme: light;
+  color-scheme: light;/* ybadel el theme light*/
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);/* lmarge eda5laniya li mn fou9 mta3 tlfn aka lbande lka7la t5ali lcontenue mayet8atach beha*/
+  padding-bottom: env(safe-area-inset-bottom, 0px);/* kifkif ama fl bande li ml louta*/
 }
 
-/* Mode sombre manuel */
-:root[data-theme="dark"] {
-  --bg: #0a1812;
-  --card: #12241c;
-  --ink: #e6f2ea;
-  --mut: #8fb09f;
-  --line: #2f4d3e;
-  --soft: #1d3329;
-  --g1: #0e3a2a;
-  --g2: #1f5a43;
-  --badbg: #3a1d19;
-  --badbg2: #2e1a17;
-  --badink: #ff9d8a;
-  --glow: #14402d;
-  color-scheme: dark;
-}
-
-/* Mode sombre automatique */
-/*si le systeme en mode sembre*/
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+/* Mode sombre automatique (selon le système) */
+@media (prefers-color-scheme: dark) {/* ken el système mta3 el user dark -> ytabbe9 el style li ta7t */
+  :root:not([data-theme="light"]) {/* ken el user ma 5tarch thème clair a3mel dark automatique */
     --bg: #0a1812;
     --card: #12241c;
     --ink: #e6f2ea;
@@ -55,69 +59,182 @@
   }
 }
 
-* { box-sizing: border-box; margin: 0; }
+/* Mode sombre choisi manuellement (bouton lune/soleil) */
+:root[data-theme="dark"] {/* ki l'user yenzel 3al bouton w ykhtar dark mode ymanuel */
+  --bg: #0a1812;
+  --card: #12241c;
+  --ink: #e6f2ea;
+  --mut: #8fb09f;
+  --line: #2f4d3e;
+  --soft: #1d3329;
+  --g1: #0e3a2a;
+  --g2: #1f5a43;
+  --badbg: #3a1d19;
+  --badbg2: #2e1a17;
+  --badink: #ff9d8a;
+  --glow: #14402d;
+  color-scheme: dark;
+}
+
+/* Couleur d'accent (titre de la page de connexion) */
+[data-dark] {/* ki yetzed attribut data-dark (dark actif) ybaddel el accent */
+  --acc: #e4ff9a;
+}
+
+
+/* ---------- 2. BASE ---------- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px); /* marge fou9 ki na3mlou scroll lel ancre (bech el contenu ma yetghatach) */
+}
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Readex Pro', 'Dubai', 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
   transition: background .4s, color .4s;
+  position: relative;
 }
 
-.wrap {
+/* Deux grandes taches lumineuses animées en arrière-plan */
+body::before,body::after {/* bch yzid 7aja 9bal w ba3d lbody hne 3mal aka dhaw li lfou9 3alimin w lo5ra louta 3alisar*/
+  content: "";
+  position: fixed;/* position thabta 3al écran (ma tet7arrekch m3a scroll) */
+  z-index: -1; /* tartib fou9/te7t el 3anaser (z-index -1) */
+  border-radius: 50%;
+  filter: blur(90px);/*flou*/
+  opacity: .9;
+  animation: drift 14s ease-in-out infinite alternate;/*animation tatla3 w tahbet */
+}
+
+body::before {/* lpartie li lfou9 3alimin*/
+  width: 520px;
+  height: 520px;
+  top: -180px;
+  right: -120px;
+  background: var(--glow);
+}
+
+body::after {/* lpartie li louta 3alisar*/
+  width: 420px;
+  height: 420px;
+  bottom: -200px;
+  left: -140px;
+  background: var(--glow);
+  animation-delay: -6s;
+}
+
+@keyframes drift {
+  to { transform: translate(-50px, 40px) scale(1.15); }/*l'animation mte3hom*/
+}
+
+
+/* ---------- 3. LAYOUT : header, logo, navigation ---------- */
+
+.wrap {/* el conteneur principal mta3 el site */
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px 28px 40px;
+  padding: 24px clamp(14px, 2vw, 28px) 40px;
 }
 
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  justify-content: space-between; /* tawzi3 el 3anaser ofoqiyan: space-between */
+  gap: 16px; /* el faragh binet el 3anaser: 16px */
+  flex-wrap: wrap;/* el 3anaser yo5rjou lel star elli ba3dou ki el blasa toufa */
+  animation: down .7s both;
 }
 
+/* Logo */
 .logo {
+  display: flex;
+  align-items: center;/* mt7ot el 3anaser 3amoudiyan: center */
+  gap: 14px;
   font-weight: 600;
   font-size: 26px;
   text-decoration: none;
   color: var(--ink);
 }
 
-.right {
+.logo i {/* el carré akhdher li fih el icône mta3 el logo */
+  width: 46px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--g1);
+  display: grid;
+  place-items: center;/* ykhallilou el 3onsor fil wost  */
+  transition: transform .5s;
+}
+
+.logo:hover i {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+.logo svg {
+  width: 20px;
+  stroke: var(--lime); /* loun el khat mta3 el svg:*/
+  stroke-width: 1.8;/* l5ochn mta3 l5at*/
+}
+
+/* Zone droite du header : nav + boutons ronds */
+.right {/* el partie lyamin fil header (nav + boutons) */
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-nav {
+/* Navigation */
+nav {/* el navigation (menu) */
   display: flex;
   gap: 4px;
   padding: 6px;
   border: 1px solid var(--line);
   border-radius: 40px;
   background: var(--card);
+  position: relative;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 nav a {
-  padding: 12px 24px;
+  padding: 12px clamp(12px, 1.6vw, 24px);
   border-radius: 30px;
   text-decoration: none;
   color: var(--ink);
   font-weight: 500;
+  font-size: 19px;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;/*el ktiba ma tet9asamch 3la barcha stour */
+  transition: color .3s;
 }
 
-nav a.on, nav a:hover {
-  background: var(--g1);
+nav a.on {/* el lien el actif fil menu */
   color: #e4ff9a;
 }
 
+
+#pill { /* el fond akhdher li yetnaqqel wra el lien actif (JS yet7akkem fih) */
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  border-radius: 30px;
+  background: var(--g1);
+  transition: left .45s cubic-bezier(.7, 0, .2, 1), width .45s cubic-bezier(.7, 0, .2, 1);
+}
+
+/* Boutons ronds (compte + thème) */
 .round {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: var(--card);
@@ -125,19 +242,74 @@ nav a.on, nav a:hover {
   place-items: center;
   cursor: pointer;
   color: var(--ink);
-  font-size: 20px;
+  transition: transform .3s, background .3s;
+  text-decoration: none;
 }
 
-h1.t {
-  font-size: 28px;
+.round:hover {
+  transform: scale(1.08) rotate(6deg);
+}
+
+.round svg {/* el icône dakhel bouton dayra */
+  width: 30px;
+  fill: none;
+  stroke: currentColor;/* lon el khat mta3 el svg: currentColor */
+  stroke-width: 1.8;
+  stroke-linecap: round; /* chakl akher el khat: round */
+}
+
+#theme,/* bouton el thème (lune / soleil) (nafs el style mta3 el selecteur elli ba3dou) */
+#btn-pdf { /* bouton export PDF */
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+}
+/* icône mta3 bouton thème */
+#theme svg {
+  transition: transform .6s cubic-bezier(.5, 1.6, .4, 1);
+}
+
+[data-dark] #theme svg { /* icône thème ki yebda dark mode */
+  transform: rotate(360deg);
+}
+
+
+/* ---------- 4. PAGES + ANIMATIONS D'APPARITION ---------- */
+
+h1.t { /* titre mta3 kol page */
+  font-weight: 500;
+  font-size: clamp(18px, 2.1vw, 28px);
   color: var(--mut);
   margin: 48px 0 22px;
 }
 
-.page { display: none; }
-.page.show { display: block; }
+.page {
+  display: none;
+}
 
-.grid3 {
+.page.show {
+  display: block;
+}
+
+.page.show > * {/*kol page tet7at*/
+  animation: up .7s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.page.show > *:nth-child(2) { animation-delay: .08s; }/* el 3onsor ethani fil page -> ta2khir 9bal ma tebda el animation: .08s */
+.page.show > *:nth-child(3) { animation-delay: .16s; }/* el 3onsor ethaleth fil page -> ta2khir 9bal ma tebda el animation: .16s */
+
+@keyframes up {/* définition mta3 animation esmha up */
+  from { opacity: 0; transform: translateY(28px); }
+}
+
+@keyframes down {
+  from { opacity: 0; transform: translateY(-20px); }
+}
+
+
+/* ---------- 5. CARTES ---------- */
+
+.grid3 { /* grille b 3 colonnes (cartes louwlin) */
   display: grid;
   grid-template-columns: 1.75fr 1fr 1fr;
   gap: 26px;
@@ -157,44 +329,255 @@ h1.t {
   padding: 28px 30px;
   position: relative;
   overflow: hidden;
+  transition: transform .35s, box-shadow .35s, background .4s;
 }
 
-.lab {
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px -18px rgba(18, 55, 42, .45);
+}
+
+.lab { /* label sghir (titre mta3 carte b 7rouf kbar) */
   font-size: 15px;
+  letter-spacing: .03em;/* el masafa bin el 7rouf: .03em */
   text-transform: uppercase;
   color: var(--mut);
 }
 
-.big {
+.big {/* el raqm el kbir mta3 kol carte */
   font-weight: 600;
-  font-size: 64px;
+  font-size: clamp(64px, 7.5vw, 125px);
   line-height: 1;
   margin: 24px 0 12px;
+  letter-spacing: -.02em;
 }
 
 h2 {
+  font-weight: 600;
   font-size: 34px;
   margin-bottom: 6px;
 }
 
-.sub {
-  color: var(--mut);
-  font-size: 17px;
+.sub { /*sous titre*/
+  color: #b4c0bc;
+  font-size: 19px;
   margin-bottom: 22px;
 }
 
-.total {
+
+.total {/* carte 'Consommation totale' (khadhra) */
   background: var(--g1);
   color: #fff;
   border-color: var(--g1);
+  min-height: 260px;
 }
 
+.total .lab { color: #b4c0bc; }
 .total .big { color: var(--lime); }
 
+.total .c1,
+.total .c2 {/* el dwer mta3 decoration*/
+  position: absolute;
+  border-radius: 50%;
+  right: -60px;
+  bottom: -110px;
+  width: 200px;
+  height: 200px;
+  background: var(--g2);
+  animation: float 6s ease-in-out infinite;
+}
+/*sna3 el dwer li fl card*/
+.total .c1 {
+  width: 260px;
+  height: 260px;
+  right: -40px;
+  bottom: -130px;
+}
+
+.total .c2 {
+  width: 130px;
+  height: 130px;
+  right: 20px;
+  bottom: -30px;
+  background: none;
+  border: 1px solid var(--lime);
+  animation-delay: -3s;
+}
+
+@keyframes float {/* définition mta3 animation esmha float */
+  50% { transform: translateY(-14px) scale(1.05); }
+}
+
+
+.avg .big {/* raqm kbir mta3 carte moyenne */
+  color: var(--ink);
+}
+
+svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
+  width: 100%;
+  height: 80px;
+  overflow: visible;
+}
+
+.spark path {/* el khat (courbe) dakhel el svg */
+  fill: none;/* el svg bla t3mir (n5aliwh fari8) */
+  stroke: var(--g2);
+  stroke-width: 2.5;
+  stroke-linejoin: round;/* chakl el coin bin 2 khoutout: round */
+  stroke-dasharray: 400;/* khat met9atta3 (toulha): 400 */
+  stroke-dashoffset: 400;/* men win yebda el khat (animation drawing): 400 */
+  animation: draw 2s .5s forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Carte "Alertes" (rouge) */
 .alert {
   background: var(--badbg);
   color: var(--badink);
+  border-color: var(--line);
 }
+
+.alert .lab { color: var(--badink); }/* label dakhel carte alerte*/
+.alert .big { color: var(--badink); }/* raqm kbir dakhel carte alerte*/
+
+.alert.pulse::after {/* bordure 7amra li todhher 3al carte alerte */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px var(--bad);
+  opacity: 0;
+  animation: pulse 2.4s infinite;
+}
+
+@keyframes pulse {
+  50% { opacity: .6; }
+}
+
+
+/* ---------- 6. BARRES DE PROGRESSION (valeur vs seuil) ---------- */
+
+.row {/* star wa7da fil barres (esm + barre + 9ima) */
+  display: grid;
+  grid-template-columns: minmax(120px, 240px) 1fr 70px;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #557066;
+}
+
+[data-dark] .row {/* el star fi dark mode */
+  color: var(--mut);
+}
+
+.row b {
+  text-align: right;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.track {/* el masar el fargh mta3 el barre */
+  height: 24px;
+  border-radius: 20px;
+  background: var(--soft);
+  position: relative;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 20px;
+  background: var(--ok);
+  width: 0;
+  transition: width 1.4s cubic-bezier(.2, .8, .2, 1);
+}
+
+.fill.bad {  /* el barre ki el valeur tfout el seuil (7amra) */
+  background: var(--bad);
+}
+
+/* Trait vertical = seuil */
+.tick {/* el khat el 3amoudi li ywarri el seuil */
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 3px;
+  background: #707070;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity .5s 1.2s;
+}
+
+.show .tick {
+  opacity: 1;
+}
+
+
+/* ---------- 7. ANOMALIES / ALERTES ---------- */
+
+.an {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: var(--badbg2);
+  margin-bottom: 14px;
+  transition: transform .3s;
+}
+
+.an:hover {
+  transform: translateX(8px);
+}
+
+/* :not(.ex) pour que le cercle "!" reste rond */
+.an > div:not(.ex) { flex: 1; }
+
+.an strong {
+  font-size: 22px;
+  display: block;
+}
+
+.an small {
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Point d'exclamation rouge qui "remue" */
+.ex {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bad);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  animation: wob 3s infinite;
+}
+
+@keyframes wob {
+  0%, 90%, 100% { transform: none; }
+  93% { transform: rotate(-14deg); }
+  96% { transform: rotate(14deg); }
+}
+
+.pct {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--badink);
+}
+
+
+/* ---------- 8. MESURES : filtres + tableau ---------- */
 
 .filters {
   display: flex;
@@ -204,33 +587,92 @@ h2 {
 }
 
 .filters select,
-.filters input, .filters button {
+.filters input {
   font: inherit;
+  font-size: 17px;
   padding: 14px 22px;
   border-radius: 30px;
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--ink);
+  min-width: 180px;
+  transition: box-shadow .3s;
 }
 
-.scroll { overflow-x: auto; }
+.filters button {
+  font: inherit;
+  font-size: 17px;
+  padding: 14px 22px;
+  border-radius: 30px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform .25s, background .3s, color .3s;
+}
+
+.filters button:hover {
+  transform: translateY(-2px);
+}
+
+/* Bouton "Voir Alertes" quand le filtre est actif */
+.filters button.on {
+  background: var(--badbg);
+  color: var(--badink);
+}
+
+.filters select:focus,
+.filters input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ok);
+}
+
+.scroll {
+  overflow-x: auto;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 640px;
 }
 
-th, td {
-  padding: 18px 14px;
+th {
   text-align: left;
-  border-top: 1px solid var(--soft);
+  font-size: 14px;
+  letter-spacing: .06em;
+  color: var(--mut);
+  padding: 12px 14px;
+  font-weight: 500;
 }
 
+td {
+  padding: 18px 14px;
+  border-top: 1px solid var(--soft);
+  font-size: 19px;
+  font-weight: 500;
+}
+
+tbody tr {
+  transition: background .25s, transform .25s;
+}
+
+tbody tr:hover {
+  background: var(--soft);
+}
+
+/* Badge de statut (ok / Alerte) */
 .pill {
   padding: 6px 18px;
   border-radius: 20px;
+  font-size: 16px;
   font-weight: 600;
   background: var(--soft);
+  color: var(--g2);
+}
+
+[data-dark] .pill {
+  color: var(--lime);
 }
 
 .pill.a {
@@ -238,148 +680,302 @@ th, td {
   color: var(--badink);
 }
 
-/* Graphique Bâtiments */
+
+/* ---------- 9. GRAPHIQUES (colonnes par bâtiment) ---------- */
+
 .cols {
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
-  gap: 40px;
-  height: 260px;
+  gap: clamp(20px, 6vw, 80px);
+  height: 300px;
   padding: 20px 30px 0;
   border-bottom: 2px solid var(--soft);
 }
 
 .col {
-  width: 110px;
+  flex: 1;
+  max-width: 140px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   height: 100%;
-}
-
-.val-label {
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: var(--ink);
+  font-weight: 600;
 }
 
 .col i {
   display: block;
   width: 100%;
   border-radius: 18px 18px 0 0;
-  background: #194a36;
-  transition: height 1s ease-in-out;
+  background: linear-gradient(var(--g2), var(--g1));
+  height: 0;
+  transition: height 1.3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.col span {
+  margin-bottom: 8px;
 }
 
 .names {
   display: flex;
-  justify-content: flex-start;
-  gap: 40px;
-  padding: 14px 30px;
+  gap: clamp(20px, 6vw, 80px);
+  padding: 12px 30px;
   font-weight: 600;
   color: var(--mut);
 }
 
 .names div {
-  width: 110px;
+  flex: 1;
+  max-width: 140px;
   text-align: center;
 }
 
-/* Graphique Par Ressource */
-#rb {
+
+/* ---------- 10. PAGE DE CONNEXION ---------- */
+
+/* En mode "cover" (page login) on cache nav, logo et bouton compte */
+body.cover nav,
+body.cover header .logo,
+body.cover .right > a.round,
+body.cover #btn-pdf {
+  display: none;
+}
+
+body.cover header {
+  justify-content: flex-end;
+}
+
+/* Page login : titre en haut, formulaire centré en dessous */
+.hero {
+  min-height: calc(100vh - 150px);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-#rb .row {
-  display: grid;
-  grid-template-columns: 140px 1fr 80px;
   align-items: center;
-  gap: 15px;
-}
-
-.res-name {
-  font-weight: 600;
-  color: var(--ink);
-  font-size: 16px;
-}
-
-.track {
-  height: 20px;
-  background: var(--soft);
-  border-radius: 20px;
+  justify-content: center;
+  text-align: center;
+  position: relative;
   overflow: hidden;
 }
 
-.track .fill {
-  height: 100%;
-  background: #5fa777;
-  border-radius: 20px;
-  transition: width 1s ease-in-out;
-}
-
-.res-val {
-  text-align: right;
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--ink);
-}
-
-/* Lignes d'alertes */
-.card-alert-row {
+.intro {
   display: flex;
+  gap: 32px;
   align-items: center;
-  justify-content: space-between;
-  background: #ffe9e4;
-  border: 1px solid #707070;
-  border-radius: 30px;
-  padding: 16px 28px;
-  margin-bottom: 14px;
+  flex-wrap: wrap;
 }
 
-.ex {
-  width: 48px;
-  height: 48px;
+.orb {
+  position: absolute;
   border-radius: 50%;
-  background: #e5604a;
-  color: #ffffff;
-  display: grid;
-  place-items: center;
+  z-index: 0;
+  animation: float 7s ease-in-out infinite;
+}
+
+.o1 {
+  width: 320px;
+  height: 320px;
+  left: calc(50% - 160px);
+  top: 24px;
+  background: var(--g2);
+  opacity: .13;
+}
+
+.o2 {
+  width: 170px;
+  height: 170px;
+  left: 0;
+  bottom: 30px;
+  border: 2px solid var(--acc);
+  opacity: .5;
+  animation-delay: -3s;
+}
+
+/* Gros titre "EcoCampus" lettre par lettre */
+.ttl {
   font-weight: 700;
-  font-size: 24px;
-  flex-shrink: 0;
+  font-size: clamp(44px, 6.5vw, 88px);
+  line-height: .95;
+  letter-spacing: -.045em;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
 }
 
-.alert-info {
-  flex: 1;
-  margin-left: 18px;
+.ttl span {
+  display: inline-block;
+  animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
+  animation-delay: calc(var(--i) * .07s + .2s);
 }
 
-.alert-info strong {
+.ttl .g {
+  color: var(--acc);
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(70px) rotate(8deg); }
+}
+
+.bar {
+  height: 8px;
+  width: 110px;
+  border-radius: 8px;
+  background: var(--acc);
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  animation: grow 1.2s .9s backwards;
+}
+
+@keyframes grow {
+  from { width: 0; }
+}
+
+/* Formulaire de connexion */
+.login {
+  max-width: 460px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.login label {
   display: block;
-  font-size: 20px;
-  color: #12372a;
+  text-align: left;
+  font-weight: 500;
+  color: var(--mut);
 }
 
-.alert-info small {
-  color: #707e74;
-  font-size: 14px;
+.login input {
+  width: 100%;
+  font: inherit;
+  padding: 16px 22px;
+  border-radius: 26px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  margin: 6px 0 16px;
+}
+
+.login a {
+  color: var(--g2);
+  font-weight: 500;
+  display: block;
+  margin-top: 14px;
+  text-decoration: none;
+}
+
+[data-dark] .login a {
+  color: var(--lime);
+}
+
+/* La carte login dans le hero (effet verre dépoli) */
+.card.login {
+  max-width: 460px;
+  width: 100%;
+  margin: 0;
+  justify-self: center;
+  padding: 30px 36px;
+  position: relative;
+  z-index: 1;
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: blur(16px);
+  animation: up .9s .35s backwards;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--g1);
+  color: var(--lime);
+  font: 600 19px inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px var(--g1);
+}
+
+
+/* Message d'erreur du formulaire de connexion */
+.login-msg {
+  min-height: 22px;
+  margin-bottom: 10px;
+  color: var(--badink);
   font-weight: 500;
 }
 
-.pct {
-  font-size: 22px;
-  font-weight: 700;
-  color: #a8321f;
+.login .btn { margin-top: 4px; }
+
+/* Message "aucune anomalie" */
+.empty {
+  color: var(--mut);
+  font-weight: 500;
 }
 
-/* Splash Screen */
-body.splashing { overflow: hidden; }
-body.splashing .wrap { display: none; }
+
+/* ---------- 11. RESPONSIVE + ACCESSIBILITÉ ---------- */
+
+/* Tablette / petit écran */
+@media (max-width: 1000px) {
+  .grid3,
+  .grid2 { grid-template-columns: 1fr; }
+
+  .big { font-size: 80px; }
+  h1.t { margin-top: 30px; }
+
+  .hero {
+    min-height: 0;
+    padding-top: 6px;
+  }
+
+  .ttl { font-size: clamp(44px, 14vw, 90px); }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .round { width: 52px; height: 52px; }
+  #theme, #btn-pdf { width: 46px; height: 46px; }
+  .logo { font-size: 22px; }
+  nav a { font-size: 16px; padding: 10px 14px; }
+  .card { border-radius: 28px; padding: 22px; }
+
+  .row {
+    grid-template-columns: 1fr 60px;
+    grid-template-areas: "n v" "t t";
+  }
+
+  .row span { grid-area: n; }
+  .row .track { grid-area: t; }
+  .row b { grid-area: v; }
+}
+
+/* Pour les personnes qui préfèrent moins d'animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .spark path {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* ---------- 12. PAGE DE DÉMARRAGE (splash, 4 secondes) ---------- */
+
+/* Pendant le splash : le site est caché et on ne peut pas scroller */
+body.splashing {
+  overflow: hidden;
+}
+
+body.splashing .wrap {
+  display: none;
+}
 
 #splash {
   position: fixed;
@@ -387,8 +983,13 @@ body.splashing .wrap { display: none; }
   z-index: 100;
   display: grid;
   place-items: center;
-  background: var(--bg);
-  transition: opacity .5s ease;
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+/* Sortie en fondu (déclenchée par le JS à 3,5 s) */
+#splash.out {
+  opacity: 0;
+  transform: scale(1.04);
 }
 
 .sp-in {
@@ -396,134 +997,121 @@ body.splashing .wrap { display: none; }
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 0 20px;
 }
 
-.sp-in h2 {
-  font-size: 60px;
+/* Logo feuille avec deux anneaux qui pulsent */
+.sp-logo {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: var(--g1);
+  display: grid;
+  place-items: center;
+  margin-bottom: 34px;
+  animation: spLogo 1s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+
+.sp-logo svg {
+  width: 44px;
+  stroke: var(--lime);
+  fill: none;
+  stroke-width: 1.8;
+  animation: spSway 3s 1s ease-in-out infinite;
+}
+
+.sp-logo::before,
+.sp-logo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--acc);
+  opacity: 0;
+  animation: spRing 2s .8s ease-out infinite;
+}
+
+.sp-logo::after {
+  animation-delay: 1.6s;
+}
+
+@keyframes spLogo {
+  from { opacity: 0; transform: scale(0) rotate(-120deg); }
+}
+
+@keyframes spSway {
+  50% { transform: rotate(-10deg) scale(1.08); }
+}
+
+@keyframes spRing {
+  from { opacity: .7; transform: scale(1); }
+  to   { opacity: 0;  transform: scale(2.4); }
+}
+
+/* Titre "EcoCampus" lettre par lettre */
+.sp-ttl {
+  font-weight: 700;
+  font-size: clamp(44px, 12vw, 150px);
+  line-height: 1;
+  letter-spacing: -.045em;
   color: var(--ink);
 }
 
+.sp-ttl span {
+  display: inline-block;
+  animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
+  animation-delay: calc(var(--i) * .08s + .5s);
+}
+
+.sp-ttl .g {
+  color: var(--acc);
+}
+
+/* Petite phrase sous le titre */
+.sp-tag {
+  margin-top: 18px;
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: 500;
+  color: var(--mut);
+  letter-spacing: .04em;
+  animation: up .8s 1.6s backwards;
+}
+
+/* Barre de chargement : se remplit pendant ~3 secondes */
 .sp-line {
-  width: 200px;
+  width: min(280px, 60vw);
   height: 6px;
-  background: var(--soft);
-  margin-top: 20px;
   border-radius: 6px;
+  background: var(--soft);
+  margin-top: 30px;
   overflow: hidden;
+  animation: up .6s 1.2s backwards;
 }
 
 .sp-line b {
   display: block;
   height: 100%;
   width: 100%;
+  border-radius: 6px;
   background: var(--acc);
-  animation: loadAnim 1.5s infinite linear;
+  transform-origin: left;
+  animation: spFill 2.3s 1.2s cubic-bezier(.4, 0, .2, 1) both;
 }
 
-@keyframes loadAnim {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+@keyframes spFill {
+  from { transform: scaleX(0); }
 }
 
 
-/*login*/
-/* Design de la page Login personnalisé */
-#login.page {
-  display: none;
-  min-height: 85vh;
-  place-items: center;
-  padding: 20px 0;
-}
+/* ---------- 13. IMPRESSION (bouton PDF) ---------- */
 
-#login.page.show {
-  display: grid;
-}
+@media print {
+  body::before,
+  body::after,
+  .right,
+  .filters { display: none !important; }
 
-.login-card-custom {
-  width: 100%;
-  max-width: 380px;
-  background: var(--g1); /* Vert foncé EcoCampus */
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  color: #ffffff;
-}
-
-.login-header-custom {
-  padding: 35px 25px 25px;
-  text-align: center;
-  position: relative;
-}
-
-.login-header-custom h2 {
-  font-size: 32px;
-  color: #e4ff9a; /* Vert clair / Lime */
-  margin-bottom: 8px;
-}
-
-.login-header-custom p {
-  font-size: 14px;
-  color: #d7ecc6;
-  opacity: 0.9;
-}
-
-.login-body-custom {
-  background: #ffffff;
-  border-radius: 28px 28px 0 0;
-  padding: 30px 25px;
-  color: #12372a;
-}
-
-.login-field {
-  margin-bottom: 18px;
-  text-align: left;
-}
-
-.login-field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #12372a;
-}
-
-.login-field input {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 15px;
-  border: 1px solid #d0d7d1;
-  background: #f4f7f4;
-  font-size: 14px;
-  color: #12372a;
-  outline: none;
-}
-
-.login-btn-custom {
-  width: 100%;
-  padding: 14px;
-  border-radius: 25px;
-  border: none;
-  background: #12372a;
-  color: #e4ff9a;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: opacity 0.2s;
-}
-
-.login-btn-custom:hover {
-  opacity: 0.9;
-}
-
-.login-links {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.login-links a {
-  color: #12372a;
-  text-decoration: underline;
-  font-weight: 600;
+  .page.show > *,
+  .card:hover { animation: none; transform: none; box-shadow: none; }
 }

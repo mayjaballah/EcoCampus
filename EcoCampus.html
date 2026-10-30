@@ -2,152 +2,166 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EcoCampus</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="splashing">
 
-<!-- Splash Screen / Animation de chargement -->
+<!-- ========== SPLASH (page de démarrage animée) ========== -->
 <div id="splash">
-  <div class="sp-in">
-    <h2>EcoCampus</h2>
-    <p>Chargement des données...</p>
-    <div class="sp-line"><b></b></div>
-  </div>
+ <div class="sp-in">
+  <i class="sp-logo"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i><!-- balise svg tasna l'icone wala logo -->
+  <div class="sp-ttl"><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></div>
+  <!-- eco campus mta3 lpage loula-->
+  <p class="sp-tag">Suivi de la consommation du campus</p>
+  <div class="sp-line"><b></b></div><!-- barre de chargement -->
+ </div>
 </div>
 
-<div class="wrap">
+<div class="wrap"><!-- el conteneur principal li yjam3 el site kemel -->
+
+<!-- ========== HEADER ========== -->
 <header>
- <a class="logo" href="#dashboard">EcoCampus</a>
- <div class="right">
-  <nav id="nav">
+ <a class="logo" href="#dashboard"><!-- el logo: ki tenzel 3lih yroo7 lel tableau de bord -->
+    <i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>EcoCampus</a> <!-- icône feuille + esm el site -->
+ <div class="right"><!-- el partie lyamin fil header (menu + boutons) -->
+  <nav id="nav"><span id="pill"></span>
    <a href="#dashboard">Tableau de bord</a>
    <a href="#mesures">Mesures</a>
    <a href="#graphique">Graphique</a>
    <a href="#alertes">Alertes</a>
   </nav>
-  <button class="round" id="theme" title="Mode sombre / clair">🌓</button>
-  <button class="round" id="btn-pdf" title="Exporter en PDF">📄</button>
-  <!-- À ajouter dans <div class="right"> à côté de tes boutons #theme et #btn-pdf -->
-  <a href="#login" class="round" id="btn-user-login" title="Se connecter">👤</a>
+  <button class="round" id="theme"  title="Mode sombre / clair"><!--title : kif t5ali souris fou9 lboutton yodhher lmsg hetheka  -->
+   <svg viewBox="0 0 24 24" id="ic"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg><!--balidse svg tasna3 l"icone bl les valeur hethoukom--> <!-- icône lune (JS yebaddel'ha lel soleil) -->
+  </button>
+  <button class="round" id="btn-pdf"  title="Exporter en PDF"> <!-- lbouton mta3 lpdf-->
+   <svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg><!-- icône wara9a: path louwel el waraqa, w el thani el plie w el ostra -->
+  </button>
+  <a class="round" href="#login"  title="Se connecter"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg></a><!-- sna3 l'icone mta3 login-->
  </div>
 </header>
 
-<!-- TABLEAU DE BORD -->
-<section class="page" id="dashboard">
+<!-- ========== TABLEAU DE BORD ========== -->
+<section class="page" id="dashboard"><!-- ===================page el tableau de bord ============-->
  <h1 class="t" id="range">Suivi de la consommation</h1>
- <div class="grid3">
-  <div class="card total">
-    <div class="lab">Consommation Totale</div>
-    <div class="big" id="tot">0</div>
+ <div class="grid3"> <!-- grille b 3 cartes -->
+  <div class="card total"><!-- carte khadhra mta3 consommation totale -->
+   <div class="lab">Consommation totale</div>
+   <div class="big" id="tot">0</div><!-- yabda ml 0 w JS yhot fih el total -->
+   <div style="position:relative;z-index:1;color:#b4c0bc">
+    <span id="nb-bat">0</span> bâtiments gérés</div><!-- 3dad les batiment-->
+   <i class="c1"></i><i class="c2"></i><!-- el dwer li fl card-->
   </div>
-  <div class="card avg">
-    <div class="lab">Nombre d'Anomalies</div>
-    <div class="big" id="nal" style="color:var(--bad);">0</div>
+  <div class="card avg"><!-- carte moyenne -->
+   <div class="lab">Moyenne</div>
+   <div class="big" id="avg">0</div><!-- ra9m yabda m 0 JS yhot fih el moyenne -->
+   <svg class="spark" viewBox="0 0 280 80" preserveAspectRatio="none"><path id="sp"/></svg><!-- sna3 lcourbe li fl moyenne-->
   </div>
-  <div class="card alert">
-    <div class="lab">Bâtiments gérés</div>
-    <div class="big" id="nb-bat">0</div>
-  </div>
- </div>
-
- <div class="grid2">
-  <div class="card">
-    <h2>Valeur vs Seuil</h2>
-    <div id="bars"></div>
-  </div>
-  <div class="card">
-    <h2>Anomalies détectées</h2>
-    <div id="anos"></div>
+  <div class="card alert pulse"><!-- carte 7amra mta3 alertes  -->
+   <div class="lab">Alertes</div>
+   <div class="big" id="nal">0</div><!-- nb des alertes-->
+   <div>seuils dépassés</div><!-- ktiba li te7t el ra9m -->
   </div>
  </div>
+ <div class="grid2"> <!-- grille b 2 cartes -->
+  <div class="card">
+    <h2>Valeur vs seuil</h2>
+    <p class="sub">Le trait vertical marque le seuil de chaque mesure</p>
+    <div id="bars"></div><!-- kif nbadlou fi donnée wala nzidou donnée tetzed houni -->
+</div>
+  <div class="card"><!-- carte el anomalies -->
+    <h2 style="margin-bottom:22px">Anomalies détectées</h2>
+    <div id="anos"></div></div><!-- houni JS yzid el anomalies -->
+ </div><!-- tsakkir grid2 -->
 </section>
 
-<!-- GESTION DES MESURES -->
-<section class="page" id="mesures">
- <h1 class="t">Gestion des Mesures</h1>
- <div class="filters">
-   <select id="fb"><option value="">Tous les bâtiments</option></select>
-   <select id="fr"><option value="">Toutes les ressources</option></select>
-   <input id="fs" type="search" placeholder="Rechercher par bâtiment...">
-   <button class="btn" id="btn-filter-alert" style="width:auto; padding:0 20px;">⚠️ Voir Alertes</button>
+<!-- ========== MESURES ========== -->
+<section class="page" id="mesures"><!--====== PAGE EL MESURE======= -->
+ <h1 class="t">Mesures</h1>
+ <div class="filters"><!-- barre el filtres -->
+  <select id="fb"></select> <!-- liste filtre bâtiment (JS ya3mar'ha) -->
+  <select id="fr"></select><!-- liste filtre ressource (JS ya3mar'ha) -->
+  <select id="fp"></select><!-- liste filtre période (JS ya3mar'ha) -->
+  <input id="fs" type="search" placeholder="Rechercher"><!-- champ recherche-->
+  <button id="btn-filter-alert" type="button">⚠️ Voir Alertes</button><!-- bouton ykhalli ken el alertes;-->
  </div>
- <div class="card">
-   <div class="scroll">
-     <table>
-       <thead><tr><th>BÂTIMENT</th><th>RESSOURCE</th><th>VALEUR</th><th>SEUIL</th><th>DATE</th><th>STATUT</th></tr></thead>
-       <tbody id="tb"></tbody>
-     </table>
-   </div>
- </div>
+ <div class="card"><div class="scroll"><!-- carte + div bech ykoun scroll ofoqi fil tableau fil telifoun -->
+  <table>
+   <thead>
+    <tr>
+      <th>BÂTIMENT</th>
+      <th>RESSOURCE</th>
+      <th>VALEUR</th>
+      <th>SEUIL</th>
+      <th>DATE</th>
+      <th>STATUT</th>
+    </tr>
+  </thead>
+   <tbody id="tb"></tbody><!-- corps el tableau: JS yzid fih el stour -->
+  </table>
+ </div></div><!-- tsakkir scroll w carte -->
 </section>
 
-<!-- GRAPHIQUES DE SYNTHÈSE -->
-<section class="page" id="graphique">
- <h1 class="t">Graphiques de Synthèse</h1>
+<!-- ========== GRAPHIQUES ========== -->
+<section class="page" id="graphique"><!-- =========PAGE EL GRAPHIQUE======== -->
+ <h1 class="t">Graphiques</h1>
  <div class="card">
-   <h2>Consommation par bâtiment</h2>
-   <p class="sub">Somme des mesures de chaque bâtiment</p>
-   <div class="cols" id="cb"></div>
-   <div class="names" id="nb"></div>
- </div>
+  <h2>Consommation par bâtiment</h2>
+  <p class="sub">Somme des mesures de chaque bâtiment</p>
+  <div class="cols" id="cb"></div><!-- les colonne yetbadlou 7asb lconsommation -->
+  <div class="names" id="nb"></div><!-- lasemi-->
+</div>
  <div class="card" style="margin-top:26px">
-   <h2>Par ressource</h2>
-   <p class="sub">Somme des mesures de chaque ressource</p>
-   <div id="rb"></div>
- </div>
+  <h2>Par ressource</h2>
+  <p class="sub" style="margin-bottom:26px">Somme des mesures de chaque ressource</p>
+  <div id="rb"></div><!-- yzid par lkol ressource -->
+</div> <!-- tsakkir page graphiques -->
 </section>
 
-<!-- CENTRE D'ALERTES -->
-<section class="page" id="alertes">
- <h1 class="t">Centre d'Alertes</h1>
- <div class="grid3" style="grid-template-columns:1fr 2fr">
-  <div class="card alert">
-    <div class="lab">ALERTES ACTIVES</div>
-    <div class="big" id="na2">0</div>
+<!-- ========== ALERTES ========== -->
+<section class="page" id="alertes"> <!-- ========PAGE EL ALERTES======== -->
+ <h1 class="t">Alertes</h1>
+ <div class="grid3" style="grid-template-columns:1fr 2fr"><!-- grille b 2 colonnes (el thanya double louwla) -->
+  <div class="card alert"><!-- lcarte l7amra-->
+    <div class="lab">Alertes actives</div>
+    <div class="big" id="na2">0</div><!-- nb d'alerte  JS yzid les valeur -->
     <div id="na3">sur 0 mesures</div>
   </div>
-  <div class="card total">
-    <div class="lab">CONSOMMATION TOTALE</div>
-    <div class="big" id="tot2" style="font-size:80px">0</div>
-    <p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p>
-    <i class="c1"></i><i class="c2"></i>
+  <div class="card total"><!-- carte khadhra: total -->
+   <div class="lab">Consommation totale</div>
+   <div class="big" id="tot2" style="font-size:80px">0</div><!-- js y7ot 8adi lconsommation total-->
+   <p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p>
+   <i class="c1"></i><i class="c2"></i><!-- 2 dwayer dékoration -->
+  </div> <!-- tsakkir carte total -->
+ </div><!-- tsakkir grid3 -->
+ <div id="al"></div><!-- houni JS yzid lista mta3 el alertes -->
+</section>
+
+<!-- ========== LOGIN ========== -->
+<section class="page" id="login"><!-- =========PAGE DE CONNEXION======-->
+ <div class="hero"><!-- el section el kbira mta3 login -->
+  <i class="orb o1"></i><i class="orb o2"></i> <!-- 2 dwayer dékoration fil khalfia -->
+  <h1 class="ttl" ><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></h1> <!-- titre kbir EcoCampus 7arf b 7arf (animation)-->
+  <div class="bar"></div><!-- khat sghir akhdher te7t el titre -->
+  <div class="card login"><!-- carte el formulaire -->
+   <div class="logo" style="justify-content:center;margin-bottom:14px"><i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i></div><!-- el logo fil wost fou9 el formulaire -->
+   <h2>Bienvenue</h2>
+   <p class="sub" style="margin-bottom:26px">Connectez-vous pour accéder à votre compte</p>
+   <form id="form-login">
+    <label for="login-user">Nom d’utilisateur ou e-mail
+     <input type="text" id="login-user" placeholder="votrenom@gmail.com" required></label>
+    <label for="login-pass">Mot de passe
+     <input type="password" id="login-pass" placeholder="Entrez mot de passe" required></label>
+    <div class="login-msg" id="login-msg"></div><!-- houni JS yhot message d'erreur -->
+    <button type="submit" class="btn">Se connecter</button><!-- bouton ybaath el formulaire -->
+   </form>
+   <a href="#login">Mot de passe oublié ?</a><!-- lien mot de passe oublié -->
+   <a href="#login">Vous n’avez pas de compte ? S’inscrire</a><!-- lien lel inscription (créer compte) -->
   </div>
  </div>
- <div id="al" style="margin-top:20px;"></div>
 </section>
-
-
-
-<!-- PAGE DE LOGIN DESIGN ECOCAMPUS -->
-<section class="page" id="login">
-  <div class="login-card-custom">
-    <div class="login-header-custom">
-      <div style="font-size: 20px; font-weight: 600; margin-bottom: 15px;">🍃 EcoCampus</div>
-      <h2>Bienvenue</h2>
-      <p>Connectez-vous pour accéder à votre compte</p>
-    </div>
-    <div class="login-body-custom">
-      <form id="form-login">
-        <div class="login-field">
-          <label for="login-user">Nom d'utilisateur ou e-mail</label>
-          <input type="text" id="login-user" placeholder="votrenom@gmail.com" required>
-        </div>
-        <div class="login-field">
-          <label for="login-pass">Mot de passe</label>
-          <input type="password" id="login-pass" placeholder="Entrez mot de passe" required>
-        </div>
-        <button type="submit" class="login-btn-custom">Se connecter</button>
-      </form>
-      <div class="login-links">
-        <p><a href="#">Mot de passe oublié ?</a></p>
-        <p style="margin-top: 6px; color: #707e74;">Vous n'avez pas de compte ? <a href="#">S'inscrire</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 </div>
 <script src="index.js"></script>
