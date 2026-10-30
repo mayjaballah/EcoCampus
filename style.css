@@ -518,7 +518,7 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 /* ---------- 7. ANOMALIES / ALERTES ---------- */
 
-.an {
+.an {/* wa7da men les anomalies (carte sghira) */
   display: flex;
   align-items: center;
   gap: 20px;
@@ -535,14 +535,14 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 }
 
 /* :not(.ex) pour que le cercle "!" reste rond */
-.an > div:not(.ex) { flex: 1; }
+.an > div:not(.ex) { flex: 1; } /*el div eli fi west lclass .an eli lclass mte3ha ex bch te5th lblasa li 9a3det fi ligne*/
 
-.an strong {
+.an strong {/* el esm el kbir fil anomalie */
   font-size: 22px;
   display: block;
 }
 
-.an small {
+.an small {/* el ktiba el sghira fil anomalie */
   color: var(--mut);
   font-weight: 600;
   font-size: 14px;
@@ -564,13 +564,13 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   animation: wob 3s infinite;
 }
 
-@keyframes wob {
+@keyframes wob {/* définition mta3 animation esmha wob */
   0%, 90%, 100% { transform: none; }
   93% { transform: rotate(-14deg); }
   96% { transform: rotate(14deg); }
 }
 
-.pct {
+.pct {/* el pourcentage mta3 el dépassement */
   font-weight: 600;
   font-size: 24px;
   color: var(--badink);
@@ -579,15 +579,15 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 /* ---------- 8. MESURES : filtres + tableau ---------- */
 
-.filters {
+.filters {/* el barre mta3 filtres fou9 el tableau */
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
 
-.filters select,
-.filters input {
+.filters select,/* listes déroulantes mta3 el filtres */
+.filters input {/* champ el recherche */
   font: inherit;
   font-size: 17px;
   padding: 14px 22px;
@@ -599,7 +599,7 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   transition: box-shadow .3s;
 }
 
-.filters button {
+.filters button {/* bouton el filtre mta3 alertes */
   font: inherit;
   font-size: 17px;
   padding: 14px 22px;
@@ -621,13 +621,13 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   color: var(--badink);
 }
 
-.filters select:focus,
-.filters input:focus {
+.filters select:focus,/* ki t5tar liste*/
+.filters input:focus {/* ki t3amer champ recherche*/
   outline: none;
   box-shadow: 0 0 0 3px var(--ok);
 }
 
-.scroll {
+.scroll {/* conteneur mta3 el tableau (scroll ofoqi) */
   overflow-x: auto;
 }
 
@@ -637,7 +637,7 @@ table {
   min-width: 640px;
 }
 
-th {
+th {/* cellule d'en-tête mta3 el tableau */
   text-align: left;
   font-size: 14px;
   letter-spacing: .06em;
@@ -646,14 +646,14 @@ th {
   font-weight: 500;
 }
 
-td {
+td { /* cellule 3adia mta3 el tableau */
   padding: 18px 14px;
   border-top: 1px solid var(--soft);
   font-size: 19px;
   font-weight: 500;
 }
 
-tbody tr {
+tbody tr {/* kol star fil corps mta3 el tableau */
   transition: background .25s, transform .25s;
 }
 
@@ -671,11 +671,11 @@ tbody tr:hover {
   color: var(--g2);
 }
 
-[data-dark] .pill {
+[data-dark] .pill {/* badge el statut fi dark mode */
   color: var(--lime);
 }
 
-.pill.a {
+.pill.a {/* badge el statut ki yebda alerte */
   background: var(--badbg);
   color: var(--badink);
 }
@@ -683,7 +683,7 @@ tbody tr:hover {
 
 /* ---------- 9. GRAPHIQUES (colonnes par bâtiment) ---------- */
 
-.cols {
+.cols {/* conteneur mta3 el colonnes mta3 graphique */
   display: flex;
   align-items: flex-end;
   gap: clamp(20px, 6vw, 80px);
@@ -692,7 +692,7 @@ tbody tr:hover {
   border-bottom: 2px solid var(--soft);
 }
 
-.col {
+.col { /* colonne wa7da (bâtiment) */
   flex: 1;
   max-width: 140px;
   display: flex;
@@ -703,7 +703,7 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-.col i {
+.col i { /* el barre el 3amoudia mta3 colonne */
   display: block;
   width: 100%;
   border-radius: 18px 18px 0 0;
@@ -712,11 +712,11 @@ tbody tr:hover {
   transition: height 1.3s cubic-bezier(.2, .8, .2, 1);
 }
 
-.col span {
+.col span { /* el raqm foug el colonne */
   margin-bottom: 8px;
 }
 
-.names {
+.names {/* star el asma2 te7t el colonnes */
   display: flex;
   gap: clamp(20px, 6vw, 80px);
   padding: 12px 30px;
@@ -724,7 +724,7 @@ tbody tr:hover {
   color: var(--mut);
 }
 
-.names div {
+.names div {/* esm wa7ed te7t colonne */
   flex: 1;
   max-width: 140px;
   text-align: center;
@@ -734,15 +734,15 @@ tbody tr:hover {
 /* ---------- 10. PAGE DE CONNEXION ---------- */
 
 /* En mode "cover" (page login) on cache nav, logo et bouton compte */
-body.cover nav,
-body.cover header .logo,
-body.cover .right > a.round,
-body.cover #btn-pdf {
-  display: none;
+body.cover nav,/* nav fi page login (mkhabya) */
+body.cover header .logo,/* logo fil header fi page login*/
+body.cover .right > a.round,/* bouton compte fi page login (mkhabi)*/
+body.cover #btn-pdf {/* bouton pdf fi page login */
+  display: none;/* yekhabbi el element*/
 }
 
-body.cover header {
-  justify-content: flex-end;
+body.cover header { /* header fi page login */
+  justify-content: flex-end;/* tawzi3 el 3anaser ofoqiyan: flex-end */
 }
 
 /* Page login : titre en haut, formulaire centré en dessous */
@@ -764,14 +764,14 @@ body.cover header {
   flex-wrap: wrap;
 }
 
-.orb {
+.orb {/* dwayer décoration fi page login */
   position: absolute;
   border-radius: 50%;
   z-index: 0;
   animation: float 7s ease-in-out infinite;
 }
 
-.o1 {
+.o1 { /* dayra louwla (pleine) */
   width: 320px;
   height: 320px;
   left: calc(50% - 160px);
@@ -780,7 +780,7 @@ body.cover header {
   opacity: .13;
 }
 
-.o2 {
+.o2 {/* dayra thanya (bordure bark) */
   width: 170px;
   height: 170px;
   left: 0;
@@ -801,21 +801,21 @@ body.cover header {
   z-index: 1;
 }
 
-.ttl span {
+.ttl span {/* kol 7arf men titre */
   display: inline-block;
   animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
   animation-delay: calc(var(--i) * .07s + .2s);
 }
 
-.ttl .g {
+.ttl .g {/* 7rouf el khadhra mta3 'Campus' */
   color: var(--acc);
 }
 
-@keyframes pop {
+@keyframes pop {/* définition mta3 animation esmha pop */
   from { opacity: 0; transform: translateY(70px) rotate(8deg); }
 }
 
-.bar {
+.bar { /* ta7t titre khat sghir akhdher */
   height: 8px;
   width: 110px;
   border-radius: 8px;
@@ -855,7 +855,7 @@ body.cover header {
   margin: 6px 0 16px;
 }
 
-.login a {
+.login a {/* liens mta3 formulaire (mot de passe oublié...) */
   color: var(--g2);
   font-weight: 500;
   display: block;
@@ -863,7 +863,7 @@ body.cover header {
   text-decoration: none;
 }
 
-[data-dark] .login a {
+[data-dark] .login a {/* liens login fi dark mode */
   color: var(--lime);
 }
 
@@ -877,11 +877,11 @@ body.cover header {
   position: relative;
   z-index: 1;
   background: color-mix(in srgb, var(--card) 82%, transparent);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);/* flou el khalfia li wra el carte (effet verre)*/
   animation: up .9s .35s backwards;
 }
 
-.btn {
+.btn {/* bouton 'Se connecter' */
   width: 100%;
   padding: 16px;
   border: 0;
@@ -920,14 +920,14 @@ body.cover header {
 /* ---------- 11. RESPONSIVE + ACCESSIBILITÉ ---------- */
 
 /* Tablette / petit écran */
-@media (max-width: 1000px) {
-  .grid3,
-  .grid2 { grid-template-columns: 1fr; }
+@media (max-width: 1000px) { /* ken el écran a9al men 1000px*/
+  .grid3,/* grille b 3 colonnes (cartes louwlin)
+  .grid2 { grid-template-columns: 1fr; } /* grille b 2 colonnes -> nombre w 3ordh el colonnes: 1fr */
 
-  .big { font-size: 80px; }
-  h1.t { margin-top: 30px; }
+  .big { font-size: 80px; } /* el raqm el kbir mta3 kol carte -> 7jem el khat: 80px */
+  h1.t { margin-top: 30px; }/* titre mta3 kol page -> marge fou9 (fou9 el 3onsor): 30px */
 
-  .hero {
+  .hero {/* el section kbira mta3 page login */
     min-height: 0;
     padding-top: 6px;
   }
@@ -936,7 +936,7 @@ body.cover header {
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 600px) {/* ken el écran a9al men 600px (tlfn) */
   .round { width: 52px; height: 52px; }
   #theme, #btn-pdf { width: 46px; height: 46px; }
   .logo { font-size: 22px; }
@@ -953,31 +953,19 @@ body.cover header {
   .row b { grid-area: v; }
 }
 
-/* Pour les personnes qui préfèrent moins d'animations */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .spark path {
-    stroke-dashoffset: 0;
-  }
-}
-
 
 /* ---------- 12. PAGE DE DÉMARRAGE (splash, 4 secondes) ---------- */
 
 /* Pendant le splash : le site est caché et on ne peut pas scroller */
-body.splashing {
+body.splashing { /* body ki el splash (page demarrage) mazel yodhher */
   overflow: hidden;
 }
 
-body.splashing .wrap {
+body.splashing .wrap {/* el site yetkhabba wa9t el splash */
   display: none;
 }
 
-#splash {
+#splash {/* page el démarrage el animée */
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -992,16 +980,14 @@ body.splashing .wrap {
   transform: scale(1.04);
 }
 
-.sp-in {
+.sp-in {/* contenu wost el splash */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 0 20px;
 }
-
-/* Logo feuille avec deux anneaux qui pulsent */
-.sp-logo {
+.sp-logo {/* dayra el logo fil splash */
   position: relative;
   width: 92px;
   height: 92px;
@@ -1032,8 +1018,8 @@ body.splashing .wrap {
   animation: spRing 2s .8s ease-out infinite;
 }
 
-.sp-logo::after {
-  animation-delay: 1.6s;
+.sp-logo::after {/* dayra thanya ta3mel pulse 7awl logo */
+  animation-delay: 1.6s;/* ta2khir 9bal ma tebda el animation: 1.6s */
 }
 
 @keyframes spLogo {
@@ -1058,13 +1044,13 @@ body.splashing .wrap {
   color: var(--ink);
 }
 
-.sp-ttl span {
+.sp-ttl span {/* kol 7arf men titre splash */
   display: inline-block;
   animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
   animation-delay: calc(var(--i) * .08s + .5s);
 }
 
-.sp-ttl .g {
+.sp-ttl .g {/* 7rouf khadhra fi titre splash */
   color: var(--acc);
 }
 
@@ -1089,7 +1075,7 @@ body.splashing .wrap {
   animation: up .6s 1.2s backwards;
 }
 
-.sp-line b {
+.sp-line b {/* el barre li temla2 wa9t el chargement */
   display: block;
   height: 100%;
   width: 100%;
@@ -1106,13 +1092,13 @@ body.splashing .wrap {
 
 /* ---------- 13. IMPRESSION (bouton PDF) ---------- */
 
-@media print {
-  body::before,
-  body::after,
+@media print {/* ytabbe9 ken wa9t l'impression / export PDF */
+  body::before,/* pseudo-element 9bal el body (tache lumineuse louwla)*/
+  body::after,/* pseudo-element ba3d el body (tache lumineuse thenya)*/
   .right,
   .filters { display: none !important; }
 
-  .page.show > *,
+  .page.show > *,/* kol 3onsor mel page dhahra (yodhher b animation)*/
   .card:hover { animation: none; transform: none; box-shadow: none; }
 }
 #btn-filter-alert .warn{
