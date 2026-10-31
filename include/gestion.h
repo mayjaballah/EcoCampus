@@ -1,175 +1,90 @@
-
 #ifndef GESTION_H
 #define GESTION_H
 
-/* Bibliotheques necessaires */
+/* Bibliothèques standards nécessaires pour les E/S, la mémoire et les booléens */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 
-
 /* =====================================================
-   3.1 - MODELISATION D'UNE MESURE
+   3.1 - MODÉLISATION D'UNE MESURE
    ===================================================== */
-
-/*
-   Structure representant une mesure de consommation.
-
-   Les champs correspondent exactement aux champs JSON :
-   batiment, ressource, valeur, seuil, date, alerte.
-
-   Les chaines de caracteres sont allouees dynamiquement
-   dans le fichier gestion.c.
+/* 
+   Structure représentant une ligne de mesure de consommation.
+   Les chaînes de caractères (batiment, ressource, date) sont allouées dynamiquement.
 */
 typedef struct {
-    char *batiment;     // Nom du batiment
-    char *ressource;    // Type de ressource
-    double valeur;      // Valeur de consommation
-    double seuil;       // Seuil de reference
+    char *batiment;     // Nom du bâtiment (ex: Bibliothèque)
+    char *ressource;    // Type de ressource (ex: electricite, eau)
+    double valeur;      // Valeur de consommation mesurée
+    double seuil;       // Seuil limite de référence
     char *date;         // Date au format AAAA-MM-JJ
-    bool alerte;        // true si valeur > seuil
+    bool alerte;        // Vrai (true) si la valeur dépasse le seuil
 } Mesure;
 
 
 /* =====================================================
-   3.2 - CHARGEMENT DES DONNEES
+   3.2 - CHARGEMENT DES DONNÉES
    ===================================================== */
-
-/*
-   Charge les mesures depuis un fichier CSV.
-   Alloue dynamiquement la memoire necessaire.
-   Retourne le nombre de mesures chargees.
-   Retourne -1 en cas d'erreur.
-*/
-int chargerMesures(const char *nomFichier,
-                   Mesure **mesures);
+/* Lit le fichier CSV et remplit dynamiquement un tableau de Mesures[cite: 1]. */
+int chargerMesures(const char *nomFichier, Mesure **mesures);
 
 
 /* =====================================================
    3.3 - AJOUT D'UNE MESURE
    ===================================================== */
-
-/*
-   Ajoute une mesure au tableau dynamique.
-   Realloue la memoire avec realloc si necessaire.
-   Retourne 1 si l'ajout reussit, 0 sinon.
-*/
-int ajouterMesure(Mesure **mesures,
-                  int *nbMesures,
-                  const Mesure *nouvelleMesure);
+/* Ajoute une nouvelle mesure en appliquant un seuil fixe/automatique[cite: 1]. */
+int ajouterMesure(Mesure **mesures, int *nbMesures, const Mesure *nouvelleMesure);
 
 
 /* =====================================================
    3.4 - RECHERCHE D'UNE MESURE
    ===================================================== */
-
-/*
-   Recherche les mesures d'un batiment et d'une ressource.
-   Retourne l'indice de la premiere mesure trouvee.
-   Retourne -1 si aucune mesure ne correspond.
-*/
-int rechercherMesure(const Mesure *mesures,
-                     int nbMesures,
-                     const char *batiment,
-                     const char *ressource);
+/* Recherche une mesure par bâtiment et ressource[cite: 1]. */
+int rechercherMesure(const Mesure *mesures, int nbMesures, const char *batiment, const char *ressource);
 
 
 /* =====================================================
    3.5 - SUPPRESSION D'UNE MESURE
    ===================================================== */
-
-/*
-   Supprime la mesure situee a l'indice indique.
-   Libere la memoire de ses chaines de caracteres.
-   Decale les mesures suivantes et met a jour le compteur.
-   Retourne 1 si la suppression reussit, 0 sinon.
-*/
-int supprimerMesure(Mesure **mesures,
-                    int *nbMesures,
-                    int indice);
+/* Supprime une mesure selon son indice dans le tableau et décale les éléments[cite: 1]. */
+int supprimerMesure(Mesure **mesures, int *nbMesures, int indice);
 
 
 /* =====================================================
    3.6 - TRI DES MESURES
    ===================================================== */
-
-/*
-   Trie les mesures par ordre croissant de valeur.
-   Utilise un tableau dynamique de mesures.
-*/
-void trierMesuresParValeur(Mesure *mesures,
-                           int nbMesures,
-                           int croissant);
+/* Trie les mesures par valeur (croissant ou décroissant selon le paramètre)[cite: 1]. */
+void trierMesuresParValeur(Mesure *mesures, int nbMesures, int croissant);
 
 
 /* =====================================================
-   3.7 - STATISTIQUES PAR BATIMENT
+   3.7 - STATISTIQUES PAR BÂTIMENT
    ===================================================== */
-
-/*
-   Calcule les statistiques d'un batiment :
-   - nombre de mesures ;
-   - consommation totale ;
-   - consommation moyenne.
-
-   Les resultats sont retournes par pointeurs.
-   Retourne 1 si le batiment existe, 0 sinon.
-*/
-int statistiquesBatiment(const Mesure *mesures,
-                          int nbMesures,
-                          const char *batiment,
-                          int *nombre,
-                          double *total,
-                          double *moyenne);
+/* Calcule les statistiques (total, moyenne, min, max) pour un bâtiment[cite: 1]. */
+int statistiquesBatiment(const Mesure *mesures, int nbMesures, const char *batiment, int *nombre, double *total, double *moyenne);
 
 
 /* =====================================================
-   3.8 - DETECTION DES ANOMALIES
+   3.8 - DÉTECTION DES ANOMALIES
    ===================================================== */
-
-/*
-   Determine si une mesure est anormale.
-   Une anomalie existe si valeur > seuil.
-   Met a jour le champ alerte.
-   Retourne true si la mesure depasse le seuil.
-*/
+/* Vérifie si une mesure dépasse son seuil et met à jour son alerte[cite: 1]. */
 bool detecterAnomalie(Mesure *mesure);
-
-
-/*
-   Calcule et met a jour le champ alerte
-   pour toutes les mesures.
-*/
-void detecterToutesAnomalies(Mesure *mesures,
-                             int nbMesures);
+void detecterToutesAnomalies(Mesure *mesures, int nbMesures);
 
 
 /* =====================================================
    3.9 - EXPORTATION JSON
    ===================================================== */
-
-/*
-   Exporte toutes les mesures dans un fichier JSON.
-   Respecte le format defini :
-   batiment, ressource, valeur, seuil, date, alerte.
-
-   Retourne 1 si l'exportation reussit, 0 sinon.
-*/
-int exporterJSON(const char *nomFichier,
-                 const Mesure *mesures,
-                 int nbMesures);
+/* Exporte toutes les mesures actuelles vers un fichier au format JSON[cite: 1]. */
+int exporterJSON(const char *nomFichier, const Mesure *mesures, int nbMesures);
 
 
 /* =====================================================
-   LIBERATION DE LA MEMOIRE
+   LIBÉRATION DE LA MÉMOIRE
    ===================================================== */
-
-/*
-   Libere les chaines de caracteres de chaque mesure,
-   puis le tableau dynamique lui-meme.
-*/
-void libererMesures(Mesure **mesures,
-                    int nbMesures);
+/* Libère proprement toute la mémoire allouée dynamiquement pour éviter les fuites (Memory Leaks)[cite: 1]. */
+void libererMesures(Mesure **mesures, int nbMesures);
 
 #endif
