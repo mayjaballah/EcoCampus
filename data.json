@@ -160,19 +160,11 @@
     "alerte": false
 },
 {
-    "batiment": "foyer",
-    "ressource": "eau",
-    "valeur": 150.00,
-    "seuil": 200.00,
-    "date": "2026-08-23",
+    "batiment": "bibliotheque",
+    "ressource": "electricite",
+    "valeur": 120.00,
+    "seuil": 120.00,
+    "date": "12-10-2026",
     "alerte": false
-},
-{
-    "batiment": "malek",
-    "ressource": "eau",
-    "valeur": 140.00,
-    "seuil": 100.00,
-    "date": "2026-04-12",
-    "alerte": true
 }
 ]

@@ -99,7 +99,8 @@ int supprimerMesure(Mesure **mesures,
    Utilise un tableau dynamique de mesures.
 */
 void trierMesuresParValeur(Mesure *mesures,
-                           int nbMesures);
+                           int nbMesures,
+                           int croissant);
 
 
 /* =====================================================

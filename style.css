@@ -1,202 +1,52 @@
-:root {
-  --bg: #eef3ec;
-  --card: #fff;
-  --ink: #12372a;
-  --mut: #707e74;
-  --line: #707070;
-  --soft: #e3ede0;
-  --g1: #12372a;
-  --g2: #1f5a43;
-  --lime: #e4ff9a;
-  --ok: #5fa777;
-  --bad: #e5604a;
-  --badbg: #ffd9d0;
-  --badbg2: #ffe9e4;
-  --badink: #a8321f;
-  --glow: #d7ecc6;
-  --acc: #2f8a5e;
-  color-scheme: light;
-}
 
-/* Mode sombre manuel */
-:root[data-theme="dark"] {
-  --bg: #0a1812;
-  --card: #12241c;
-  --ink: #e6f2ea;
-  --mut: #8fb09f;
-  --line: #2f4d3e;
-  --soft: #1d3329;
-  --g1: #0e3a2a;
-  --g2: #1f5a43;
-  --badbg: #3a1d19;
-  --badbg2: #2e1a17;
-  --badink: #ff9d8a;
-  --glow: #14402d;
-  color-scheme: dark;
-}
 
-/* Mode sombre automatique */
-/*si le systeme en mode sembre*/
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0a1812;
-    --card: #12241c;
-    --ink: #e6f2ea;
-    --mut: #8fb09f;
-    --line: #2f4d3e;
-    --soft: #1d3329;
-    --g1: #0e3a2a;
-    --g2: #1f5a43;
-    --badbg: #3a1d19;
-    --badbg2: #2e1a17;
-    --badink: #ff9d8a;
-    --glow: #14402d;
-    color-scheme: dark;
-  }
-}
+/* ---------- 7. ANOMALIES / ALERTES ---------- */
 
-* { box-sizing: border-box; margin: 0; }
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background .4s, color .4s;
-}
-
-.wrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px 28px 40px;
-}
-
-header {
+.an {
+.an {/* wa7da men les anomalies (carte sghira) */
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-weight: 600;
-  font-size: 26px;
-  text-decoration: none;
-  color: var(--ink);
-}
-
-.right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-nav {
-  display: flex;
-  gap: 4px;
-  padding: 6px;
-  border: 1px solid var(--line);
-  border-radius: 40px;
-  background: var(--card);
-}
-
-nav a {
-  padding: 12px 24px;
-  border-radius: 30px;
-  text-decoration: none;
-  color: var(--ink);
-  font-weight: 500;
-}
-
-nav a.on, nav a:hover {
-  background: var(--g1);
-  color: #e4ff9a;
-}
-
-.round {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--card);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  color: var(--ink);
-  font-size: 20px;
-}
-
-h1.t {
-  font-size: 28px;
-  color: var(--mut);
-  margin: 48px 0 22px;
-}
-
-.page { display: none; }
-.page.show { display: block; }
-
-.grid3 {
-  display: grid;
-  grid-template-columns: 1.75fr 1fr 1fr;
-  gap: 26px;
-  margin-bottom: 26px;
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 1.55fr 1fr;
   gap: 20px;
+@@ -535,14 +535,14 @@
 }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 36px;
-  padding: 28px 30px;
-  position: relative;
-  overflow: hidden;
+/* :not(.ex) pour que le cercle "!" reste rond */
+.an > div:not(.ex) { flex: 1; }
+.an > div:not(.ex) { flex: 1; } /*el div eli fi west lclass .an eli lclass mte3ha ex bch te5th lblasa li 9a3det fi ligne*/
+
+.an strong {
+.an strong {/* el esm el kbir fil anomalie */
+  font-size: 22px;
+  display: block;
 }
 
-.lab {
-  font-size: 15px;
-  text-transform: uppercase;
+.an small {
+.an small {/* el ktiba el sghira fil anomalie */
   color: var(--mut);
-}
-
-.big {
   font-weight: 600;
-  font-size: 64px;
-  line-height: 1;
-  margin: 24px 0 12px;
+  font-size: 14px;
+@@ -564,13 +564,13 @@
+  animation: wob 3s infinite;
 }
 
-h2 {
-  font-size: 34px;
-  margin-bottom: 6px;
+@keyframes wob {
+@keyframes wob {/* définition mta3 animation esmha wob */
+  0%, 90%, 100% { transform: none; }
+  93% { transform: rotate(-14deg); }
+  96% { transform: rotate(14deg); }
 }
 
-.sub {
-  color: var(--mut);
-  font-size: 17px;
-  margin-bottom: 22px;
-}
-
-.total {
-  background: var(--g1);
-  color: #fff;
-  border-color: var(--g1);
-}
-
-.total .big { color: var(--lime); }
-
-.alert {
-  background: var(--badbg);
+.pct {
+.pct {/* el pourcentage mta3 el dépassement */
+  font-weight: 600;
+  font-size: 24px;
   color: var(--badink);
-}
+@@ -579,15 +579,15 @@
+
+/* ---------- 8. MESURES : filtres + tableau ---------- */
 
 .filters {
+.filters {/* el barre mta3 filtres fou9 el tableau */
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
@@ -204,326 +54,383 @@ h2 {
 }
 
 .filters select,
-.filters input, .filters button {
+.filters input {
+.filters select,/* listes déroulantes mta3 el filtres */
+.filters input {/* champ el recherche */
   font: inherit;
+  font-size: 17px;
   padding: 14px 22px;
-  border-radius: 30px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
+@@ -599,7 +599,7 @@
+  transition: box-shadow .3s;
 }
 
-.scroll { overflow-x: auto; }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
+.filters button {
+.filters button {/* bouton el filtre mta3 alertes */
+  font: inherit;
+  font-size: 17px;
+  padding: 14px 22px;
+@@ -621,13 +621,13 @@
+  color: var(--badink);
 }
 
-th, td {
-  padding: 18px 14px;
+.filters select:focus,
+.filters input:focus {
+.filters select:focus,/* ki t5tar liste*/
+.filters input:focus {/* ki t3amer champ recherche*/
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ok);
+}
+
+.scroll {
+.scroll {/* conteneur mta3 el tableau (scroll ofoqi) */
+  overflow-x: auto;
+}
+
+@@ -637,7 +637,7 @@
+  min-width: 640px;
+}
+
+th {
+th {/* cellule d'en-tête mta3 el tableau */
   text-align: left;
-  border-top: 1px solid var(--soft);
+  font-size: 14px;
+  letter-spacing: .06em;
+@@ -646,14 +646,14 @@
+  font-weight: 500;
 }
 
-.pill {
-  padding: 6px 18px;
-  border-radius: 20px;
-  font-weight: 600;
-  background: var(--soft);
+td {
+td { /* cellule 3adia mta3 el tableau */
+  padding: 18px 14px;
+  border-top: 1px solid var(--soft);
+  font-size: 19px;
+  font-weight: 500;
+}
+
+tbody tr {
+tbody tr {/* kol star fil corps mta3 el tableau */
+  transition: background .25s, transform .25s;
+}
+
+@@ -671,19 +671,19 @@
+  color: var(--g2);
+}
+
+[data-dark] .pill {
+[data-dark] .pill {/* badge el statut fi dark mode */
+  color: var(--lime);
 }
 
 .pill.a {
+.pill.a {/* badge el statut ki yebda alerte */
   background: var(--badbg);
   color: var(--badink);
 }
 
-/* Graphique Bâtiments */
+
+/* ---------- 9. GRAPHIQUES (colonnes par bâtiment) ---------- */
+
 .cols {
+.cols {/* conteneur mta3 el colonnes mta3 graphique */
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
-  gap: 40px;
-  height: 260px;
-  padding: 20px 30px 0;
+  gap: clamp(20px, 6vw, 80px);
+@@ -692,7 +692,7 @@
   border-bottom: 2px solid var(--soft);
 }
 
 .col {
-  width: 110px;
+.col { /* colonne wa7da (bâtiment) */
+  flex: 1;
+  max-width: 140px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-}
-
-.val-label {
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: var(--ink);
+@@ -703,7 +703,7 @@
+  font-weight: 600;
 }
 
 .col i {
+.col i { /* el barre el 3amoudia mta3 colonne */
   display: block;
   width: 100%;
   border-radius: 18px 18px 0 0;
-  background: #194a36;
-  transition: height 1s ease-in-out;
+@@ -712,19 +712,19 @@
+  transition: height 1.3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.col span {
+.col span { /* el raqm foug el colonne */
+  margin-bottom: 8px;
 }
 
 .names {
+.names {/* star el asma2 te7t el colonnes */
   display: flex;
-  justify-content: flex-start;
-  gap: 40px;
-  padding: 14px 30px;
+  gap: clamp(20px, 6vw, 80px);
+  padding: 12px 30px;
   font-weight: 600;
   color: var(--mut);
 }
 
 .names div {
-  width: 110px;
+.names div {/* esm wa7ed te7t colonne */
+  flex: 1;
+  max-width: 140px;
   text-align: center;
+@@ -734,15 +734,15 @@
+/* ---------- 10. PAGE DE CONNEXION ---------- */
+
+/* En mode "cover" (page login) on cache nav, logo et bouton compte */
+body.cover nav,
+body.cover header .logo,
+body.cover .right > a.round,
+body.cover #btn-pdf {
+  display: none;
+body.cover nav,/* nav fi page login (mkhabya) */
+body.cover header .logo,/* logo fil header fi page login*/
+body.cover .right > a.round,/* bouton compte fi page login (mkhabi)*/
+body.cover #btn-pdf {/* bouton pdf fi page login */
+  display: none;/* yekhabbi el element*/
 }
 
-/* Graphique Par Ressource */
-#rb {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+body.cover header {
+  justify-content: flex-end;
+body.cover header { /* header fi page login */
+  justify-content: flex-end;/* tawzi3 el 3anaser ofoqiyan: flex-end */
 }
 
-#rb .row {
-  display: grid;
-  grid-template-columns: 140px 1fr 80px;
-  align-items: center;
-  gap: 15px;
+/* Page login : titre en haut, formulaire centré en dessous */
+@@ -764,14 +764,14 @@
+  flex-wrap: wrap;
 }
 
-.res-name {
-  font-weight: 600;
-  color: var(--ink);
-  font-size: 16px;
+.orb {
+.orb {/* dwayer décoration fi page login */
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  animation: float 7s ease-in-out infinite;
 }
 
-.track {
-  height: 20px;
-  background: var(--soft);
-  border-radius: 20px;
+.o1 {
+.o1 { /* dayra louwla (pleine) */
+  width: 320px;
+  height: 320px;
+  left: calc(50% - 160px);
+@@ -780,7 +780,7 @@
+  opacity: .13;
+}
+
+.o2 {
+.o2 {/* dayra thanya (bordure bark) */
+  width: 170px;
+  height: 170px;
+  left: 0;
+@@ -801,21 +801,21 @@
+  z-index: 1;
+}
+
+.ttl span {
+.ttl span {/* kol 7arf men titre */
+  display: inline-block;
+  animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
+  animation-delay: calc(var(--i) * .07s + .2s);
+}
+
+.ttl .g {
+.ttl .g {/* 7rouf el khadhra mta3 'Campus' */
+  color: var(--acc);
+}
+
+@keyframes pop {
+@keyframes pop {/* définition mta3 animation esmha pop */
+  from { opacity: 0; transform: translateY(70px) rotate(8deg); }
+}
+
+.bar {
+.bar { /* ta7t titre khat sghir akhdher */
+  height: 8px;
+  width: 110px;
+  border-radius: 8px;
+@@ -855,15 +855,15 @@
+  margin: 6px 0 16px;
+}
+
+.login a {
+.login a {/* liens mta3 formulaire (mot de passe oublié...) */
+  color: var(--g2);
+  font-weight: 500;
+  display: block;
+  margin-top: 14px;
+  text-decoration: none;
+}
+
+[data-dark] .login a {
+[data-dark] .login a {/* liens login fi dark mode */
+  color: var(--lime);
+}
+
+@@ -877,11 +877,11 @@
+  position: relative;
+  z-index: 1;
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);/* flou el khalfia li wra el carte (effet verre)*/
+  animation: up .9s .35s backwards;
+}
+
+.btn {
+.btn {/* bouton 'Se connecter' */
+  width: 100%;
+  padding: 16px;
+  border: 0;
+@@ -920,14 +920,14 @@
+/* ---------- 11. RESPONSIVE + ACCESSIBILITÉ ---------- */
+
+/* Tablette / petit écran */
+@media (max-width: 1000px) {
+  .grid3,
+  .grid2 { grid-template-columns: 1fr; }
+@media (max-width: 1000px) { /* ken el écran a9al men 1000px*/
+  .grid3,/* grille b 3 colonnes (cartes louwlin)
+  .grid2 { grid-template-columns: 1fr; } /* grille b 2 colonnes -> nombre w 3ordh el colonnes: 1fr */
+
+  .big { font-size: 80px; }
+  h1.t { margin-top: 30px; }
+  .big { font-size: 80px; } /* el raqm el kbir mta3 kol carte -> 7jem el khat: 80px */
+  h1.t { margin-top: 30px; }/* titre mta3 kol page -> marge fou9 (fou9 el 3onsor): 30px */
+
+  .hero {
+  .hero {/* el section kbira mta3 page login */
+    min-height: 0;
+    padding-top: 6px;
+  }
+@@ -936,7 +936,7 @@
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+@media (max-width: 600px) {/* ken el écran a9al men 600px (tlfn) */
+  .round { width: 52px; height: 52px; }
+  #theme, #btn-pdf { width: 46px; height: 46px; }
+  .logo { font-size: 22px; }
+@@ -953,31 +953,19 @@
+  .row b { grid-area: v; }
+}
+
+/* Pour les personnes qui préfèrent moins d'animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .spark path {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* ---------- 12. PAGE DE DÉMARRAGE (splash, 4 secondes) ---------- */
+
+/* Pendant le splash : le site est caché et on ne peut pas scroller */
+body.splashing {
+body.splashing { /* body ki el splash (page demarrage) mazel yodhher */
   overflow: hidden;
 }
 
-.track .fill {
-  height: 100%;
-  background: #5fa777;
-  border-radius: 20px;
-  transition: width 1s ease-in-out;
+body.splashing .wrap {
+body.splashing .wrap {/* el site yetkhabba wa9t el splash */
+  display: none;
 }
-
-.res-val {
-  text-align: right;
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--ink);
-}
-
-/* Lignes d'alertes */
-.card-alert-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #ffe9e4;
-  border: 1px solid #707070;
-  border-radius: 30px;
-  padding: 16px 28px;
-  margin-bottom: 14px;
-}
-
-.ex {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #e5604a;
-  color: #ffffff;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-.alert-info {
-  flex: 1;
-  margin-left: 18px;
-}
-
-.alert-info strong {
-  display: block;
-  font-size: 20px;
-  color: #12372a;
-}
-
-.alert-info small {
-  color: #707e74;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.pct {
-  font-size: 22px;
-  font-weight: 700;
-  color: #a8321f;
-}
-
-/* Splash Screen */
-body.splashing { overflow: hidden; }
-body.splashing .wrap { display: none; }
 
 #splash {
+#splash {/* page el démarrage el animée */
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: grid;
-  place-items: center;
-  background: var(--bg);
-  transition: opacity .5s ease;
+@@ -992,16 +980,14 @@
+  transform: scale(1.04);
 }
 
 .sp-in {
+.sp-in {/* contenu wost el splash */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 0 20px;
 }
 
-.sp-in h2 {
-  font-size: 60px;
+/* Logo feuille avec deux anneaux qui pulsent */
+.sp-logo {
+.sp-logo {/* dayra el logo fil splash */
+  position: relative;
+  width: 92px;
+  height: 92px;
+@@ -1032,8 +1018,8 @@
+  animation: spRing 2s .8s ease-out infinite;
+}
+
+.sp-logo::after {
+  animation-delay: 1.6s;
+.sp-logo::after {/* dayra thanya ta3mel pulse 7awl logo */
+  animation-delay: 1.6s;/* ta2khir 9bal ma tebda el animation: 1.6s */
+}
+
+@keyframes spLogo {
+@@ -1058,13 +1044,13 @@
   color: var(--ink);
 }
 
-.sp-line {
-  width: 200px;
-  height: 6px;
-  background: var(--soft);
-  margin-top: 20px;
-  border-radius: 6px;
-  overflow: hidden;
+.sp-ttl span {
+.sp-ttl span {/* kol 7arf men titre splash */
+  display: inline-block;
+  animation: pop .9s cubic-bezier(.2, 1.4, .4, 1) backwards;
+  animation-delay: calc(var(--i) * .08s + .5s);
+}
+
+.sp-ttl .g {
+.sp-ttl .g {/* 7rouf khadhra fi titre splash */
+  color: var(--acc);
+}
+
+@@ -1089,7 +1075,7 @@
+  animation: up .6s 1.2s backwards;
 }
 
 .sp-line b {
+.sp-line b {/* el barre li temla2 wa9t el chargement */
   display: block;
   height: 100%;
   width: 100%;
-  background: var(--acc);
-  animation: loadAnim 1.5s infinite linear;
+@@ -1106,26 +1092,26 @@
+
+/* ---------- 13. IMPRESSION (bouton PDF) ---------- */
+
+@media print {
+  body::before,
+  body::after,
+@media print {/* ytabbe9 ken wa9t l'impression / export PDF */
+  body::before,/* pseudo-element 9bal el body (tache lumineuse louwla)*/
+  body::after,/* pseudo-element ba3d el body (tache lumineuse thenya)*/
+  .right,
+  .filters { display: none !important; }
+
+  .page.show > *,
+  .page.show > *,/* kol 3onsor mel page dhahra (yodhher b animation)*/
+  .card:hover { animation: none; transform: none; box-shadow: none; }
+}
+#btn-filter-alert .warn{
+  width:22px;
+  height:22px;
+  vertical-align:-5px;
+  margin-right:8px;
 }
 
-@keyframes loadAnim {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
+/* non cliqué : dayra 7amra + ! abyadh */
+#btn-filter-alert .wc{ fill:var(--bad); transition:fill .3s; }
+#btn-filter-alert .wx{ stroke:#fff; transition:stroke .3s; }
 
-
-/*login*/
-/* Design de la page Login personnalisé */
-#login.page {
-  display: none;
-  min-height: 85vh;
-  place-items: center;
-  padding: 20px 0;
-}
-
-#login.page.show {
-  display: grid;
-}
-
-.login-card-custom {
-  width: 100%;
-  max-width: 380px;
-  background: var(--g1); /* Vert foncé EcoCampus */
-  border-radius: 30px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  color: #ffffff;
-}
-
-.login-header-custom {
-  padding: 35px 25px 25px;
-  text-align: center;
-  position: relative;
-}
-
-.login-header-custom h2 {
-  font-size: 32px;
-  color: #e4ff9a; /* Vert clair / Lime */
-  margin-bottom: 8px;
-}
-
-.login-header-custom p {
-  font-size: 14px;
-  color: #d7ecc6;
-  opacity: 0.9;
-}
-
-.login-body-custom {
-  background: #ffffff;
-  border-radius: 28px 28px 0 0;
-  padding: 30px 25px;
-  color: #12372a;
-}
-
-.login-field {
-  margin-bottom: 18px;
-  text-align: left;
-}
-
-.login-field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #12372a;
-}
-
-.login-field input {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 15px;
-  border: 1px solid #d0d7d1;
-  background: #f4f7f4;
-  font-size: 14px;
-  color: #12372a;
-  outline: none;
-}
-
-.login-btn-custom {
-  width: 100%;
-  padding: 14px;
-  border-radius: 25px;
-  border: none;
-  background: #12372a;
-  color: #e4ff9a;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: opacity 0.2s;
-}
-
-.login-btn-custom:hover {
-  opacity: 0.9;
-}
-
-.login-links {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.login-links a {
-  color: #12372a;
-  text-decoration: underline;
-  font-weight: 600;
-}
+/* cliqué : nafs la7keya, loun yetbaddel */
+#btn-filter-alert.on .wc{ fill:var(--badink); }
+#btn-filter-alert.on .wx{ stroke:var(--badbg); }

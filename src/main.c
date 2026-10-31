@@ -2,7 +2,7 @@
  * Utilise le module gestion.c / gestion.h
  *
  * Compilation : gcc -Wall -o ecocampus main.c gestion.c
- * Exécution   : ./ecocampus [measures_in.csv] [data.json]
+ * Execution   : ./ecocampus [measures_in.csv] [data.json]
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@
 
 #define FICHIER_ENTREE "measures_in.csv"
 #define FICHIER_SORTIE "data.json"
-#define FIN_SAISIE (-2)   /* retourné par lireEntier() en fin de saisie (EOF) */
+#define FIN_SAISIE (-2)   /* retourne par lireEntier() en fin de saisie (EOF) */
 
 /* ---------- Fonctions utilitaires de saisie ---------- */
 
@@ -47,7 +47,7 @@ static int lireEntier(const char *invite)
     return (int)v;
 }
 
-/* Lit un réel, redemande tant que la saisie est invalide. */
+/* Lit un rÃ©el, redemande tant que la saisie est invalide. */
 static double lireDouble(const char *invite)
 {
     char buf[64];
@@ -71,7 +71,7 @@ static double lireDouble(const char *invite)
 static void afficherEntete(void)
 {
     printf("\n%-4s %-26s %-12s %9s %9s  %-11s %s\n",
-           "N°", "Bâtiment", "Ressource", "Valeur", "Seuil", "Date", "Alerte");
+           "No", "Batiment", "Ressource", "Valeur", "Seuil", "Date", "Alerte");
     printf("-----------------------------------------------------------------------------------\n");
 }
 
@@ -88,7 +88,7 @@ static void afficherToutes(const Mesure *mesures, int nb)
 
     if (nb == 0)
     {
-        printf("Aucune mesure en mémoire.\n");
+        printf("Aucune mesure en memoire.\n");
         return;
     }
     afficherEntete();
@@ -106,15 +106,16 @@ static void actionAjouter(Mesure **mesures, int *nb)
     char batiment[100], ressource[100], date[100];
     Mesure m;
 
-    lireTexte("Bâtiment (ex: Bibliotheque) : ", batiment, sizeof(batiment));
+    lireTexte("Batiment (ex: Bibliotheque) : ", batiment, sizeof(batiment));
     lireTexte("Ressource (electricite/eau/chauffage) : ", ressource, sizeof(ressource));
     m.valeur = lireDouble("Valeur : ");
-    m.seuil = lireDouble("Seuil : ");
+    // Note : Le seuil n'est plus demandÃ© ici car il est gÃ©rÃ© automatiquement de faÃ§on fixe par ajouterMesure()
+    m.seuil = 0.0; 
     lireTexte("Date (AAAA-MM-JJ) : ", date, sizeof(date));
 
     if (batiment[0] == '\0' || ressource[0] == '\0' || date[0] == '\0')
     {
-        printf("Ajout annulé : champ vide.\n");
+        printf("Ajout annule : champ vide.\n");
         return;
     }
 
@@ -125,7 +126,7 @@ static void actionAjouter(Mesure **mesures, int *nb)
 
     if (ajouterMesure(mesures, nb, &m))
     {
-        printf("Mesure ajoutée (alerte : %s).\n",
+        printf("Mesure ajoutee avec succes (seuil fixe attribue, alerte : %s).\n",
                (*mesures)[*nb - 1].alerte ? "OUI" : "non");
     }
     else
@@ -139,10 +140,9 @@ static void actionRechercher(const Mesure *mesures, int nb)
     char batiment[100], ressource[100];
     int debut = 0, idx, trouve = 0;
 
-    lireTexte("Bâtiment : ", batiment, sizeof(batiment));
+    lireTexte("Batiment : ", batiment, sizeof(batiment));
     lireTexte("Ressource : ", ressource, sizeof(ressource));
 
-    /* rechercherMesure() renvoie la 1re correspondance : on boucle pour toutes les trouver */
     while (debut < nb)
     {
         idx = rechercherMesure(mesures + debut, nb - debut, batiment, ressource);
@@ -165,7 +165,7 @@ static void actionRechercher(const Mesure *mesures, int nb)
     }
     else
     {
-        printf("%d résultat(s).\n", trouve);
+        printf("%d resultat(s).\n", trouve);
     }
 }
 
@@ -178,25 +178,24 @@ static void actionSupprimer(Mesure **mesures, int *nb)
     {
         return;
     }
-    indice = lireEntier("Numéro de la mesure à supprimer : ");
+    indice = lireEntier("Numero de la mesure a supprimer : ");
     if (supprimerMesure(mesures, nb, indice))
     {
-        printf("Mesure %d supprimée. Il reste %d mesure(s).\n", indice, *nb);
+        printf("Mesure %d supprimee. Il reste %d mesure(s).\n", indice, *nb);
     }
     else
     {
-        printf("Numéro invalide.\n");
+        printf("Numero invalide.\n");
     }
 }
 
-/* Statistiques d'un bâtiment, ou de tous les bâtiments si la saisie est vide */
 static void actionStatistiques(const Mesure *mesures, int nb)
 {
     char batiment[100];
     int i, j, deja, n;
     double total, moyenne;
 
-    lireTexte("Bâtiment (vide = tous) : ", batiment, sizeof(batiment));
+    lireTexte("Batiment (vide = tous) : ", batiment, sizeof(batiment));
 
     if (batiment[0] != '\0')
     {
@@ -240,14 +239,14 @@ static void actionAnomalies(Mesure *mesures, int nb)
             nbAlertes++;
         }
     }
-    printf("%d anomalie(s) détectée(s) sur %d mesure(s).\n", nbAlertes, nb);
+    printf("%d anomalie(s) detectee(s) sur %d mesure(s).\n", nbAlertes, nb);
 }
 
 static void actionExporter(const Mesure *mesures, int nb, const char *fichier)
 {
     if (exporterJSON(fichier, mesures, nb))
     {
-        printf("Export réussi : %d mesure(s) écrites dans %s\n", nb, fichier);
+        printf("Export reussi : %d mesure(s) ecrites dans %s\n", nb, fichier);
     }
     else
     {
@@ -260,11 +259,11 @@ static void afficherMenu(void)
     printf("\n========== ECOCAMPUS - Gestion des mesures ==========\n");
     printf(" 1. Afficher toutes les mesures\n");
     printf(" 2. Ajouter une mesure\n");
-    printf(" 3. Rechercher (bâtiment + ressource)\n");
+    printf(" 3. Rechercher (batiment + ressource)\n");
     printf(" 4. Supprimer une mesure\n");
-    printf(" 5. Trier par valeur croissante\n");
-    printf(" 6. Statistiques par bâtiment\n");
-    printf(" 7. Détecter / afficher les anomalies\n");
+    printf(" 5. Trier par valeur (croissant/decroissant)\n");
+    printf(" 6. Statistiques par batiment\n");
+    printf(" 7. Detecter / afficher les anomalies\n");
     printf(" 8. Exporter vers JSON\n");
     printf(" 0. Quitter\n");
     printf("=====================================================\n");
@@ -279,14 +278,14 @@ int main(int argc, char *argv[])
     Mesure *mesures = NULL;
     int nb, choix;
 
-    /* 1. Chargement + affichage de contrôle */
+    /* 1. Chargement + affichage de contrÃ´le */
     nb = chargerMesures(entree, &mesures);
     if (nb < 0)
     {
         printf("Impossible de charger %s.\n", entree);
         return 1;
     }
-    printf("%d mesure(s) chargée(s) depuis %s.\n", nb, entree);
+    printf("%d mesure(s) chargee(s) depuis %s.\n", nb, entree);
 
     detecterToutesAnomalies(mesures, nb);
     afficherToutes(mesures, nb);
@@ -304,8 +303,9 @@ int main(int argc, char *argv[])
         case 3: actionRechercher(mesures, nb);            break;
         case 4: actionSupprimer(&mesures, &nb);           break;
         case 5:
-            trierMesuresParValeur(mesures, nb);
-            printf("Mesures triées par valeur croissante.\n");
+            int ordre = lireEntier("Ordre de tri (1 = Croissant, 0 = Decroissant) : ");
+            trierMesuresParValeur(mesures, nb, ordre);
+            printf("Mesures triees avec succes.\n");
             afficherToutes(mesures, nb);
             break;
         case 6: actionStatistiques(mesures, nb);          break;
