@@ -14,6 +14,11 @@
    11. Responsive + accessibilité
    ===================================================== */
 
+/* [BOOTSTRAP] Cette feuille se charge APRES bootstrap.min.css (voir le <head> du HTML).
+   9a3da: Bootstrap = layout (grille, flex, marges), tableau, champs de formulaire, boutons.
+          style.css = el design mte3na (couleurs, dark mode, animations, nav, splash, graphiques).
+   Kol blasa tbaddlet fiha ma7a9eha ykoun commentaire "[BOOTSTRAP]". */
+
 
 /* ---------- 1. VARIABLES ---------- */
 
@@ -82,11 +87,29 @@
 }
 
 
+/* [BOOTSTRAP] PONT: Bootstrap ya9ra les couleurs mel variables mte3o (--bs-*).
+   houni n7ottou el variables mte3na (--ink, --bg, --line) fi blasethom, donc les composants Bootstrap
+   (champs, tableau, cartes) ya5dhou automatiquement el couleurs mte3na, fil clair w fil sombre,
+   bla ma n3awdou n3ayetou lel JS. */
+:root {
+  --bs-body-font-family: 'Readex Pro', 'Dubai', 'Segoe UI', sans-serif;
+  --bs-body-color: var(--ink);
+  --bs-body-bg: var(--bg);
+  --bs-border-color: var(--line);
+  --bs-body-line-height: normal; /* Bootstrap y7ot 1.5 par défaut: n5aliw "normal" kima kenet el design */
+}
+
+
 /* ---------- 2. BASE ---------- */
 
+/* [BOOTSTRAP] box-sizing: border-box tsir wa7dha fi Bootstrap -> na7inaha men houni.
+   p{margin-bottom:0}: Bootstrap y7ot 1rem te7t kol <p>, w el design mte3na ma yhebhech. */
 * {
-  box-sizing: border-box;
   margin: 0;
+}
+
+p {
+  margin-bottom: 0;
 }
 
 html {
@@ -144,12 +167,10 @@ body::after {/* lpartie li louta 3alisar*/
   padding: 24px clamp(14px, 2vw, 28px) 40px;
 }
 
+/* [BOOTSTRAP] display / align-items / gap / flex-wrap tnaqlou lel HTML (d-flex align-items-center flex-wrap gap-3).
+   bkat houni ken justify-content (body.cover ybaddlou) w el animation. */
 header {
-  display: flex;
-  align-items: center;
   justify-content: space-between; /* tawzi3 el 3anaser ofoqiyan: space-between */
-  gap: 16px; /* el faragh binet el 3anaser: 16px */
-  flex-wrap: wrap;/* el 3anaser yo5rjou lel star elli ba3dou ki el blasa toufa */
   animation: down .7s both;
 }
 
@@ -185,12 +206,7 @@ header {
 }
 
 /* Zone droite du header : nav + boutons ronds */
-.right {/* el partie lyamin fil header (nav + boutons) */
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
+/* [BOOTSTRAP] el CSS mta3 ".right" tna7a: wallet d-flex align-items-center gap-3 fil HTML (el classe nafsha bkat lel body.cover w lel print) */
 /* Navigation */
 nav {/* el navigation (menu) */
   display: flex;
@@ -309,20 +325,10 @@ h1.t { /* titre mta3 kol page */
 
 /* ---------- 5. CARTES ---------- */
 
-.grid3 { /* grille b 3 colonnes (cartes louwlin) */
-  display: grid;
-  grid-template-columns: 1.75fr 1fr 1fr;
-  gap: 26px;
-  margin-bottom: 26px;
-}
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 1.55fr 1fr;
-  gap: 20px;
-}
+/* [BOOTSTRAP] .grid3 / .grid2 tna7aw: wallou row + col-lg-* fil HTML */
 
 .card {
+  display: block; /* [BOOTSTRAP] .card mta3 Bootstrap = display:flex + column. n7ebou block kima kenet 5ater les cartes mte3na ma3andhomch hakka */
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 36px;
@@ -438,6 +444,7 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   background: var(--badbg);
   color: var(--badink);
   border-color: var(--line);
+  margin-bottom: 0; /* [BOOTSTRAP] ".alert" mta3 Bootstrap y7ot margin-bottom:1rem w ykharbit el taille mta3 h-100 */
 }
 
 .alert .lab { color: var(--badink); }/* label dakhel carte alerte*/
@@ -460,7 +467,11 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 /* ---------- 6. BARRES DE PROGRESSION (valeur vs seuil) ---------- */
 
-.row {/* star wa7da fil barres (esm + barre + 9ima) */
+/* [BOOTSTRAP] ".row" wallet ".bars .row": Bootstrap 3ando ".row" lel grille, donc lazem n9ayedou el CSS mte3na bl wrapper ".bars" (#bars w #rb).
+   --bs-gutter-x/y:0 bech Bootstrap ma ydhifch marges salbin w padding lel enfants. */
+.bars .row {
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
   display: grid;
   grid-template-columns: minmax(120px, 240px) 1fr 70px;
   gap: 16px;
@@ -470,11 +481,11 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   color: #557066;
 }
 
-[data-dark] .row {/* el star fi dark mode */
+[data-dark] .bars .row {/* el star fi dark mode */
   color: var(--mut);
 }
 
-.row b {
+.bars .row b {
   text-align: right;
   font-size: 18px;
   color: var(--ink);
@@ -520,6 +531,7 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 .an {
   display: flex;
+  flex-direction: row; /* [BOOTSTRAP] .card (Bootstrap) y7ot column: nrajj3ouha row kima kenet fil page Alertes (.card.an) */
   align-items: center;
   gap: 20px;
   padding: 16px 18px;
@@ -579,65 +591,111 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 /* ---------- 8. MESURES : filtres + tableau ---------- */
 
-.filters {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
+/* [BOOTSTRAP] .filters { display:flex; gap; flex-wrap; margin-bottom } tna7a -> d-flex flex-wrap gap-3 mb-4 fil HTML. */
+
+/* ---- Champs (Bootstrap: .form-control / .form-select) ----
+   Bootstrap ya3tina el base (taille, padding, structure); houni n7ottou el couleurs w el forme mte3na. */
+.form-control,
+.form-select {
+  line-height: normal;
 }
 
-.filters select,
-.filters input {
-  font: inherit;
-  font-size: 17px;
-  padding: 14px 22px;
+.form-control::placeholder {
+  color: var(--mut); /* Bootstrap y7ot gris fou9 loun dark -> n5aliw loun el placeholder men el variables mte3na */
+  opacity: 1;
+}
+
+/* focus: el halo akhdher kima kenet (Bootstrap kan bleu) */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ok);
+  box-shadow: 0 0 0 3px var(--ok);
+}
+
+/* champs des filtres: forme dayra + fond carte */
+.filters .form-control,
+.filters .form-select {
+  background-color: var(--card);
   border-radius: 30px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 22px;   /* padding-right n5aliwh Bootstrap (blasa lel sahm mta3 select) */
+  font-size: 17px;
   min-width: 180px;
   transition: box-shadow .3s;
 }
 
-.filters button {
-  font: inherit;
-  font-size: 17px;
-  padding: 14px 22px;
-  border-radius: 30px;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
-  cursor: pointer;
-  transition: transform .25s, background .3s, color .3s;
+.filters .form-control:focus,
+.filters .form-select:focus {
+  background-color: var(--card);
 }
 
-.filters button:hover {
+/* sahm el select: loun mou7ayed yodhher fil clair w fil sombre (el sahm mta3 Bootstrap kan ghamek) */
+.filters .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%238fa398' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* ---- Bouton "Voir Alertes" (Bootstrap .btn + variante .btn-eco-light) ----
+   Bootstrap yeqra les couleurs mel variables --bs-btn-*: nbaddlou el variables bark, mouch kol el CSS. */
+.btn-eco-light {
+  --bs-btn-color: var(--ink);
+  --bs-btn-bg: var(--card);
+  --bs-btn-border-color: var(--line);
+  --bs-btn-border-radius: 30px;
+  --bs-btn-padding-x: 22px;
+  --bs-btn-padding-y: 14px;
+  --bs-btn-font-size: 17px;
+  --bs-btn-line-height: normal;
+  --bs-btn-hover-color: var(--ink);
+  --bs-btn-hover-bg: var(--card);
+  --bs-btn-hover-border-color: var(--line);
+  --bs-btn-active-color: var(--ink);
+  --bs-btn-active-bg: var(--card);
+  --bs-btn-active-border-color: var(--line);
+  --bs-btn-focus-shadow-rgb: 47, 138, 94;
+  transition: transform .25s, background .3s, color .3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; 
+}
+.btn-eco-light .warn {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.btn-eco-light:hover {
   transform: translateY(-2px);
 }
 
-/* Bouton "Voir Alertes" quand le filtre est actif */
-.filters button.on {
-  background: var(--badbg);
-  color: var(--badink);
+/* Bouton "Voir Alertes" quand le filtre est actif (JS yzid classe "on") */
+.btn-eco-light.on {
+  --bs-btn-color: var(--badink);
+  --bs-btn-bg: var(--badbg);
+  --bs-btn-hover-color: var(--badink);
+  --bs-btn-hover-bg: var(--badbg);
+  --bs-btn-active-color: var(--badink);
+  --bs-btn-active-bg: var(--badbg);
 }
 
-.filters select:focus,
-.filters input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--ok);
-}
-
-.scroll {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* ---- Tableau (Bootstrap .table .table-hover) ----
+   .scroll / table / th / td / tbody tr tna7aw: Bootstrap ya3mel el ma3na (table-responsive + table).
+   houni ken el couleurs w el tailles mte3na. */
+.table {
+  --bs-table-bg: transparent;            /* mouch fond ab7ydh mta3 body: el carte hiya li lawna */
+  --bs-table-color: var(--ink);
+  --bs-table-border-color: var(--soft);  /* khat fine binet les stour */
+  --bs-table-hover-bg: var(--soft);      /* loun el star ki t7out el souris */
+  --bs-table-hover-color: var(--ink);
   min-width: 640px;
 }
 
-th {
+.table > :not(:first-child) {
+  border-top: 0; /* Bootstrap y7ot khat s5in (2px) bin thead w tbody: na7inah */
+}
+
+.table th {
   text-align: left;
   font-size: 14px;
   letter-spacing: .06em;
@@ -646,21 +704,17 @@ th {
   font-weight: 500;
 }
 
-td {
+.table td {
   padding: 18px 14px;
-  border-top: 1px solid var(--soft);
   font-size: 19px;
   font-weight: 500;
 }
 
-tbody tr {
-  transition: background .25s, transform .25s;
+.table tbody tr:last-child td {
+  border-bottom-width: 0; /* ma n7ebouch khat fil a5er star */
 }
 
-tbody tr:hover {
-  background: var(--soft);
-}
-
+/* Bouton "Voir Alertes" quand le filtre est actif */
 /* Badge de statut (ok / Alerte) */
 .pill {
   padding: 6px 18px;
@@ -746,13 +800,10 @@ body.cover header {
 }
 
 /* Page login : titre en haut, formulaire centré en dessous */
+/* [BOOTSTRAP] display:flex / flex-direction / align-items / justify-content / text-align tnaqlou lel HTML
+   (d-flex flex-column align-items-center justify-content-center text-center). */
 .hero {
   min-height: calc(100vh - 150px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   position: relative;
   overflow: hidden;
 }
@@ -837,22 +888,9 @@ body.cover header {
   text-align: center;
 }
 
+/* [BOOTSTRAP] display:block / text-align:left / font-weight:500 tnaqlou lel HTML (d-block text-start fw-medium). */
 .login label {
-  display: block;
-  text-align: left;
-  font-weight: 500;
   color: var(--mut);
-}
-
-.login input {
-  width: 100%;
-  font: inherit;
-  padding: 16px 22px;
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--ink);
-  margin: 6px 0 16px;
 }
 
 .login a {
@@ -881,20 +919,24 @@ body.cover header {
   animation: up .9s .35s backwards;
 }
 
-.btn {
-  width: 100%;
-  padding: 16px;
-  border: 0;
-  border-radius: 30px;
-  background: var(--g1);
-  color: var(--lime);
-  font: 600 19px inherit;
-  font-family: inherit;
-  cursor: pointer;
+/* [BOOTSTRAP] bouton principal: Bootstrap .btn + variante .btn-eco (width:100% -> w-100 fil HTML).
+   Ma n3awdouch nektbou el CSS kolou: nbaddlou el variables --bs-btn-* bark. */
+.btn-eco {
+  --bs-btn-color: var(--lime);
+  --bs-btn-bg: var(--g1);
+  --bs-btn-border-width: 0;
+  --bs-btn-border-radius: 30px;
+  --bs-btn-padding-y: 16px;
+  --bs-btn-line-height: normal;
+  --bs-btn-hover-color: var(--lime);
+  --bs-btn-hover-bg: var(--g1);
+  --bs-btn-active-color: var(--lime);
+  --bs-btn-active-bg: var(--g1);
+  --bs-btn-focus-shadow-rgb: 47, 138, 94;
   transition: transform .25s, box-shadow .25s;
 }
 
-.btn:hover {
+.btn-eco:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 24px -10px var(--g1);
 }
@@ -908,7 +950,7 @@ body.cover header {
   font-weight: 500;
 }
 
-.login .btn { margin-top: 4px; }
+/* [BOOTSTRAP] .login .btn { margin-top:4px } tna7a -> mt-1 fil HTML */
 
 /* Message "aucune anomalie" */
 .empty {
@@ -921,9 +963,7 @@ body.cover header {
 
 /* Tablette / petit écran */
 @media (max-width: 1000px) {
-  .grid3,
-  .grid2 { grid-template-columns: 1fr; }
-
+  /* [BOOTSTRAP] .grid3/.grid2 { 1 colonne } tna7aw: col-lg-* fil HTML ya3mlou nafs 7keya (breakpoint 992px) */
   .big { font-size: 80px; }
   h1.t { margin-top: 30px; }
 
@@ -943,17 +983,19 @@ body.cover header {
   nav a { font-size: 16px; padding: 10px 14px; }
   .card { border-radius: 28px; padding: 22px; }
 
-  .row {
+  .bars .row {
     grid-template-columns: 1fr 60px;
     grid-template-areas: "n v" "t t";
   }
 
-  .row span { grid-area: n; }
-  .row .track { grid-area: t; }
-  .row b { grid-area: v; }
+  .bars .row span { grid-area: n; }
+  .bars .row .track { grid-area: t; }
+  .bars .row b { grid-area: v; }
 }
 
 /* Pour les personnes qui préfèrent moins d'animations */
+
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
@@ -964,8 +1006,6 @@ body.cover header {
     stroke-dashoffset: 0;
   }
 }
-
-
 /* ---------- 12. PAGE DE DÉMARRAGE (splash, 4 secondes) ---------- */
 
 /* Pendant le splash : le site est caché et on ne peut pas scroller */
