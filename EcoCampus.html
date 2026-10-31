@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EcoCampus</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="splashing">
 
 <!-- ========== SPLASH (page de démarrage animée) ========== -->
+
 <div id="splash">
  <div class="sp-in">
   <i class="sp-logo"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i><!-- balise svg tasna l'icone wala logo -->
@@ -23,10 +25,12 @@
 <div class="wrap"><!-- el conteneur principal li yjam3 el site kemel -->
 
 <!-- ========== HEADER ========== -->
-<header>
- <a class="logo" href="#dashboard"><!-- el logo: ki tenzel 3lih yroo7 lel tableau de bord -->
+<!-- [BOOTSTRAP] header: d-flex + align-items-center + flex-wrap + gap-3 3awdhou "display:flex; align-items:center; flex-wrap:wrap; gap" mel CSS.-->
+<header class="d-flex align-items-center flex-wrap gap-3">
+ <a class="logo" href="#dashboard"><!-- el logo: ki tenzel 3lih yemchi lel tableau de bord -->
     <i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>EcoCampus</a> <!-- icône feuille + esm el site -->
- <div class="right"><!-- el partie lyamin fil header (menu + boutons) -->
+ <!-- [BOOTSTRAP] .right: d-flex align-items-center gap-3 3awdhou el CSS mta3 ".right" (supprimé). el classe "right" bkat khater body.cover w @media print yesta3mlouha -->
+ <div class="right d-flex align-items-center gap-3"><!-- el partie lyamin fil header (menu + boutons) -->
   <nav id="nav"><span id="pill"></span>
    <a href="#dashboard">Tableau de bord</a>
    <a href="#mesures">Mesures</a>
@@ -46,49 +50,81 @@
 <!-- ========== TABLEAU DE BORD ========== -->
 <section class="page" id="dashboard"><!-- ===================page el tableau de bord ============-->
  <h1 class="t" id="range">Suivi de la consommation</h1>
- <div class="grid3"> <!-- grille b 3 cartes -->
-  <div class="card total"><!-- carte khadhra mta3 consommation totale -->
-   <div class="lab">Consommation totale</div>
-   <div class="big" id="tot">0</div><!-- yabda ml 0 w JS yhot fih el total -->
-   <div style="position:relative;z-index:1;color:#b4c0bc">
-    <span id="nb-bat">0</span> bâtiments gérés</div><!-- 3dad les batiment-->
-   <i class="c1"></i><i class="c2"></i><!-- el dwer li fl card-->
+ <!-- [BOOTSTRAP] grid3 (CSS) -> grille Bootstrap: row + g-4 (faragh binet les cartes) + col-lg-6/3/3.
+      "col-lg-*" ya3ni: fou9 992px 3 cartes fi star, ta7t 992px kol carte fi star wa7dha (3awdh el @media 1000px mta3 el CSS).
+      el nesba kanet 1.75fr/1fr/1fr (~47/27/27%), wallet 6/3/3 (50/25/25%) 5ater Bootstrap yest3mel 12 colonnes.
+      "h-100" 5ater Bootstrap ma ymaddedch les cartes kol 3la nafs el toul wa7do (el grid mta3 CSS kenet ta3mel hakka wa7dha). -->
+ <div class="row g-4 mb-4">
+  <div class="col-lg-5"> 
+   <div class="card total h-90"><!-- carte khadhra mta3 consommation totale -->
+    <div class="lab">Consommation totale</div>
+    <div class="big" id="tot">0</div><!-- yabda ml 0 w JS yhot fih el total -->
+    <div style="position:relative;z-index:1;color:#b4c0bc">
+     <span id="nb-bat">0</span> bâtiments gérés</div><!-- 3dad les batiment-->
+    <i class="c1"></i><i class="c2"></i><!-- el dwer li fl card-->
+   </div>
   </div>
-  <div class="card avg"><!-- carte moyenne -->
-   <div class="lab">Moyenne</div>
-   <div class="big" id="avg">0</div><!-- ra9m yabda m 0 JS yhot fih el moyenne -->
-   <svg class="spark" viewBox="0 0 280 80" preserveAspectRatio="none"><path id="sp"/></svg><!-- sna3 lcourbe li fl moyenne-->
+  <div class="col-lg-4">
+   <div class="card avg h-90"><!-- carte moyenne -->
+    <div class="lab">Moyenne</div>
+    <div class="big" id="avg">0</div><!-- ra9m yabda m 0 JS yhot fih el moyenne -->
+    <svg class="spark" viewBox="0 0 280 80" preserveAspectRatio="none"><path id="sp"/></svg><!-- sna3 lcourbe li fl moyenne-->
+   </div>
   </div>
-  <div class="card alert pulse"><!-- carte 7amra mta3 alertes  -->
-   <div class="lab">Alertes</div>
-   <div class="big" id="nal">0</div><!-- nb des alertes-->
-   <div>seuils dépassés</div><!-- ktiba li te7t el ra9m -->
+  <div class="col-lg-3">
+   <div class="card alert pulse h-90"><!-- carte 7amra mta3 alertes  -->
+    <div class="lab">Alertes</div>
+    <div class="big" id="nal">0</div><!-- nb des alertes-->
+    <div>seuils dépassés</div><!-- ktiba li te7t el ra9m -->
+   </div>
   </div>
  </div>
- <div class="grid2"> <!-- grille b 2 cartes -->
-  <div class="card">
+ <!-- [BOOTSTRAP] grid2 (CSS) -> row g-4 + col-lg-7 / col-lg-5 (el nesba kanet 1.55fr/1fr, tawa 58%/42%) -->
+ <div class="row g-4">
+  <div class="col-lg-7">
+   <div class="card h-100">
     <h2>Valeur vs seuil</h2>
     <p class="sub">Le trait vertical marque le seuil de chaque mesure</p>
-    <div id="bars"></div><!-- kif nbadlou fi donnée wala nzidou donnée tetzed houni -->
-</div>
-  <div class="card"><!-- carte el anomalies -->
+    <!-- [BOOTSTRAP] zedt classe "bars": el CSS mta3 ".row" (les barres li JS ya3mlhom) wallet ".bars .row"
+         bech ma yetkhalatch m3a ".row" mta3 Bootstrap (nafs el esm !) -->
+    <div id="bars" class="bars"></div><!-- kif nbadlou fi donnée wala nzidou donnée tetzed houni -->
+   </div>
+  </div>
+  <div class="col-lg-5">
+   <div class="card h-100"><!-- carte el anomalies -->
     <h2 style="margin-bottom:22px">Anomalies détectées</h2>
-    <div id="anos"></div></div><!-- houni JS yzid el anomalies -->
- </div><!-- tsakkir grid2 -->
+    <div id="anos"></div><!-- houni JS yzid el anomalies -->
+   </div>
+  </div>
+ </div><!-- tsakkir row -->
 </section>
 
 <!-- ========== MESURES ========== -->
 <section class="page" id="mesures"><!--====== PAGE EL MESURE======= -->
  <h1 class="t">Mesures</h1>
- <div class="filters"><!-- barre el filtres -->
-  <select id="fb"></select> <!-- liste filtre bâtiment (JS ya3mar'ha) -->
-  <select id="fr"></select><!-- liste filtre ressource (JS ya3mar'ha) -->
-  <select id="fp"></select><!-- liste filtre période (JS ya3mar'ha) -->
-  <input id="fs" type="search" placeholder="Rechercher"><!-- champ recherche-->
-  <button id="btn-filter-alert" type="button">⚠️ Voir Alertes</button><!-- bouton ykhalli ken el alertes;-->
+ <!-- [BOOTSTRAP] .filters: d-flex flex-wrap gap-3 mb-4 3awdhou el CSS (display:flex; gap; flex-wrap; margin-bottom).-->
+ <div class="filters d-flex flex-wrap gap-3 mb-4"><!-- barre el filtres -->
+  <!-- [BOOTSTRAP] form-select / form-control = el style mta3 les champs men Bootstrap; "w-auto" 5ater par défaut yekhdhou 100% el 3ordh.-->
+  <select id="fb" class="form-select w-auto"></select> <!-- liste filtre bâtiment (JS ya3mar'ha) -->
+  <select id="fr" class="form-select w-auto"></select><!-- liste filtre ressource (JS ya3mar'ha) -->
+  <select id="fp" class="form-select w-auto"></select><!-- liste filtre période (JS ya3mar'ha) -->
+  <input id="fs" type="search" class="form-control w-auto" placeholder="Rechercher"><!-- champ recherche-->
+  <!-- [BOOTSTRAP] "btn" = bouton Bootstrap, "btn-eco-light" = variante mte3na (CSS) tbaddel couleurs Bootstrap bl variables --bs-btn-*.
+       el classe "on" (JS yzidha) mazelet te5dem w tbaddel loun el bouton l7amer -->
+  <button id="btn-filter-alert" type="button" class="btn btn-eco-light">
+  <svg class="warn" viewBox="0 0 14 14" aria-hidden="true">
+    <circle class="wc" cx="7" cy="7" r="6" fill="#e8604c"/>
+    <path class="wx" d="M7 3.8v3.4M7 9.8v.1" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+  <span>Voir Alertes</span>
+</button><!-- bouton ykhalli ken el alertes;-->
  </div>
- <div class="card"><div class="scroll"><!-- carte + div bech ykoun scroll ofoqi fil tableau fil telifoun -->
-  <table>
+
+ <div class="card"><div class="table-responsive"><!-- carte + div bech ykoun scroll ofoqi fil tableau fil telifoun -->
+  <!-- [BOOTSTRAP] class="table": style el tableau mta3 Bootstrap.
+       table-hover: (kenet tbody tr:hover fil CSS).
+       align-middle: el contenu fil wost 3amoudiyan. mb-0: bla marge mel te7t -->
+  <table class="table table-hover align-middle mb-0">
    <thead>
     <tr>
       <th>BÂTIMENT</th>
@@ -101,7 +137,7 @@
   </thead>
    <tbody id="tb"></tbody><!-- corps el tableau: JS yzid fih el stour -->
   </table>
- </div></div><!-- tsakkir scroll w carte -->
+ </div></div><!-- tsakkir table-responsive w carte -->
 </section>
 
 <!-- ========== GRAPHIQUES ========== -->
@@ -116,32 +152,37 @@
  <div class="card" style="margin-top:26px">
   <h2>Par ressource</h2>
   <p class="sub" style="margin-bottom:26px">Somme des mesures de chaque ressource</p>
-  <div id="rb"></div><!-- yzid par lkol ressource -->
+  <div id="rb" class="bars"></div><!-- yzid par lkol ressource ("bars": nafs el 7keya mta3 #bars fou9) -->
 </div> <!-- tsakkir page graphiques -->
 </section>
 
 <!-- ========== ALERTES ========== -->
 <section class="page" id="alertes"> <!-- ========PAGE EL ALERTES======== -->
  <h1 class="t">Alertes</h1>
- <div class="grid3" style="grid-template-columns:1fr 2fr"><!-- grille b 2 colonnes (el thanya double louwla) -->
-  <div class="card alert"><!-- lcarte l7amra-->
+ <div class="row g-4 mb-4">
+  <div class="col-lg-4">
+   <div class="card alert h-100"><!-- lcarte l7amra-->
     <div class="lab">Alertes actives</div>
     <div class="big" id="na2">0</div><!-- nb d'alerte  JS yzid les valeur -->
     <div id="na3">sur 0 mesures</div>
+   </div>
   </div>
-  <div class="card total"><!-- carte khadhra: total -->
-   <div class="lab">Consommation totale</div>
-   <div class="big" id="tot2" style="font-size:80px">0</div><!-- js y7ot 8adi lconsommation total-->
-   <p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p>
-   <i class="c1"></i><i class="c2"></i><!-- 2 dwayer dékoration -->
-  </div> <!-- tsakkir carte total -->
- </div><!-- tsakkir grid3 -->
+  <div class="col-lg-8">
+   <div class="card total h-100"><!-- carte khadhra: total -->
+    <div class="lab">Consommation totale</div>
+    <div class="big" id="tot2" style="font-size:80px">0</div><!-- js y7ot 8adi lconsommation total-->
+    <p style="color:#b4c0bc;position:relative;z-index:1">Une mesure est en alerte quand sa valeur dépasse son seuil.</p>
+    <i class="c1"></i><i class="c2"></i><!-- 2 dwayer dékoration -->
+   </div> <!-- tsakkir carte total -->
+  </div>
+ </div><!-- tsakkir row -->
  <div id="al"></div><!-- houni JS yzid lista mta3 el alertes -->
 </section>
 
 <!-- ========== LOGIN ========== -->
 <section class="page" id="login"><!-- =========PAGE DE CONNEXION======-->
- <div class="hero"><!-- el section el kbira mta3 login -->
+ <!-- [BOOTSTRAP] .hero: d-flex flex-column align-items-center justify-content-center text-center 3awdhou 5 lignes mel CSS.-->
+ <div class="hero d-flex flex-column align-items-center justify-content-center text-center"><!-- el section el kbira mta3 login -->
   <i class="orb o1"></i><i class="orb o2"></i> <!-- 2 dwayer dékoration fil khalfia -->
   <h1 class="ttl" ><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></h1> <!-- titre kbir EcoCampus 7arf b 7arf (animation)-->
   <div class="bar"></div><!-- khat sghir akhdher te7t el titre -->
@@ -150,12 +191,16 @@
    <h2>Bienvenue</h2>
    <p class="sub" style="margin-bottom:26px">Connectez-vous pour accéder à votre compte</p>
    <form id="form-login">
-    <label for="login-user">Nom d’utilisateur ou e-mail
-     <input type="text" id="login-user" placeholder="votrenom@gmail.com" required></label>
-    <label for="login-pass">Mot de passe
-     <input type="password" id="login-pass" placeholder="Entrez mot de passe" required></label>
+    <!-- [BOOTSTRAP] label: d-block text-start fw-medium (kenet fil CSS: display:block; text-align:left; font-weight:500).
+         input: form-control (style Bootstrap) + rounded-pill (dayra) + px-4 py-3 (padding) + mt-1 mb-3 (marge) + fw-medium.
+   -->
+    <label for="login-user" class="d-block text-start fw-medium">Nom d’utilisateur ou e-mail
+     <input type="text" id="login-user" class="form-control rounded-pill px-4 py-3 mt-1 mb-3 fw-medium" placeholder="votrenom@gmail.com" required></label>
+    <label for="login-pass" class="d-block text-start fw-medium">Mot de passe
+     <input type="password" id="login-pass" class="form-control rounded-pill px-4 py-3 mt-1 mb-3 fw-medium" placeholder="Entrez mot de passe" required></label>
     <div class="login-msg" id="login-msg"></div><!-- houni JS yhot message d'erreur -->
-    <button type="submit" class="btn">Se connecter</button><!-- bouton ybaath el formulaire -->
+    <!-- [BOOTSTRAP] "btn" (Bootstrap) + "btn-eco" (variante mte3na fil CSS) + w-100 (3ordh kemel) + mt-1 (kenet ".login .btn{margin-top:4px}") -->
+    <button type="submit" class="btn btn-eco w-100 mt-1">Se connecter</button><!-- bouton ybaath el formulaire -->
    </form>
    <a href="#login">Mot de passe oublié ?</a><!-- lien mot de passe oublié -->
    <a href="#login">Vous n’avez pas de compte ? S’inscrire</a><!-- lien lel inscription (créer compte) -->
