@@ -1,4 +1,5 @@
 let D = []; //var global pour stocker les mesures
+
 let S = { T: 0, n: 0 }; // [AJOUT] résumé : T = total des valeurs, n = nombre d'alertes (utilisé par les compteurs)
 let seulementAlertes = false; // [AJOUT] true quand le bouton "Voir Alertes" est actif
 
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         //sayee data walet prete
         .then(data => {
+            D = data;
             // [AJOUT] on force valeur et seuil en nombres (au cas où le JSON les donne en texte)
             D = data.map(m => ({ ...m, valeur: Number(m.valeur), seuil: Number(m.seuil) }));
             initApp();//lancer l'app
@@ -29,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
         //pour eviter le bloquage de site
         .catch(err => {
             console.warn(err);
+            D = [
+              { batiment: "Bibliothèque", ressource: "électricité", valeur: 152.4, seuil: 120, date: "2026-09-20", alerte: true },
+              { batiment: "Bibliothèque", ressource: "eau", valeur: 35, seuil: 50, date: "2026-09-21", alerte: false },
+              { batiment: "Résidence", ressource: "chauffage", valeur: 410.5, seuil: 400, date: "2026-09-20", alerte: true },
+              { batiment: "Labo_info", ressource: "électricité", valeur: 98.2, seuil: 150, date: "2026-09-20", alerte: false }
+            ];
             D = DEFAUT; // [MODIF] on utilise la constante DEFAUT définie en haut
             initApp();
         });
@@ -79,6 +87,26 @@ function calculerKPI() {
     getEl('#nal').textContent=anomalies.length;
     getEl('#nb-bat').textContent=batimentsUniques.length;
 
+    //affichage valeur vs seuil
+    //.map mesh thawel kol mesure f tab l ligne html
+
+    getEl('#bars').innerHTML = D.map(m => `
+        <div class="row" style="display:flex; justify-content:space-between; margin:10px 0;">
+            <span>${m.batiment} . ${m.ressource}</span>
+            <b>${arrondir(m.valeur)} / ${m.seuil}</b>
+        </div>`).join('');//concatini tous les lignes dans un seul bloc 
+
+        //affcihage anomalies
+    getEl('#anos').innerHTML=anomalies.length ? anomalies.map(m => `
+        <div class="an" style="background:#ffe9e4; padding:12px; border-radius:14px; margin-bottom:8px; border:1px solid #707070;">
+            <strong style="color:#a8321f;">⚠️ ${m.batiment} - ${m.ressource}</strong>
+            <small style="color:#707e74;">Valeur : ${m.valeur} (Seuil : ${m.seuil})</small>
+        </div>`).join('') : "<p>Aucune anomalie détectée ✅</p>";
+}
+
+function remplirTableau(donnees) {
+    getEl('#tb').innerHTML=donnees.map(m => `
+        <tr>
     // [AJOUT] titre de la période (ex : "du 20 au 21 septembre 2026")
     const dates = [...new Set(D.map(m => m.date))].sort(); //D.map(m => m.date)) : tjib kol les dates men les mesures / new Set(...) tna7i el redoublons (ken 3andek 3 mesures fi nafs el nhar, el date tطla3 marra wahda).
     const fmt = d => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }); // t7awel date men 2026-09-20 l “20 septembre 2026” b el français (jour, mois en lettres, année).
@@ -138,6 +166,17 @@ function remplirTableau(donnees) {
 function remplirFiltres() {
     const batiments=[...new Set(D.map(m => m.batiment))];
     const ressources=[...new Set(D.map(m => m.ressource))];
+
+    getEl('#fb').innerHTML='<option value="">Tous les bâtiments</option>' + batiments.map(b => `<option value="${b}">${b}</option>`).join('');
+    getEl('#fr').innerHTML='<option value="">Toutes les ressources</option>' + ressources.map(r => `<option value="${r}">${r}</option>`).join('');
+
+    getEl('#fb').onchange=filtrer;
+    getEl('#fr').onchange=filtrer;
+    getEl('#fs').oninput=filtrer;
+    
+    getEl('#btn-filter-alert').onclick = () => {
+        const filtered=D.filter(m => m.alerte || m.valeur > m.seuil);
+        remplirTableau(filtered);
     const dates=[...new Set(D.map(m => m.date))]; // [AJOUT] liste des dates pour le filtre "Période"
 
     // [CORRECTION] backticks ` ` au lieu de ' ' sinon ${b} ne se remplace pas
@@ -167,6 +206,7 @@ function filtrer() {
     const resultat=D.filter(m => 
         (!b || m.batiment === b) &&
         (!r || m.ressource === r) &&
+        (!q || m.batiment.toLowerCase().includes(q)) //verifier si le nom de batiment contient ce texte
         (!p || m.date === p) && // [AJOUT] filtre par date
         (!seulementAlertes || al(m)) && // [AJOUT] si "Voir Alertes" est actif, seulement les alertes
         (m.batiment + " " + m.ressource).toLowerCase().includes(q) // [MODIF] la recherche porte sur bâtiment ET ressource
@@ -183,6 +223,10 @@ function remplirGraphiques() {
     const maxValB=Math.max(...Object.values(sommetsB), 1);
     //ken l tab vide yaatina 1
 
+    getEl('#cb').innerHTML=Object.entries(sommetsB).map(([bat, val]) => `
+        <div class="col">
+            <span class="val-label">${arrondir(val)}</span>
+            <i style="height: ${(val / maxValB) * 100}%;"></i>
     // [MODIF] data-h (au lieu de style height) : la hauteur est animée par route()
     getEl('#cb').innerHTML=Object.entries(sommetsB).map(([bat, val]) => `
         <div class="col">
@@ -205,6 +249,7 @@ function remplirGraphiques() {
         <div class="row">
             <span class="res-name">${res}</span>
             <div class="track">
+                <div class="fill" style="width: ${(val / maxValR) * 100}%;"></div>
                 <div class="fill" data-w="${(val / maxValR) * 100}"></div>
             </div>
             <b class="res-val">${arrondir(val)}</b>
@@ -222,6 +267,8 @@ function calculerPageAlertes() {
     if(getEl('#al')) {
         getEl('#al').innerHTML=anomalies.map(m => {
             const pc=((m.valeur / m.seuil - 1) * 100).toFixed(1);
+            return `
+            <div class="card-alert-row">
             // [MODIF] carte arrondie "card an" (même rendu que le 2e fichier)
             return `
             <div class="card an" style="border-radius:36px;padding:22px 28px">
@@ -235,6 +282,28 @@ function calculerPageAlertes() {
         }).join('');
     }
 }
+let isLoggedIn = window.userIsLoggedIn; // pour connaitre que l user est inscrit
+//tlem w tnadhem navigation mtaa site
+function gererRouter() {
+    //besh nshoufou anehi l page li besh nemshoulha
+    function route() {
+        //location.h =>tjib ay haja maktouba #ayhaja
+        //.slice(1) => tfassakh awel lettre (#)
+        //ken l user moush aamel login awel page todhher hiya login
+        let h=location.hash.slice(1) || (isLoggedIn ? 'dashboard' : 'login'); 
+        //ken l user maamalsh login w yheb yemshi l paga okhra yraj3ou bessif ll login
+       if (!isLoggedIn && h !== 'login' && h !== 'register' && h !== 'forgot-password' && h !== 'verify-code'
+        && h !== 'reset-password') {
+        h = 'login';
+        location.hash = '#login';
+        }
+        //ken l page moush mawjouda yafichi dashbord wala login kenou moush connecté
+        if (!document.getElementById(h)) h = isLoggedIn ? 'dashboard' : 'login';
+        //si p.id hiya nafsha l h yzid l classe show ll page hedhika
+        document.querySelectorAll('.page').forEach(p => p.classList.toggle('show', p.id===h));
+    }
+    //lors de changement de page (lktiba li baad #) naaytou ll fct rooter
+    window.addEventListener('hashchange', route);
 let isLoggedIn=false; // pour connaitre que l user est inscrit
 
 // [AJOUT] éléments de la navigation (le fond vert "pill" et les liens)
@@ -317,6 +386,12 @@ function gererRouter() {
     route();
 }
 
+
+
+const root=document.documentElement;//yjib l html
+getEl('#theme').onclick = () => {
+    const current=root.dataset.theme;//recupere theme actuel
+    root.dataset.theme=current==='dark' ? 'light' : 'dark';//nhoutou theme jdid f 
 //gestion de form login w verif user name w l password 
 document.addEventListener("DOMContentLoaded", ()=>{
     const formLog=getEl('#form-login');
@@ -366,6 +441,14 @@ getEl('#btn-pdf').onclick = () => {
     window.print();//ouvre la fenetre d'impression
 };
 
+setTimeout(() => {
+    const splash=getEl('#splash');
+    if (splash) {
+        splash.style.opacity = '0';//rendre la page transparente (tadrijian)
+        setTimeout(() => splash.remove(), 500);//supprime la page apres 0.5s
+        document.body.classList.remove('splashing');//supprime la class splashing 
+    }
+}, 1500);
 // [MODIF] splash : fondu à 3,5 s (classe "out"), puis suppression à 4 s + relance de route()
 const splash = getEl('#splash');
 setTimeout(() => splash.classList.add('out'), 3500);            // après 3,5 s : fondu CSS

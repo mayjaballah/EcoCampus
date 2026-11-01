@@ -1,3 +1,4 @@
+:root {
 /* =====================================================
    EcoCampus - style.css (version fusionnée)
    Sommaire :
@@ -39,6 +40,11 @@
   --badink: #a8321f;
   --glow: #d7ecc6;
   --acc: #2f8a5e;
+  color-scheme: light;
+}
+
+/* Mode sombre manuel */
+:root[data-theme="dark"] {
   color-scheme: light;/* ybadel el theme light*/
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);/* lmarge eda5laniya li mn fou9 mta3 tlfn aka lbande lka7la t5ali lcontenue mayet8atach beha*/
@@ -81,6 +87,30 @@
   color-scheme: dark;
 }
 
+/* Mode sombre automatique */
+/*si le systeme en mode sembre*/
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1812;
+    --card: #12241c;
+    --ink: #e6f2ea;
+    --mut: #8fb09f;
+    --line: #2f4d3e;
+    --soft: #1d3329;
+    --g1: #0e3a2a;
+    --g2: #1f5a43;
+    --badbg: #3a1d19;
+    --badbg2: #2e1a17;
+    --badink: #ff9d8a;
+    --glow: #14402d;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 /* Couleur d'accent (titre de la page de connexion) */
 [data-dark] {/* ki yetzed attribut data-dark (dark actif) ybaddel el accent */
   --acc: #e4ff9a;
@@ -123,6 +153,23 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   transition: background .4s, color .4s;
+}
+
+.wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 28px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.logo {
   position: relative;
 }
 
@@ -185,6 +232,13 @@ header {
   color: var(--ink);
 }
 
+.right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+nav {
 .logo i {/* el carré akhdher li fih el icône mta3 el logo */
   width: 46px;
   height: 36px;
@@ -215,6 +269,10 @@ nav {/* el navigation (menu) */
   border: 1px solid var(--line);
   border-radius: 40px;
   background: var(--card);
+}
+
+nav a {
+  padding: 12px 24px;
   position: relative;
   overflow-x: auto;
   max-width: 100%;
@@ -226,6 +284,16 @@ nav a {
   text-decoration: none;
   color: var(--ink);
   font-weight: 500;
+}
+
+nav a.on, nav a:hover {
+  background: var(--g1);
+  color: #e4ff9a;
+}
+
+.round {
+  width: 50px;
+  height: 50px;
   font-size: 19px;
   position: relative;
   z-index: 1;
@@ -258,6 +326,11 @@ nav a.on {/* el lien el actif fil menu */
   place-items: center;
   cursor: pointer;
   color: var(--ink);
+  font-size: 20px;
+}
+
+h1.t {
+  font-size: 28px;
   transition: transform .3s, background .3s;
   text-decoration: none;
 }
@@ -299,6 +372,23 @@ h1.t { /* titre mta3 kol page */
   margin: 48px 0 22px;
 }
 
+.page { display: none; }
+.page.show { display: block; }
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1.75fr 1fr 1fr;
+  gap: 26px;
+  margin-bottom: 26px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 20px;
+}
+
+.card {
 .page {
   display: none;
 }
@@ -335,6 +425,10 @@ h1.t { /* titre mta3 kol page */
   padding: 28px 30px;
   position: relative;
   overflow: hidden;
+}
+
+.lab {
+  font-size: 15px;
   transition: transform .35s, box-shadow .35s, background .4s;
 }
 
@@ -350,6 +444,14 @@ h1.t { /* titre mta3 kol page */
   color: var(--mut);
 }
 
+.big {
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 1;
+  margin: 24px 0 12px;
+}
+
+h2 {
 .big {/* el raqm el kbir mta3 kol carte */
   font-weight: 600;
   font-size: clamp(64px, 7.5vw, 125px);
@@ -364,6 +466,60 @@ h2 {
   margin-bottom: 6px;
 }
 
+.sub {
+  color: var(--mut);
+  font-size: 17px;
+  margin-bottom: 22px;
+}
+
+.total {
+  background: var(--g1);
+  color: #fff;
+  border-color: var(--g1);
+}
+
+.total .big { color: var(--lime); }
+
+.alert {
+  background: var(--badbg);
+  color: var(--badink);
+}
+
+.filters {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.filters select,
+.filters input, .filters button {
+  font: inherit;
+  padding: 14px 22px;
+  border-radius: 30px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 18px 14px;
+  text-align: left;
+  border-top: 1px solid var(--soft);
+}
+
+.pill {
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  background: var(--soft);
 .sub { /*sous titre*/
   color: #b4c0bc;
   font-size: 19px;
@@ -734,6 +890,13 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   color: var(--badink);
 }
 
+/* Graphique Bâtiments */
+.cols {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 40px;
+  height: 260px;
 
 /* ---------- 9. GRAPHIQUES (colonnes par bâtiment) ---------- */
 
@@ -747,6 +910,7 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 }
 
 .col {
+  width: 110px;
   flex: 1;
   max-width: 140px;
   display: flex;
@@ -754,6 +918,13 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   justify-content: flex-end;
   align-items: center;
   height: 100%;
+}
+
+.val-label {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -761,6 +932,8 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
   display: block;
   width: 100%;
   border-radius: 18px 18px 0 0;
+  background: #194a36;
+  transition: height 1s ease-in-out;
   background: linear-gradient(var(--g2), var(--g1));
   height: 0;
   transition: height 1.3s cubic-bezier(.2, .8, .2, 1);
@@ -772,6 +945,9 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 
 .names {
   display: flex;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 14px 30px;
   gap: clamp(20px, 6vw, 80px);
   padding: 12px 30px;
   font-weight: 600;
@@ -779,6 +955,103 @@ svg.spark { /* el svg mta3 el courbe sghira fil moyenne */
 }
 
 .names div {
+  width: 110px;
+  text-align: center;
+}
+
+/* Graphique Par Ressource */
+#rb {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+#rb .row {
+  display: grid;
+  grid-template-columns: 140px 1fr 80px;
+  align-items: center;
+  gap: 15px;
+}
+
+.res-name {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.track {
+  height: 20px;
+  background: var(--soft);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.track .fill {
+  height: 100%;
+  background: #5fa777;
+  border-radius: 20px;
+  transition: width 1s ease-in-out;
+}
+
+.res-val {
+  text-align: right;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+/* Lignes d'alertes */
+.card-alert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffe9e4;
+  border: 1px solid #707070;
+  border-radius: 30px;
+  padding: 16px 28px;
+  margin-bottom: 14px;
+}
+
+.ex {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e5604a;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.alert-info {
+  flex: 1;
+  margin-left: 18px;
+}
+
+.alert-info strong {
+  display: block;
+  font-size: 20px;
+  color: #12372a;
+}
+
+.alert-info small {
+  color: #707e74;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pct {
+  font-size: 22px;
+  font-weight: 700;
+  color: #a8321f;
+}
+
+/* Splash Screen */
+body.splashing { overflow: hidden; }
+body.splashing .wrap { display: none; }
   flex: 1;
   max-width: 140px;
   text-align: center;
@@ -1023,6 +1296,8 @@ body.splashing .wrap {
   z-index: 100;
   display: grid;
   place-items: center;
+  background: var(--bg);
+  transition: opacity .5s ease;
   transition: opacity .5s ease, transform .5s ease;
 }
 
@@ -1037,6 +1312,203 @@ body.splashing .wrap {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.sp-in h2 {
+  font-size: 60px;
+  color: var(--ink);
+}
+
+.sp-line {
+  width: 200px;
+  height: 6px;
+  background: var(--soft);
+  margin-top: 20px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sp-line b {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--acc);
+  animation: loadAnim 1.5s infinite linear;
+}
+
+@keyframes loadAnim {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+
+/*login*/
+/* Design de la page Login personnalisé */
+#login.page {
+  display: none;
+  min-height: 85vh;
+  place-items: center;
+  padding: 20px 0;
+}
+
+#login.page.show {
+  display: grid;
+}
+
+.login-card-custom {
+  width: 100%;
+  max-width: 380px;
+  background: var(--g1); /* Vert foncé EcoCampus */
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.login-header-custom {
+  padding: 35px 25px 25px;
+  text-align: center;
+  position: relative;
+}
+
+.login-header-custom h2 {
+  font-size: 32px;
+  color: #e4ff9a; /* Vert clair / Lime */
+  margin-bottom: 8px;
+}
+
+.login-header-custom p {
+  font-size: 14px;
+  color: #d7ecc6;
+  opacity: 0.9;
+}
+
+.login-body-custom {
+  background: #ffffff;
+  border-radius: 28px 28px 0 0;
+  padding: 30px 25px;
+  color: #12372a;
+}
+
+.login-field {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.login-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #12372a;
+}
+
+.login-field input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  border: 1px solid #d0d7d1;
+  background: #f4f7f4;
+  font-size: 14px;
+  color: #12372a;
+  outline: none;
+}
+
+.login-btn-custom {
+  width: 100%;
+  padding: 14px;
+  border-radius: 25px;
+  border: none;
+  background: #12372a;
+  color: #e4ff9a;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s;
+}
+
+.login-btn-custom:hover {
+  opacity: 0.9;
+}
+
+.login-links {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.login-links a {
+  color: #12372a;
+  text-decoration: underline;
+  font-weight: 600;
+}
+/* Message de succès après inscription */
+.message-success {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #e8f7ee;
+    color: #187344;
+    border: 1px solid #b7e4c7;
+    border-left: 5px solid #28a05b;
+    padding: 14px 16px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: apparition 0.4s ease;
+}
+
+/* Message de confirmation */
+.login-body-custom .message-success {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: #eaf7ef;
+    border: 1px solid #b8e3c7;
+    border-left: 4px solid #239653;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 0 0 22px 0;
+    color: #176b3a;
+    font-size: 14px;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.login-body-custom .message-success p {
+    margin: 0;
+    padding: 0;
+    color: #176b3a;
+    font-size: 14px;
+}
+
+.login-body-custom .message-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background-color: #239653;
+    color: white;
+    font-weight: bold;
+}
+.btn-logout {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #bb2d3b;
+}
   padding: 0 20px;
 }
 
