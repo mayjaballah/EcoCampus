@@ -1,0 +1,209 @@
+/* =====================================================
+   responsive.css - adaptation mobile / tablette d'EcoCampus
+   À charger APRÈS style.css et chatbot.css (voir index.php).
+   Ne modifie rien sur ordinateur : tout est dans des @media.
+   ===================================================== */
+
+/* ---------- Sécurités générales ---------- */
+html, body { overflow-x: hidden; }          /* plus de défilement horizontal parasite */
+img { max-width: 100%; }
+
+/* Sur écran tactile : pas d'effet « survol » qui reste bloqué après un tap */
+@media (hover: none) {
+  .card:hover, .an:hover, .round:hover { transform: none; box-shadow: none; }
+}
+
+/* =====================================================
+   TABLETTE ET TÉLÉPHONE  (≤ 768 px)
+   ===================================================== */
+@media (max-width: 768px) {
+
+  /* Le menu fixe est dans le header : on coupe l'animation d'entrée du header,
+     sinon la barre se positionne par rapport au header et non à l'écran */
+  header { animation: none; }
+
+  .wrap { padding: 14px 14px 112px; }          /* place pour la barre de menu fixe en bas */
+  body.cover .wrap { padding-bottom: 30px; }   /* pas de menu sur les pages de connexion */
+
+  /* ---------- En-tête compact ---------- */
+  header.d-flex { flex-wrap: nowrap !important; gap: 10px !important; }
+  header .right.d-flex { gap: 8px !important; }
+  .logo { font-size: 20px; gap: 10px; min-width: 0; }
+  .logo i { width: 38px; height: 32px; }
+  .round { width: 44px; height: 44px; }
+  .round svg { width: 22px; }
+  #theme, #btn-pdf { width: 40px; height: 40px; }
+
+  /* ---------- Menu : barre fixe en bas de l'écran (comme une appli) ---------- */
+  body:not(.cover) nav {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    gap: 0;
+    padding: 5px;
+    justify-content: space-between;
+    scrollbar-width: none;
+    background: var(--card);
+    background: color-mix(in srgb, var(--card) 88%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a { flex: 1 1 auto; text-align: center; font-size: 13px; padding: 12px 6px; }
+  #pill { top: 5px; bottom: 5px; }
+
+  /* ---------- Titres et cartes ---------- */
+  h1.t { margin: 26px 0 16px; font-size: 20px; }
+  h2 { font-size: 22px; }
+  .sub { font-size: 15px; margin-bottom: 16px; }
+  .lab { font-size: 13px; }
+  .big { font-size: clamp(48px, 16vw, 72px); margin: 14px 0 8px; }
+  .card { border-radius: 26px; padding: 20px; }
+
+  /* ---------- Champs : 16 px minimum (sinon iPhone zoome au clic) ---------- */
+  input:not([type="range"]):not([type="file"]):not([type="checkbox"]), select, textarea { font-size: 16px; }
+
+  /* ---------- Filtres de la page Mesures ---------- */
+  .filters.d-flex { gap: 10px !important; }
+  .filters .form-select,
+  .filters .form-control {
+    flex: 1 1 100%;
+    width: 100% !important;
+    min-width: 0;
+    font-size: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .filters .btn { flex: 1 1 calc(50% - 6px); font-size: 15px; padding: 12px 10px; }
+
+  /* Filtres du graphique par jour */
+  .gj-filters { gap: 10px; }
+  .gj-filters .form-select { width: 100% !important; flex: 1 1 100%; }
+
+  /* ---------- Cartes « par ressource » du dashboard ---------- */
+  #avg-ressources-list > div[style*="space-around"] {
+    flex-wrap: wrap;
+    gap: 14px 22px;
+    justify-content: flex-start !important;
+  }
+
+  /* ---------- Lignes d'alertes ---------- */
+  .an { gap: 12px; padding: 14px; border-radius: 22px; }
+  .card.an { padding: 14px 16px !important; border-radius: 24px !important; }
+  .ex { width: 42px; height: 42px; font-size: 22px; }
+  .an > div:not(.ex) { min-width: 0; }
+  .an strong { font-size: 17px; overflow-wrap: anywhere; }
+  .an small { font-size: 13px; }
+  .pct { font-size: 17px; flex: none; }
+  .btn-explain { padding: 7px 12px; font-size: 12.5px; }
+
+  /* ---------- Barres « valeur vs seuil » ---------- */
+  .bars .row { gap: 8px 12px; }
+  .bars .row b { font-size: 16px; }
+
+  /* ---------- Podium ---------- */
+  .podium { gap: 6px; min-height: 0; }
+  .pod { min-width: 0; }
+  .pod-medal { font-size: 24px; }
+  .pod-name { font-size: 12px; }
+  .pod-pct { font-size: 15px; }
+  .pod-1 .pod-step { height: 100px; }
+  .pod-2 .pod-step { height: 74px; }
+  .pod-3 .pod-step { height: 54px; }
+  .pod small { font-size: 10.5px; }
+
+  /* ---------- Notifications ---------- */
+  .notif { padding: 12px 14px; gap: 10px; }
+  .notif-text { font-size: 13px; }
+
+  /* ---------- Chatbot : remonté au-dessus de la barre de menu ---------- */
+  .ecobot .ecobot-launcher {
+    right: 14px;
+    bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+    width: 52px;
+    height: 52px;
+  }
+  .ecobot .ecobot-panel {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    bottom: calc(148px + env(safe-area-inset-bottom, 0px));
+    height: calc(100vh - 250px);
+    height: min(520px, calc(100dvh - 250px));
+    max-height: none;
+  }
+  .ecobot-input { font-size: 16px; }
+}
+
+/* =====================================================
+   PETITS TÉLÉPHONES ET PETITES TABLETTES  (≤ 768 px) : les tableaux deviennent des cartes
+   ===================================================== */
+@media (max-width: 768px) {
+
+  .table-responsive { overflow: visible; }
+  .table thead { display: none; }
+  .table,
+  .table tbody { display: block; width: 100%; min-width: 0; }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 12px;
+    padding: 10px 16px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 15px;
+    text-align: right;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .table td::before {
+    flex: none;
+    text-align: left;
+    color: var(--mut);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  .table td:nth-child(1)::before { content: "Bâtiment"; }
+  .table td:nth-child(2)::before { content: "Ressource"; }
+  .table td:nth-child(3)::before { content: "Valeur"; }
+  .table td:nth-child(4)::before { content: "Seuil"; }
+  .table td:nth-child(5)::before { content: "Date"; }
+  .table td:nth-child(6)::before { content: "Statut"; }
+  .table td:nth-child(7)::before { content: "Tendance"; }
+
+  .table td:first-child {
+    font-weight: 600;
+    font-size: 17px;
+    padding-bottom: 9px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line) !important;
+  }
+}
+
+/* =====================================================
+   TRÈS PETITS ÉCRANS  (≤ 520 px)
+   ===================================================== */
+@media (max-width: 520px) {
+  #btn-pdf { display: none; }                 /* l'export PDF n'a pas de sens sur téléphone */
+}
+
+@media (max-width: 380px) {
+  .logo { font-size: 18px; }
+  nav a { font-size: 12px; padding: 12px 3px; }
+}

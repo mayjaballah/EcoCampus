@@ -1,0 +1,352 @@
+[
+{
+    "batiment": "Salle_TP_Informatique",
+    "ressource": "electricite",
+    "valeur": 152.40,
+    "seuil": 120.00,
+    "date": "2026-09-20",
+    "alerte": true,
+    "moyenne_mobile": 152.40,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "eau",
+    "valeur": 185.20,
+    "seuil": 150.00,
+    "date": "2026-09-20",
+    "alerte": true,
+    "moyenne_mobile": 185.20,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Administration",
+    "ressource": "electricite",
+    "valeur": 110.50,
+    "seuil": 120.00,
+    "date": "2026-09-20",
+    "alerte": false,
+    "moyenne_mobile": 110.50,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "electricite",
+    "valeur": 135.80,
+    "seuil": 120.00,
+    "date": "2026-09-21",
+    "alerte": true,
+    "moyenne_mobile": 135.80,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Amphitheatre",
+    "ressource": "electricite",
+    "valeur": 98.00,
+    "seuil": 120.00,
+    "date": "2026-09-21",
+    "alerte": false,
+    "moyenne_mobile": 98.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_TP_Chimie",
+    "ressource": "eau",
+    "valeur": 112.70,
+    "seuil": 100.00,
+    "date": "2026-09-21",
+    "alerte": true,
+    "moyenne_mobile": 112.70,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Residence_Etudiants_A",
+    "ressource": "electricite",
+    "valeur": 118.90,
+    "seuil": 120.00,
+    "date": "2026-09-22",
+    "alerte": false,
+    "moyenne_mobile": 118.90,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "electricite",
+    "valeur": 245.00,
+    "seuil": 180.00,
+    "date": "2026-09-22",
+    "alerte": true,
+    "moyenne_mobile": 245.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Gymnase",
+    "ressource": "chauffage",
+    "valeur": 121.00,
+    "seuil": 120.00,
+    "date": "2026-09-22",
+    "alerte": true,
+    "moyenne_mobile": 121.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Bibliotheque",
+    "ressource": "electricite",
+    "valeur": 176.30,
+    "seuil": 150.00,
+    "date": "2026-09-23",
+    "alerte": true,
+    "moyenne_mobile": 176.30,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_TP_Physique",
+    "ressource": "eau",
+    "valeur": 92.50,
+    "seuil": 100.00,
+    "date": "2026-09-23",
+    "alerte": false,
+    "moyenne_mobile": 92.50,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_TP_Informatique",
+    "ressource": "electricite",
+    "valeur": 143.20,
+    "seuil": 140.00,
+    "date": "2026-09-23",
+    "alerte": true,
+    "moyenne_mobile": 147.80,
+    "tendance": "baisse"
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "eau",
+    "valeur": 99.90,
+    "seuil": 100.00,
+    "date": "2026-09-24",
+    "alerte": false,
+    "moyenne_mobile": 99.90,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Residence_Etudiants_B",
+    "ressource": "electricite",
+    "valeur": 125.00,
+    "seuil": 120.00,
+    "date": "2026-09-24",
+    "alerte": true,
+    "moyenne_mobile": 125.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Amphitheatre",
+    "ressource": "chauffage",
+    "valeur": 88.60,
+    "seuil": 100.00,
+    "date": "2026-09-24",
+    "alerte": false,
+    "moyenne_mobile": 88.60,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_TP_Chimie",
+    "ressource": "electricite",
+    "valeur": 160.00,
+    "seuil": 150.00,
+    "date": "2026-09-25",
+    "alerte": true,
+    "moyenne_mobile": 160.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Restaurant_Universitaire",
+    "ressource": "eau",
+    "valeur": 155.40,
+    "seuil": 150.00,
+    "date": "2026-09-25",
+    "alerte": true,
+    "moyenne_mobile": 170.30,
+    "tendance": "baisse"
+},
+{
+    "batiment": "Buvette_Etudiants",
+    "ressource": "electricite",
+    "valeur": 119.50,
+    "seuil": 120.00,
+    "date": "2026-09-25",
+    "alerte": false,
+    "moyenne_mobile": 127.65,
+    "tendance": "baisse"
+},
+{
+    "batiment": "Gymnase",
+    "ressource": "eau",
+    "valeur": 131.70,
+    "seuil": 125.00,
+    "date": "2026-09-26",
+    "alerte": true,
+    "moyenne_mobile": 131.70,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_TP_Physique",
+    "ressource": "electricite",
+    "valeur": 149.00,
+    "seuil": 150.00,
+    "date": "2026-09-26",
+    "alerte": false,
+    "moyenne_mobile": 149.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "eau",
+    "valeur": 134.00,
+    "seuil": 100.00,
+    "date": "2026-11-06",
+    "alerte": true,
+    "moyenne_mobile": 134.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "eau",
+    "valeur": 200.00,
+    "seuil": 100.00,
+    "date": "2026-11-06",
+    "alerte": true,
+    "moyenne_mobile": 167.00,
+    "tendance": "hausse"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "electricite",
+    "valeur": 70.00,
+    "seuil": 120.00,
+    "date": "2026-11-06",
+    "alerte": false,
+    "moyenne_mobile": 70.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "gaze",
+    "valeur": 70.00,
+    "seuil": 120.00,
+    "date": "2026-11-06",
+    "alerte": false,
+    "moyenne_mobile": 70.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "gaze",
+    "valeur": 70.00,
+    "seuil": 120.00,
+    "date": "2026-11-06",
+    "alerte": false,
+    "moyenne_mobile": 70.00,
+    "tendance": "stable"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 150.00,
+    "seuil": 120.00,
+    "date": "2026-11-09",
+    "alerte": true,
+    "moyenne_mobile": 150.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 150.00,
+    "seuil": 120.00,
+    "date": "2026-11-09",
+    "alerte": true,
+    "moyenne_mobile": 150.00,
+    "tendance": "stable"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 90.00,
+    "seuil": 120.00,
+    "date": "2026-11-09",
+    "alerte": false,
+    "moyenne_mobile": 130.00,
+    "tendance": "baisse"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 900.00,
+    "seuil": 120.00,
+    "date": "2026-11-09",
+    "alerte": true,
+    "moyenne_mobile": 380.00,
+    "tendance": "hausse"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 900.00,
+    "seuil": 120.00,
+    "date": "2026-11-10",
+    "alerte": true,
+    "moyenne_mobile": 630.00,
+    "tendance": "hausse"
+},
+{
+    "batiment": "Bibliothèque",
+    "ressource": "electricite",
+    "valeur": 900.00,
+    "seuil": 120.00,
+    "date": "2026-11-10",
+    "alerte": true,
+    "moyenne_mobile": 900.00,
+    "tendance": "stable"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "gaze",
+    "valeur": 50.00,
+    "seuil": 120.00,
+    "date": "2026-11-10",
+    "alerte": false,
+    "moyenne_mobile": 63.33,
+    "tendance": "baisse"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "gaze",
+    "valeur": 78.00,
+    "seuil": 120.00,
+    "date": "2026-11-10",
+    "alerte": false,
+    "moyenne_mobile": 66.00,
+    "tendance": "hausse"
+},
+{
+    "batiment": "Buvette_Étudiants",
+    "ressource": "gaze",
+    "valeur": 170.00,
+    "seuil": 120.00,
+    "date": "2026-11-10",
+    "alerte": true,
+    "moyenne_mobile": 170.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Salle_de_chimie",
+    "ressource": "chauffage",
+    "valeur": 170.00,
+    "seuil": 100.00,
+    "date": "2026-11-11",
+    "alerte": true,
+    "moyenne_mobile": 170.00,
+    "tendance": "indisponible"
+}
+]
