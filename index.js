@@ -10,6 +10,29 @@ const DEFAUT = [
   { batiment: "Labo_info", ressource: "électricité", valeur: 98.2, seuil: 150, date: "2026-09-20", alerte: false }
 ];
 
+// ---------- Un seul nom par bâtiment (sans doublons accent / sans accent) ----------
+// Même bâtiment sous deux noms : clé écrite ici -> clé à conserver
+const ALIAS_BAT = { salle_tp_chimie: 'salle_de_chimie' };
+
+const cleBat = b => String(b).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[\s_]+/g, '_');
+
+function unifierBatiments(data) {
+    const canon = {};
+    data.forEach(m => {
+        let k = cleBat(m.batiment);
+        k = ALIAS_BAT[k] || k;
+        const nom = String(m.batiment);
+        // on garde de préférence la version avec accents
+        if (!canon[k] || (!/[À-ÿ]/.test(canon[k]) && /[À-ÿ]/.test(nom))) canon[k] = nom;
+    });
+    data.forEach(m => {
+        const k = cleBat(m.batiment);
+        m.batiment = canon[ALIAS_BAT[k] || k];
+    });
+    return data;
+}
+
 //on va recuperer les mesures de data lors de chargement de page
 document.addEventListener("DOMContentLoaded", () => {
     fetch('data.json', { cache: 'no-store' })
@@ -18,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return res.json();
         })
         .then(data => {
-            D = data.map(m => ({ ...m, valeur: Number(m.valeur), seuil: Number(m.seuil) }));
+            D = unifierBatiments(data.map((m, i) => ({ ...m, _i: i, valeur: Number(m.valeur), seuil: Number(m.seuil) })));
             initApp();
         })
         
@@ -252,6 +275,9 @@ function remplirTableau(donnees) {
             <td>${m.date}</td>
             <td><span class="pill ${al(m) ? 'a' : ''}">${al(m) ? 'Alerte' : 'Ok'}</span></td>
             <td>${tendanceHtml(m)}</td>
+            ${window.userIsLoggedIn ? (m._i !== undefined
+                ? `<td><button type="button" class="btn-suppr" data-i="${m._i}" title="Supprimer cette mesure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg>Supprimer</button></td>`
+                : '<td></td>') : ''}
         </tr>`).join('');
 }
 
@@ -273,6 +299,8 @@ function remplirFiltres() {
     getEl('#fb').onchange = filtrer;
     getEl('#fr').onchange = filtrer;
     getEl('#fs').oninput = filtrer;
+    const ft = getEl('#ft');
+    if (ft) ft.onchange = filtrer;
     const btnAlert = getEl('#btn-filter-alert');
     if (btnAlert) {
         btnAlert.onclick = e => {
@@ -296,6 +324,10 @@ function filtrer() {
         (!seulementAlertes || al(m)) &&
         (!q || (joli(m.batiment) + " " + resNom(m.ressource) + " " + m.ressource).toLowerCase().includes(q)) //recherche f batiment + ressource
     );
+    // Tri par valeur (comme le menu du module C) ; resultat est une copie, D garde son ordre
+    const ft = getEl('#ft');
+    const ordre = ft ? ft.value : '';
+    if (ordre) resultat.sort((x, y) => ordre === 'asc' ? x.valeur - y.valeur : y.valeur - x.valeur);
     remplirTableau(resultat);
 }
 
@@ -845,3 +877,18 @@ const tendanceHtml = m => {
     if (!m) return;
     m.addEventListener('shown.bs.modal', () => { const i = getEl('#new-username'); i.focus(); i.select(); });
 })();
+
+// ---------- Suppression d'une mesure (confirmation avant envoi) ----------
+document.addEventListener('click', e => {
+    const b = e.target.closest('.btn-suppr');
+    if (!b) return;
+    const m = D.find(x => x._i === Number(b.dataset.i));
+    if (!m) return;
+    getEl('#suppr-i').value = m._i;
+    getEl('#suppr-res').value = m.ressource;
+    getEl('#suppr-val').value = m.valeur;
+    getEl('#suppr-date').value = m.date;
+    getEl('#suppr-texte').textContent =
+        `Voulez-vous vraiment supprimer ${phraseMesure(m)} (valeur ${arrondir(m.valeur)}, le ${m.date}) ?`;
+    bootstrap.Modal.getOrCreateInstance(getEl('#modalSuppr')).show();
+});

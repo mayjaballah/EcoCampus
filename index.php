@@ -1,6 +1,7 @@
 <?php
 //pour l'inscription
 session_start();
+if (empty($_SESSION['csrf'])) { $_SESSION['csrf'] = bin2hex(random_bytes(16)); }
 
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
@@ -178,6 +179,11 @@ $resFr = ['electricite' => 'Électricité', 'eau' => 'Eau', 'chauffage' => 'Chau
   <select id="fr" class="form-select w-auto"></select><!-- Liste des filtres par ressource, remplie par JavaScript. -->
   <select id="fp" class="form-select w-auto"></select><!-- Liste des filtres par période, remplie par JavaScript. -->
   <input id="fs" type="search" class="form-control w-auto" placeholder="Rechercher"><!-- champ recherche-->
+  <select id="ft" class="form-select w-auto" aria-label="Trier par valeur"><!-- tri comme dans le menu du module C -->
+    <option value="">Trier : ordre d’origine</option>
+    <option value="asc">Valeur croissante</option>
+    <option value="desc">Valeur décroissante</option>
+  </select>
   
   <button type="button" class="btn btn-eco-light" data-bs-toggle="modal" data-bs-target="#modalAjout">
   Ajouter un bâtiment
@@ -207,6 +213,7 @@ $resFr = ['electricite' => 'Électricité', 'eau' => 'Eau', 'chauffage' => 'Chau
       <th>DATE</th>
       <th>STATUT</th>
       <th>TENDANCE</th>
+      <?php if ($peutExpliquer) : ?><th>ACTION</th><?php endif; ?>
     </tr>
   </thead>
    <tbody id="tb"></tbody><!-- Corps du tableau, rempli de lignes par JavaScript. -->
@@ -548,6 +555,32 @@ $resFr = ['electricite' => 'Électricité', 'eau' => 'Eau', 'chauffage' => 'Chau
     </div>
   </div>
 </div>
+<?php if ($peutExpliquer) : ?>
+<!-- Fenêtre : confirmer la suppression d'une mesure -->
+<div class="modal fade" id="modalSuppr" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--card); color: var(--ink); border-radius: 28px; border: 1px solid var(--line);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="font-weight: 600;">Supprimer cette mesure ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body pt-3">
+        <p id="suppr-texte" class="mb-2"></p>
+        <p style="font-size:13px;color:var(--mut)">Cette action est définitive : la ligne est retirée de measures_in.csv et data.json est régénéré.</p>
+        <form id="form-suppr" action="php/supprimer_mesure.php" method="POST" class="d-flex gap-2 mt-3">
+          <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
+          <input type="hidden" name="index" id="suppr-i">
+          <input type="hidden" name="ressource" id="suppr-res">
+          <input type="hidden" name="valeur" id="suppr-val">
+          <input type="hidden" name="date" id="suppr-date">
+          <button type="button" class="btn btn-eco-light flex-fill" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-danger flex-fill" style="border-radius:25px">Oui, supprimer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
 <?php if ($peutExpliquer) : ?>
 <!-- Fenêtre : modifier le nom d'utilisateur -->
 <div class="modal fade" id="modalUser" tabindex="-1" aria-hidden="true">

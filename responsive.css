@@ -186,6 +186,7 @@ img { max-width: 100%; }
   .table td:nth-child(5)::before { content: "Date"; }
   .table td:nth-child(6)::before { content: "Statut"; }
   .table td:nth-child(7)::before { content: "Tendance"; }
+  .table td:nth-child(8)::before { content: "Action"; }
 
   .table td:first-child {
     font-weight: 600;

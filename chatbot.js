@@ -27,6 +27,22 @@
     return n;
   }
 
+    /* ---------- Nettoyage des réponses du modèle ---------- */
+  var ACCENTS = {
+    Bibliotheque: "Bibliothèque", Amphitheatre: "Amphithéâtre", Residence: "Résidence",
+    Etudiants: "Étudiants", Etudiant: "Étudiant", electricite: "électricité", gaze: "gaz"
+  };
+  function nettoyer(t) {
+    return String(t)
+      .replace(/^\s*[*•]\s+/gm, "- ")                 // puces "* " -> "- "
+      .replace(/\*\*([^*]+)\*\*/g, "$1")              // **gras** -> gras
+      .replace(/\*+/g, "")                            // étoiles restantes
+      .replace(/^#{1,6}\s*/gm, "")                    // titres "## "
+      .replace(/`/g, "")                              // accents graves
+      .replace(/([A-Za-zÀ-ÿ0-9])_(?=[A-Za-zÀ-ÿ0-9])/g, "$1 ")   // Salle_TP -> Salle TP
+      .replace(/[A-Za-z]+/g, function (w) { return ACCENTS[w] || w; });
+  }
+
   var SVG_NS = "http://www.w3.org/2000/svg";
   function icone(chemin) {
     var svg = document.createElementNS(SVG_NS, "svg");
@@ -148,7 +164,7 @@
         if (r.ok && r.data.reply) {
           historique.push({ role: "user", content: texte });
           historique.push({ role: "assistant", content: r.data.reply });
-          ajouterMessage(r.data.reply, "bot");
+          ajouterMessage(nettoyer(r.data.reply), "bot");
         } else {
           ajouterMessage(r.data.error || "Le serveur n’a pas répondu correctement. Vérifiez que XAMPP et php/chatbot.php fonctionnent.", "err");
         }

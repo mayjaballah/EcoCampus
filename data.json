@@ -30,7 +30,7 @@
     "tendance": "indisponible"
 },
 {
-    "batiment": "Buvette_Etudiants",
+    "batiment": "Buvette_Étudiants",
     "ressource": "electricite",
     "valeur": 135.80,
     "seuil": 120.00,
@@ -50,7 +50,7 @@
     "tendance": "indisponible"
 },
 {
-    "batiment": "Salle_TP_Chimie",
+    "batiment": "Salle_de_chimie",
     "ressource": "eau",
     "valeur": 112.70,
     "seuil": 100.00,
@@ -90,7 +90,7 @@
     "tendance": "indisponible"
 },
 {
-    "batiment": "Bibliotheque",
+    "batiment": "Bibliothèque",
     "ressource": "electricite",
     "valeur": 176.30,
     "seuil": 150.00,
@@ -120,7 +120,7 @@
     "tendance": "baisse"
 },
 {
-    "batiment": "Buvette_Etudiants",
+    "batiment": "Buvette_Étudiants",
     "ressource": "eau",
     "valeur": 99.90,
     "seuil": 100.00,
@@ -150,7 +150,7 @@
     "tendance": "indisponible"
 },
 {
-    "batiment": "Salle_TP_Chimie",
+    "batiment": "Salle_de_chimie",
     "ressource": "electricite",
     "valeur": 160.00,
     "seuil": 150.00,
@@ -170,7 +170,7 @@
     "tendance": "baisse"
 },
 {
-    "batiment": "Buvette_Etudiants",
+    "batiment": "Buvette_Étudiants",
     "ressource": "electricite",
     "valeur": 119.50,
     "seuil": 120.00,
@@ -226,8 +226,8 @@
     "seuil": 120.00,
     "date": "2026-11-06",
     "alerte": false,
-    "moyenne_mobile": 70.00,
-    "tendance": "indisponible"
+    "moyenne_mobile": 115.00,
+    "tendance": "baisse"
 },
 {
     "batiment": "Salle_de_chimie",
@@ -256,8 +256,8 @@
     "seuil": 120.00,
     "date": "2026-11-09",
     "alerte": true,
-    "moyenne_mobile": 150.00,
-    "tendance": "indisponible"
+    "moyenne_mobile": 163.15,
+    "tendance": "baisse"
 },
 {
     "batiment": "Bibliothèque",
@@ -266,8 +266,8 @@
     "seuil": 120.00,
     "date": "2026-11-09",
     "alerte": true,
-    "moyenne_mobile": 150.00,
-    "tendance": "stable"
+    "moyenne_mobile": 158.77,
+    "tendance": "baisse"
 },
 {
     "batiment": "Bibliothèque",
@@ -284,7 +284,7 @@
     "ressource": "electricite",
     "valeur": 900.00,
     "seuil": 120.00,
-    "date": "2026-11-09",
+    "date": "2026-11-10",
     "alerte": true,
     "moyenne_mobile": 380.00,
     "tendance": "hausse"
@@ -298,16 +298,6 @@
     "alerte": true,
     "moyenne_mobile": 630.00,
     "tendance": "hausse"
-},
-{
-    "batiment": "Bibliothèque",
-    "ressource": "electricite",
-    "valeur": 900.00,
-    "seuil": 120.00,
-    "date": "2026-11-10",
-    "alerte": true,
-    "moyenne_mobile": 900.00,
-    "tendance": "stable"
 },
 {
     "batiment": "Salle_de_chimie",
@@ -348,5 +338,25 @@
     "alerte": true,
     "moyenne_mobile": 170.00,
     "tendance": "indisponible"
+},
+{
+    "batiment": "Buvette_Étudiants",
+    "ressource": "chauffage",
+    "valeur": 80.00,
+    "seuil": 100.00,
+    "date": "2026-11-11",
+    "alerte": false,
+    "moyenne_mobile": 80.00,
+    "tendance": "indisponible"
+},
+{
+    "batiment": "Buvette_Étudiants",
+    "ressource": "chauffage",
+    "valeur": 500.00,
+    "seuil": 100.00,
+    "date": "2026-11-11",
+    "alerte": true,
+    "moyenne_mobile": 290.00,
+    "tendance": "hausse"
 }
 ]

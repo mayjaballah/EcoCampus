@@ -1391,7 +1391,19 @@ body.splashing .wrap {
 }
 .building-chart .cols { overflow: visible; }
 .building-chart .col,
-.building-chart .names div { flex: 0 0 85px; }
+.building-chart .names div {
+  flex: 0 0 110px;
+  width: 110px;
+  min-width: 0;          /* empêche un long mot d'élargir la colonne */
+  box-sizing: border-box;
+}
+.building-chart .col i { width: 64px; }      /* barre centrée dans sa colonne */
+.building-chart .names div {
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
 .building-chart .bar-segment {
   position: relative;
   cursor: pointer;
@@ -1421,5 +1433,19 @@ body.splashing .wrap {
   .building-chart .cols,
   .building-chart .names { gap: 16px; }
   .building-chart .col,
-  .building-chart .names div { flex-basis: 72px; }
+  .building-chart .names div { flex: 0 0 84px; width: 84px; }
+  .building-chart .col i { width: 48px; }
+  .building-chart .names div { font-size: 11.5px; }
 }
+
+/* ---------- Bouton « Supprimer » du tableau des mesures ---------- */
+.btn-suppr {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 0; border-radius: 999px; padding: 5px 12px;
+  background: var(--badbg); color: var(--badink);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-suppr:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, .2); }
+.btn-suppr:focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
+.btn-suppr svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
