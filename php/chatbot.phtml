@@ -1,0 +1,23 @@
+<?php
+/* views/chatbot.phtml - Bouton « ✨ Expliquer » du chatbot
+   Affiché à côté d'un graphique ; réservé aux utilisateurs connectés.
+   chatbot.js lit l'attribut data-q et envoie la question à php/chatbot.php.
+
+   Variables à définir avant le require :
+     $question  : la question envoyée à l'assistant
+     $idBouton  : id HTML du bouton (chaîne vide si inutile)
+   Variable de index.php : $peutExpliquer (utilisateur connecté)
+
+   Exemple :
+     <?php $idBouton = ''; $question = 'Explique ce graphique'; require __DIR__ . '/views/chatbot.phtml'; ?>
+*/
+if (empty($peutExpliquer)) {
+    return;
+}
+?>
+<button type="button"
+<?= !empty($idBouton) ? ' id="' . htmlspecialchars($idBouton, ENT_QUOTES, 'UTF-8') . '"' : '' ?>
+ class="btn-explain" data-q="
+ <?= htmlspecialchars($question, ENT_QUOTES, 'UTF-8') ?>">
+ <span aria-hidden="true">✨</span> 
+ Expliquer</button>

@@ -1,0 +1,23 @@
+<!-- ========== PAGE DE VERIFICATION DU CODE ========== -->
+<section class="page" id="verify-code">
+ <div class="hero flex flex-col items-center justify-center text-center">
+  <i class="orb o1"></i><i class="orb o2"></i>
+  <h1 class="ttl"><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></h1>
+  <div class="bar"></div>
+  <div class="card login">
+   <div class="logo" style="justify-content:center;margin-bottom:14px"><i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i></div>
+   <h2>Vérification du code</h2>
+   <p class="sub" style="margin-bottom:26px">Entrez le code à 6 chiffres envoyé à votre adresse e-mail.</p>
+
+   <form action="php/verify_code.php" method="POST">
+    <label for="code" class="d-block text-start fw-medium">Code de vérification
+     <input type="text" id="code" name="code" class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Exemple : 123456" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" required></label>
+    <button type="submit" class="block w-full rounded-full bg-[#0f3d2a] text-[#c8f7a0] font-semibold text-center px-6 py-3 mt-1 cursor-pointer transition hover:bg-[#14543a] focus:outline-none focus:ring-2 focus:ring-green-500">Vérifier le code</button>
+   </form>
+   
+   <div class="login-links" style="margin-top: 15px;">
+     <p><a href="#login">Retour à la connexion</a></p>
+   </div>
+  </div>
+ </div>
+</section>

@@ -1,0 +1,68 @@
+<?php
+/* views/upload.phtml - Photo de profil (colonne gauche de « Mon profil ») + fenêtre de recadrage
+   Le bouton appareil photo ouvre le sélecteur de fichier ; index.js affiche ensuite
+   la fenêtre « Ajuster la photo » (#modalCrop) puis envoie l'image à php/upload.php.
+   Le formulaire « Supprimer la photo » envoie aussi vers php/upload.php.
+   Variables de index.php : $peutExpliquer, $photoUrl, $initiales */
+if (empty($peutExpliquer)) {
+    return;
+}
+?>
+   <!-- Gauche : photo -->
+   <div class="prof-left">
+    <div class="prof-avatar">
+     <?php if ($photoUrl) : ?>
+      <img src="<?= htmlspecialchars($photoUrl) ?>" alt="Photo de profil">
+     <?php else : ?>
+      <?= htmlspecialchars($initiales) ?>
+     <?php endif; ?>
+     <button type="button" id="btn-choisir-photo" class="avatar-edit" aria-label="Changer la photo de profil" title="Changer la photo">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+     </button>
+    </div>
+    <input type="file" id="photo-input" accept="image/png,image/jpeg,image/webp" hidden>
+    <?php if ($photoUrl) : ?>
+    <form action="php/upload.php" method="POST">
+     <button type="submit" name="supprimer" value="1" class="link-btn">Supprimer la photo</button>
+    </form>
+    <?php endif; ?>
+   </div>
+
+<!-- Fenêtre : ajuster la photo de profil -->
+<div class="modal fade" id="modalCrop" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-eco">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="font-weight:600">Ajuster la photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body pt-3 text-center">
+        <div class="crop-stage" id="crop-stage">
+          <img id="crop-img" alt="">
+          <div class="crop-box" id="crop-box">
+            <span class="crop-circle"></span>
+            <span class="crop-grid"></span>
+            <i class="crop-h nw" data-c="nw"></i>
+            <i class="crop-h ne" data-c="ne"></i>
+            <i class="crop-h sw" data-c="sw"></i>
+            <i class="crop-h se" data-c="se"></i>
+          </div>
+        </div>
+        <p class="prof-hint">Déplacez le cadre ou tirez sur ses coins pour choisir la zone visible.</p>
+        <div class="crop-actions">
+          <button type="button" class="btn btn-eco-light" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-eco" id="crop-ok">Valider</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// La fenêtre de recadrage est déplacée directement dans <body> : placée dans une
+// <section class="page"> masquée, une fenêtre Bootstrap ne pourrait pas s'afficher.
+(function () {
+    var m = document.getElementById('modalCrop');
+    if (m && m.parentNode !== document.body) { document.body.appendChild(m); }
+})();
+</script>

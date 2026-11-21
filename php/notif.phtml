@@ -1,0 +1,32 @@
+
+<?php if ($flash || $nouvelleAlerte) : ?>
+<div class="notif-stack">
+
+  <?php if ($flash) : ?>
+  <div class="notif <?= $flashType === 'error' ? 'is-error' : 'is-success' ?>" data-notif data-duration="4500"
+       style="--dur:4.5s" role="<?= $flashType === 'error' ? 'alert' : 'status' ?>">
+    <span class="notif-icon" aria-hidden="true"><?= $flashType === 'error' ? '✕' : '✓' ?></span>
+    <div class="notif-text"><span><?= htmlspecialchars($flash) ?></span></div>
+    <button type="button" class="notif-close" aria-label="Fermer">×</button>
+    <i class="notif-bar"></i>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($nouvelleAlerte) : ?>
+  <div class="notif is-alert" data-notif data-duration="7000" style="--dur:7s" role="alert">
+    <span class="notif-icon" aria-hidden="true">⚠</span>
+    <div class="notif-text">
+      <strong>Nouvelle anomalie détectée</strong>
+      <span>
+        <?= htmlspecialchars($nouvelleAlerte['batiment']) ?> (<?= htmlspecialchars($nouvelleAlerte['ressource']) ?>) :
+        <?= number_format($nouvelleAlerte['valeur'], 1) ?> pour un seuil de <?= number_format($nouvelleAlerte['seuil'], 1) ?>
+        (+<?= $nouvelleAlerte['pct'] ?> %)
+      </span>
+    </div>
+    <button type="button" class="notif-close" aria-label="Fermer">×</button>
+    <i class="notif-bar"></i>
+  </div>
+  <?php endif; ?>
+
+</div>
+<?php endif; ?>

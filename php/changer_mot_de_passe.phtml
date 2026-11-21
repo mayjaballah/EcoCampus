@@ -1,0 +1,130 @@
+<!-- MODALE : MODIFIER LE MOT DE PASSE -->
+
+<div class="modal fade" id="modalMdp" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content modal-eco">
+
+            <!-- En-tête -->
+            <div class="modal-header border-0 pb-0">
+
+                <h5 class="modal-title" style="font-weight:600">
+                    Modifier le mot de passe
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fermer">
+                </button>
+
+            </div>
+
+            <!-- Corps -->
+            <div class="modal-body pt-3">
+
+                <!-- Modification normale -->
+                <div id="mdp-change">
+
+                    <form action="php/changer_mot_de_passe.php"
+                          method="POST"
+                          class="pw-form">
+
+                        <!-- Token de sécurité -->
+                        <input type="hidden"
+                               name="csrf"
+                               value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
+
+                        <!-- Ancien mot de passe -->
+                        <input type="password"
+                               name="mot_de_passe_actuel"
+                               class="form-control rounded-pill px-4 py-2"
+                               placeholder="Mot de passe actuel"
+                               autocomplete="current-password"
+                               required>
+
+                        <!-- Nouveau mot de passe -->
+                        <input type="password"
+                               name="nouveau_mot_de_passe"
+                               class="form-control rounded-pill px-4 py-2"
+                               placeholder="Nouveau mot de passe (8 caractères min.)"
+                               minlength="8"
+                               autocomplete="new-password"
+                               required>
+
+                        <!-- Confirmation -->
+                        <input type="password"
+                               name="confirmation"
+                               class="form-control rounded-pill px-4 py-2"
+                               placeholder="Confirmer le nouveau mot de passe"
+                               minlength="8"
+                               autocomplete="new-password"
+                               required>
+
+                        <button type="submit" class="btn btn-eco w-100">
+                            Modifier le mot de passe
+                        </button>
+
+                    </form>
+
+                    <!-- Mot de passe actuel oublié -->
+                    <p class="mdp-forgot">
+                        <button type="button"
+                                class="link-btn"
+                                id="mdp-oublie">
+                            Mot de passe actuel oublié ?
+                        </button>
+                    </p>
+
+                </div>
+
+                <!-- Récupération par email -->
+                <div id="mdp-forgot" hidden>
+
+                    <p style="margin:0 0 18px">
+
+                        Pas de souci : nous allons envoyer un code
+                        de vérification à
+
+                        <strong>
+                            <?= htmlspecialchars($profil['email'] ?? '') ?>
+                        </strong>.
+
+                        Une fois le code saisi, vous pourrez choisir
+                        un nouveau mot de passe sans indiquer l'ancien.
+
+                    </p>
+
+                    <form action="php/forgot_password.php" method="POST">
+
+                        <input type="hidden"
+                               name="email"
+                               value="<?= htmlspecialchars($profil['email'] ?? '') ?>">
+
+                        <button type="submit" class="btn btn-eco w-100">
+                            Envoyer le code par e-mail
+                        </button>
+
+                    </form>
+
+                    <!-- Retour à la modification normale -->
+                    <p class="mdp-forgot">
+
+                        <button type="button"
+                                class="link-btn"
+                                id="mdp-retour">
+                            ← Retour
+                        </button>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

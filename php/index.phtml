@@ -1,0 +1,293 @@
+<!-- ========== TABLEAU DE BORD ========== -->
+<section class="page" id="dashboard"><!-- =================== Page Tableau de bord ============-->
+ <h1 class="t" id="range">Suivi de la consommation</h1>
+ <!-- Indicateurs de consommation et alertes répartis par ressource. -->
+ <div class="row g-4 mb-4">
+  <div class="col-lg-4">
+   <div class="card total h-100 d-flex flex-column justify-content-between" style="padding: 22px;">
+    <div style="position: relative; z-index: 1;">
+     <div class="lab" style="font-size: 11px; letter-spacing: 0.5px; margin-bottom: 16px; opacity: 0.85;">Consommation totale par ressource</div>
+     <div id="tot-ressources-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;"></div>
+    </div>
+    <i class="c1"></i><i class="c2"></i>
+   </div>
+  </div>
+  <div class="col-lg-4">
+   <div class="card avg h-100 d-flex flex-column justify-content-between" style="padding: 22px;">
+    <div class="lab" style="font-size: 11px; letter-spacing: 0.5px; margin-bottom: 16px;">Moyenne de consommation par ressource</div>
+    <div id="avg-ressources-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;"></div>
+   </div>
+  </div>
+  <div class="col-lg-4">
+   <div class="card alert pulse h-100 d-flex flex-column justify-content-between" style="padding: 22px;">
+    <div>
+     <div class="lab" style="font-size: 11px; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600;">Alertes</div>
+     <div class="big" id="nal" style="font-size: 42px; font-weight: 700; line-height: 1.1;">0</div>
+     <div style="font-size: 12px; margin-bottom: 16px;">seuils dépassés</div>
+     <div id="alert-ressources-list" style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px;"></div>
+    </div>
+    <div style="font-size: 11px; opacity: 0.8; margin-top: 14px;">Suivi des dépassements par ressource</div>
+   </div>
+  </div>
+ </div>
+ <!-- [BOOTSTRAP] grid2 (CSS) -> row g-4 + col-lg-7 / col-lg-5 (les proportions étaient de 1.55fr/1fr et sont désormais de 58 %/42 %). -->
+ <div class="row g-4">
+  <div class="col-lg-7">
+   <div class="card h-100">
+    <div class="card-head">
+     <div>
+      <h2>Valeur vs seuil</h2>
+      <p class="sub">Le trait vertical marque le seuil de chaque mesure</p>
+     </div>
+     <?php if ($peutExpliquer) : ?>
+     <button type="button" class="btn-explain" data-q="Explique le graphique « Valeur vs seuil » : que montre-t-il et quelles mesures dépassent leur seuil ?"><span aria-hidden="true">✨</span> Expliquer</button>
+     <?php endif; ?>
+    </div>
+    <div id="bars" class="bars"></div><!-- Les données modifiées ou ajoutées s'affichent ici. -->
+   </div>
+  </div>
+  <div class="col-lg-5">
+   <div class="card h-100"><!-- Carte des anomalies. -->
+    <h2 style="margin-bottom:22px">Anomalies détectées</h2>
+    <div id="anos"></div><!-- JavaScript ajoute les anomalies ici. -->
+   </div>
+  </div>
+ </div><!-- Fermeture de la ligne. -->
+</section>
+
+<!-- ========== MESURES ========== -->
+<section class="page" id="mesures"><!--====== PAGE MESURES======= -->
+ <h1 class="t">Mesures</h1>
+ <!-- [BOOTSTRAP] .filters : d-flex + flex-wrap + gap-3 + mb-4 remplacent les règles CSS (display:flex; gap; flex-wrap; margin-bottom). -->
+ <div class="filters d-flex flex-wrap gap-3 mb-4"><!-- Barre des filtres. -->
+  <!-- [BOOTSTRAP] form-select / form-control définissent le style des champs. "w-auto" évite qu'ils occupent toute la largeur par défaut. -->
+  <select id="fb" class="form-select w-auto"></select> <!-- Liste des filtres par bâtiment, remplie par JavaScript. -->
+  <select id="fr" class="form-select w-auto"></select><!-- Liste des filtres par ressource, remplie par JavaScript. -->
+  <select id="fp" class="form-select w-auto"></select><!-- Liste des filtres par période, remplie par JavaScript. -->
+  <input id="fs" type="search" class="form-control w-auto" placeholder="Rechercher"><!-- champ recherche-->
+  <select id="ft" class="form-select w-auto" aria-label="Trier par valeur"><!-- tri comme dans le menu du module C -->
+    <option value="">Trier : ordre d’origine</option>
+    <option value="asc">Valeur croissante</option>
+    <option value="desc">Valeur décroissante</option>
+  </select>
+  
+  <button type="button" class="btn btn-eco-light" data-bs-toggle="modal" data-bs-target="#modalAjout">
+  Ajouter un bâtiment
+  </button>
+    <!-- [BOOTSTRAP] "btn" est un bouton Bootstrap ; "btn-eco-light" est notre variante CSS qui remplace les couleurs Bootstrap grâce aux variables --bs-btn-*.
+        La classe "on", ajoutée par JavaScript, reste fonctionnelle et colore le bouton en rouge. -->
+    <button id="btn-filter-alert" type="button" class="btn btn-eco-light">
+    <svg class="warn" viewBox="0 0 14 14" aria-hidden="true">
+      <circle class="wc" cx="7" cy="7" r="6" fill="#e8604c"/>
+      <path class="wx" d="M7 3.8v3.4M7 9.8v.1" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <span>Voir Alertes</span>
+  </button><!-- Bouton affichant uniquement les alertes. -->
+ </div>
+
+ <div class="card"><div class="table-responsive"><!-- Carte et conteneur assurant le défilement horizontal du tableau sur téléphone. -->
+  <!-- [BOOTSTRAP] class="table" applique le style de tableau de Bootstrap.
+       table-hover : remplace la règle CSS tbody tr:hover.
+       align-middle : centre le contenu verticalement. mb-0 : supprime la marge inférieure. -->
+  <table class="table table-hover align-middle mb-0">
+   <thead>
+    <tr>
+      <th>BÂTIMENT</th>
+      <th>RESSOURCE</th>
+      <th>VALEUR</th>
+      <th>SEUIL</th>
+      <th>DATE</th>
+      <th>STATUT</th>
+      <th>TENDANCE</th>
+      <?php if ($peutExpliquer) : ?><th>ACTION</th><?php endif; ?>
+    </tr>
+  </thead>
+   <tbody id="tb"></tbody><!-- Corps du tableau, rempli de lignes par JavaScript. -->
+  </table>
+ </div></div><!-- Fermeture de table-responsive et de la carte. -->
+</section>
+
+<!-- ========== GRAPHIQUES ========== -->
+<section class="page" id="graphique"><!-- ========= PAGE GRAPHIQUES ======== -->
+ <h1 class="t">Graphiques</h1>
+  <div class="card">
+  <div class="card-head">
+   <div>
+    <h2>Consommation par jour</h2>
+    <p class="sub">Évolution jour après jour, par ressource</p>
+   </div>
+   <?php if ($peutExpliquer) : ?>
+   <button type="button" id="gj-explain" class="btn-explain" data-q="Explique le graphique de consommation par jour : comment évolue la consommation d'un jour à l'autre ?"><span aria-hidden="true">✨</span> Expliquer</button>
+   <?php endif; ?>
+  </div>
+  <div class="gj-filters">
+   <select id="gj-bat" class="form-select w-auto" aria-label="Filtrer par bâtiment"></select>
+   <select id="gj-res" class="form-select w-auto" aria-label="Filtrer par ressource"></select>
+  </div>
+  <div class="gj-wrap"><canvas id="gj-canvas" role="img" aria-label="Courbe de consommation par jour"></canvas></div>
+ </div>
+ <div class="card building-chart" style="margin-top:26px">
+  <div class="card-head">
+   <div>
+    <h2>Consommation par bâtiment</h2>
+    <p class="sub">Répartition des ressources par bâtiment</p>
+   </div>
+   <?php if ($peutExpliquer) : ?>
+   <button type="button" class="btn-explain" data-q="Explique le graphique « Consommation par bâtiment » : compare la consommation des bâtiments selon les ressources et indique ceux qui consomment le plus."><span aria-hidden="true">✨</span> Expliquer</button>
+   <?php endif; ?>
+  </div>
+  <div class="building-chart-legend">
+   <span><i style="background:#a3e635"></i>Électricité</span>
+   <span><i style="background:#38bdf8"></i>Eau</span>
+   <span><i style="background:#fb923c"></i>Chauffage</span>
+   <span><i style="background:#facc15"></i>Gaz</span>
+  </div>
+  <div class="cols-wrapper">
+   <div id="cb-axis" class="building-chart-axis" aria-hidden="true"></div>
+   <div class="building-chart-content">
+    <div class="cols" id="cb"></div>
+    <div class="names" id="nb"></div>
+   </div>
+  </div>
+ </div>
+ <div class="card" style="margin-top:26px">
+  <div class="card-head" style="margin-bottom:26px">
+   <div>
+    <h2>Par ressource</h2>
+    <p class="sub" style="margin-bottom:0">Somme des mesures de chaque ressource</p>
+   </div>
+   <?php if ($peutExpliquer) : ?>
+   <button type="button" class="btn-explain" data-q="Explique le graphique « Par ressource » : comment se répartit la consommation entre électricité, eau et chauffage ?"><span aria-hidden="true">✨</span> Expliquer</button>
+   <?php endif; ?>
+  </div>
+  <div id="rb" class="bars"></div><!-- Affiche les barres de chaque ressource ("bars" fonctionne comme #bars ci-dessus). -->
+ </div>
+</section>
+
+<!-- ========== ALERTES ========== -->
+<section class="page" id="alertes"> <!-- ======== PAGE ALERTES ======== -->
+ <h1 class="t">Alertes</h1>
+ <div class="row g-4 mb-4">
+  <div class="col-lg-4">
+   <div class="card alert pulse h-100 d-flex flex-column justify-content-between" style="padding: 22px;">
+    <div>
+     <div class="lab" style="font-size: 11px; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600;">Alertes</div>
+     <div class="big" id="na2" style="font-size: 42px; font-weight: 700; line-height: 1.1;">0</div>
+     <div style="font-size: 12px; margin-bottom: 16px;">seuils dépassés</div>
+     <div id="alert-ressources-list-2" style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px;"></div>
+    </div>
+    <div style="font-size: 11px; opacity: 0.8; margin-top: 14px;">Suivi des dépassements par ressource</div>
+   </div>
+  </div>
+  <div class="col-lg-8">
+   <div class="card h-100">
+    <div class="card-head">
+     <div>
+      <h2>Classement écologique</h2>
+      <p class="sub">Les bâtiments les plus gourmands, selon leurs dépassements de seuil</p>
+     </div>
+     <?php if ($peutExpliquer) : ?>
+     <button type="button" class="btn-explain" data-q="Explique le classement écologique des bâtiments : pourquoi les premiers sont-ils les plus gourmands et que faire pour réduire leurs dépassements de seuil ?"><span aria-hidden="true">✨</span> Expliquer</button>
+     <?php endif; ?>
+    </div>
+    <div id="podium" class="podium"></div>
+    <p class="podium-note">Classement = somme des dépassements de seuil (en %). Score éco = 100 − dépassement moyen par mesure.</p>
+   </div>
+  </div>
+ </div><!-- Fermeture de la ligne. -->
+ <div id="al"></div><!-- JavaScript ajoute ici la liste des alertes. -->
+</section>
+
+<?php if ($peutExpliquer) : ?>
+<!-- ========== MON PROFIL ========== -->
+<section class="page" id="profil">
+ <h1 class="t">Mon profil</h1>
+
+ <div class="card prof-main">
+  <h2 class="prof-title">Vos informations</h2>
+
+  <div class="prof-layout">
+
+<?php require __DIR__ . '/upload_photo.phtml'; ?>
+
+   <!-- Droite : informations personnelles, en face de la photo -->
+   <div class="prof-right">
+    <dl class="info-list">
+     <div><dt>Prénom</dt><dd><?= htmlspecialchars($profil['prenom'] ?? ($_SESSION['prenom'] ?? '')) ?></dd></div>
+     <div><dt>Nom</dt><dd><?= htmlspecialchars($profil['nom'] ?? ($_SESSION['nom'] ?? '')) ?></dd></div>
+     <div>
+      <dt>Nom d’utilisateur</dt>
+      <dd><?= htmlspecialchars($profil['username'] ?? ($_SESSION['username'] ?? '')) ?> <button type="button" class="link-btn" data-bs-toggle="modal" data-bs-target="#modalUser">Modifier</button></dd>
+     </div>
+     <div><dt>E-mail</dt><dd><?= htmlspecialchars($profil['email'] ?? '—') ?></dd></div>
+     <div>
+      <dt>Mot de passe</dt>
+      <dd>•••••••••• <button type="button" class="link-btn" data-bs-toggle="modal" data-bs-target="#modalMdp">Modifier</button></dd>
+     </div>
+    </dl>
+   </div>
+
+  </div>
+ </div>
+
+ <!-- Mesures ajoutées -->
+ <div class="card prof-wide">
+  <h2>Mes bâtiments ajoutés</h2>
+  <p class="sub">Les bâtiments que vous avez enregistrés depuis le bouton « Ajouter un bâtiment »</p>
+  <?php if (empty($mesAjouts)) : ?>
+   <p class="empty">Vous n’avez encore ajouté aucun bâtiment.</p>
+  <?php else : ?>
+   <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+     <thead>
+      <tr><th>BÂTIMENT</th><th>RESSOURCE</th><th>VALEUR</th><th>SEUIL</th><th>DATE</th><th>STATUT</th></tr>
+     </thead>
+     <tbody>
+      <?php foreach ($mesAjouts as $a) : $enAlerte = (float)$a['valeur'] > (float)$a['seuil']; ?>
+      <tr>
+       <td><?= htmlspecialchars(str_replace('_', ' ', $a['batiment'])) ?></td>
+       <td><?= htmlspecialchars($resFr[$a['ressource']] ?? $a['ressource']) ?></td>
+       <td><?= number_format((float)$a['valeur'], 1) ?></td>
+       <td><?= number_format((float)$a['seuil'], 1) ?></td>
+       <td><?= date('d/m/Y', strtotime($a['date_mesure'])) ?></td>
+       <td><span class="pill <?= $enAlerte ? 'a' : '' ?>"><?= $enAlerte ? 'Alerte' : 'Ok' ?></span></td>
+      </tr>
+      <?php endforeach; ?>
+     </tbody>
+    </table>
+   </div>
+  <?php endif; ?>
+ </div>
+</section>
+<?php endif; ?>
+
+<!-- ========== LOGIN ========== -->
+
+<!-- ========== PAGE D'INSCRIPTION ========== -->
+<?php require __DIR__ . '/register.phtml'; ?>
+
+<?php require __DIR__ . '/forgot_password.phtml'; ?>
+
+<?php require __DIR__ . '/verify_code.phtml'; ?>
+
+<?php require __DIR__ . '/reset_password.phtml'; ?>
+
+<?php require __DIR__ . '/ajouter_mesure.phtml'; ?>
+
+<?php require __DIR__ . '/login.phtml';?>
+
+
+
+<?php if ($peutExpliquer) : ?>
+<!-- Fenêtre : confirmer la suppression d'une mesure -->
+<?php require __DIR__ . '/supprimer_mesure.phtml'; ?>
+<?php endif; ?>
+<?php if ($peutExpliquer) : ?>
+<!-- Fenêtre : modifier le nom d'utilisateur -->
+<?php require __DIR__ . '/changer_username.phtml'; ?>
+
+<!-- Fenêtre : ajuster la photo de profil -->
+
+<!-- Fenêtre : modifier le mot de passe -->
+<?php require __DIR__ . '/changer_mot_de_passe.phtml'; ?>
+<?php endif; ?>

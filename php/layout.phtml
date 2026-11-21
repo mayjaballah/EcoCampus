@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EcoCampus</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="chatbot.css">
+<script src="php/vue.global.js"></script>
+<link rel="stylesheet" href="responsive.css?v=<?= filemtime(dirname(__DIR__) . '/responsive.css') ?>">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="splashing">
+
+<!-- ========== SPLASH (page de démarrage animée) ========== -->
+
+<div id="splash">
+ <div class="sp-in">
+  <i class="sp-logo"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i><!-- La balise SVG crée l'icône ou le logo. -->
+  <div class="sp-ttl"><span style="--i:0">E</span><span style="--i:1">c</span><span style="--i:2">o</span><span class="g" style="--i:3">C</span><span class="g" style="--i:4">a</span><span class="g" style="--i:5">m</span><span class="g" style="--i:6">p</span><span class="g" style="--i:7">u</span><span class="g" style="--i:8">s</span></div>
+  <!-- EcoCampus de la page d'accueil. -->
+  <p class="sp-tag">Suivi de la consommation du campus</p>
+  <div class="sp-line"><b></b></div><!-- barre de chargement -->
+ </div>
+</div>
+
+<div class="wrap"><!-- Conteneur principal regroupant tout le site. -->
+
+<!-- ========== HEADER ========== -->
+<!-- [BOOTSTRAP] header : d-flex + align-items-center + flex-wrap + gap-3 remplacent les règles CSS "display:flex; align-items:center; flex-wrap:wrap; gap". -->
+<header class="d-flex align-items-center flex-wrap gap-3">
+ <a class="logo" href="#dashboard"><!-- Le logo renvoie au tableau de bord lorsqu'on clique dessus. -->
+    <i><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/></svg></i>EcoCampus</a> <!-- Icône feuille et nom du site. -->
+ <!-- [BOOTSTRAP] .right : d-flex + align-items-center + gap-3 remplacent les règles CSS de .right (supprimées). La classe "right" est conservée, car body.cover et @media print l'utilisent. -->
+ <div class="right d-flex align-items-center gap-3"><!-- Partie droite de l'en-tête (menu et boutons). -->
+  <nav id="nav"><span id="pill"></span>
+   <a href="#dashboard">Tableau de bord</a>
+   <a href="#mesures">Mesures</a>
+   <a href="#graphique">Graphique</a>
+   <a href="#alertes">Alertes</a>
+  </nav>
+  <button class="round" id="theme"  title="Mode sombre / clair"><!-- Le titre s'affiche au survol du bouton. -->
+   <svg viewBox="0 0 24 24" id="ic"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg><!-- La balise SVG crée l'icône à partir de ces valeurs. --> <!-- Icône de lune, remplacée par une icône de soleil par JavaScript. -->
+  </button>
+  <button class="round" id="btn-pdf"  title="Exporter en PDF"> <!-- Bouton d'exportation en PDF. -->
+   <svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg><!-- Icône de document : premier tracé de la feuille, second tracé du pli et des lignes. -->
+  </button>
+  <?php if ($peutExpliquer) : ?>
+  <a class="round avatar-link" href="#profil" title="Mon profil">
+   <?php if ($photoUrl) : ?>
+    <img src="<?= htmlspecialchars($photoUrl) ?>" alt="Mon profil">
+   <?php else : ?>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg>
+   <?php endif; ?>
+  </a>
+  <?php endif; ?>
+    <?php if (isset($_SESSION['user_id'])) : ?>
+   <?php require __DIR__ . '/logout.phtml'; ?>
+  <?php endif; ?>
+</div>
+</header>
+    
+<?= $contenu ?>
+
+</div>
+<script>window.userIsLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;</script>
+<?php require __DIR__ . '/notif.phtml';?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="chatbot.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- MODALE : MODIFIER LE NOM D'UTILISATEUR -->
+
+<div class="modal fade" id="modalUser" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content modal-eco">
+
+            <!-- En-tête -->
+            <div class="modal-header border-0 pb-0">
+
+                <h5 class="modal-title" style="font-weight:600">
+                    Modifier le nom d'utilisateur
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fermer">
+                </button>
+
+            </div>
+
+            <!-- Corps -->
+            <div class="modal-body pt-3">
+
+                <form action="php/changer_username.php"
+                      method="POST"
+                      class="pw-form">
+
+                    <!-- Token de sécurité -->
+                    <input type="hidden"
+                           name="csrf"
+                           value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
+
+                    <!-- Nouveau username -->
+                    <input type="text"
+                           id="new-username"
+                           name="username"
+                           class="form-control rounded-pill px-4 py-2"
+                           value="<?= htmlspecialchars($profil['username'] ?? '') ?>"
+                           placeholder="Nouveau nom d'utilisateur"
+                           minlength="3"
+                           maxlength="30"
+                           pattern="[A-Za-z0-9._-]{3,30}"
+                           autocomplete="username"
+                           required>
+
+                    <p class="prof-hint" style="margin:0">
+                        3 à 30 caractères : lettres, chiffres, point,
+                        tiret ou underscore (pas d'espace ni de @).
+                    </p>
+
+                    <!-- Bouton de validation -->
+                    <button type="submit" class="btn btn-eco w-100">
+                        Enregistrer
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

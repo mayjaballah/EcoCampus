@@ -1,0 +1,34 @@
+<?php
+/* views/supprimer_mesure.phtml - Fenêtre de confirmation de suppression d'une mesure
+   Le bouton « supprimer » du tableau (construit par index.js) remplit les champs
+   cachés #suppr-i, #suppr-res, #suppr-val et #suppr-date, puis ouvre cette fenêtre.
+   Le formulaire envoie ces champs à php/supprimer_mesure.php.
+   Variable de index.php : $peutExpliquer (utilisateur connecté) ; $_SESSION['csrf'] */
+if (empty($peutExpliquer)) {
+    return;
+}
+?>
+<!-- Fenêtre : confirmer la suppression d'une mesure -->
+<div class="modal fade" id="modalSuppr" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--card); color: var(--ink); border-radius: 28px; border: 1px solid var(--line);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="font-weight: 600;">Supprimer cette mesure ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body pt-3">
+        <p id="suppr-texte" class="mb-2"></p>
+        <p style="font-size:13px;color:var(--mut)">Cette action est définitive : la ligne est retirée de measures_in.csv et data.json est régénéré.</p>
+        <form id="form-suppr" action="php/supprimer_mesure.php" method="POST" class="d-flex gap-2 mt-3">
+          <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
+          <input type="hidden" name="index" id="suppr-i">
+          <input type="hidden" name="ressource" id="suppr-res">
+          <input type="hidden" name="valeur" id="suppr-val">
+          <input type="hidden" name="date" id="suppr-date">
+          <button type="button" class="btn btn-eco-light flex-fill" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-danger flex-fill" style="border-radius:25px">Oui, supprimer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

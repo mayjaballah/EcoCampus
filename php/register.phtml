@@ -1,0 +1,144 @@
+<!-- PAGE D'INSCRIPTION -->
+
+<section class="page" id="register">
+
+    <div class="hero !flex !flex-col !items-center !justify-center text-center">
+
+        <i class="orb o1"></i>
+        <i class="orb o2"></i>
+
+        <!-- Logo EcoCampus -->
+        <h1 class="ttl">
+            <span style="--i:0">E</span>
+            <span style="--i:1">c</span>
+            <span style="--i:2">o</span>
+            <span class="g" style="--i:3">C</span>
+            <span class="g" style="--i:4">a</span>
+            <span class="g" style="--i:5">m</span>
+            <span class="g" style="--i:6">p</span>
+            <span class="g" style="--i:7">u</span>
+            <span class="g" style="--i:8">s</span>
+        </h1>
+
+        <div class="bar"></div>
+
+        <!-- Carte d'inscription -->
+        <div class="card login" style="max-width:520px;">
+
+            <div class="logo" style="justify-content:center;margin-bottom:14px">
+                <i>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19l7-7"/>
+                    </svg>
+                </i>
+            </div>
+
+            <h2>Créer un compte</h2>
+
+            <p class="sub" style="margin-bottom:26px">
+                Rejoignez EcoCampus dès maintenant
+            </p>
+
+            <!-- Formulaire d'inscription -->
+            <form id="form-register"
+                  action="php/register.php"
+                  method="POST">
+
+                <!-- Token de sécurité -->
+                <input type="hidden"
+                       name="csrf"
+                       value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
+
+                <label for="nom" class="block text-left font-medium text-green-200 mb-1">
+                    Nom
+
+                    <input type="text"
+                           id="nom"
+                           name="nom"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="Votre nom"
+                           required>
+                </label>
+
+                <label for="prenom" class="block text-left font-medium text-green-200 mb-1">
+                    Prénom
+
+                    <input type="text"
+                           id="prenom"
+                           name="prenom"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="Votre prénom"
+                           required>
+                </label>
+
+                <label for="username" class="block text-left font-medium text-green-200 mb-1">
+                    Nom d'utilisateur
+
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="Votre nom d'utilisateur"
+                           minlength="3"
+                           maxlength="30"
+                           pattern="[A-Za-z0-9._-]{3,30}"
+                           required>
+                </label>
+
+                <label for="email" class="block text-left font-medium text-green-200 mb-1">
+                    Adresse email
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="exemple@gmail.com"
+                           required>
+                </label>
+
+                <label for="password" class="block text-left font-medium text-green-200 mb-1">
+                    Mot de passe
+
+                    <input type="password"
+                           id="password"
+                           name="mot_de_passe"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="Minimum 8 caractères"
+                           minlength="8"
+                           required>
+                </label>
+
+                <label for="confirm-password" class="block text-left font-medium text-green-200 mb-1">
+                    Confirmer le mot de passe
+
+                    <input type="password"
+                           id="confirm-password"
+                           name="confirmation"
+                           class="block w-full rounded-full border border-green-900 bg-[#0a1a14] text-green-100 placeholder-green-300/60 px-6 py-3 mt-1 mb-4 font-medium focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                           placeholder="Confirmer votre mot de passe"
+                           minlength="8"
+                           required>
+                </label>
+
+                <button type="submit"
+                        class="block w-full rounded-full bg-[#0f3d2a] text-[#c8f7a0] font-semibold text-center px-6 py-3 mt-1 cursor-pointer transition hover:bg-[#14543a] focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                    Créer mon compte
+
+                </button>
+
+            </form>
+
+            <!-- Lien vers la connexion -->
+            <div class="login-links" style="margin-top:15px;">
+
+                <p>
+                    Vous avez déjà un compte ?
+                    <a href="#login">Se connecter</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</section>

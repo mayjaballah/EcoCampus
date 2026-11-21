@@ -1,0 +1,117 @@
+<div class="modal fade" id="modalAjout" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" id="vue-ajout-mesure" style="background: var(--card); color: var(--ink); border-radius: 28px; border: 1px solid var(--line);">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" style="font-weight: 600;">Ajouter un bâtiment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3">
+        <form id="form-ajout-bat" action="php/ajouter_mesure.php" method="POST" @submit="verifierAjout">
+          <div class="mb-3 text-start">
+            <label for="new-bat" class="form-label fw-medium" style="font-size: 14px;">Nom du bâtiment</label>
+            <input
+              type="text"
+              id="new-bat"
+              name="batiment"
+              v-model="batiment"
+              @input="erreur = ''"
+              class="form-control rounded-pill px-3 py-2"
+              placeholder="Ex: Bibliothèque"
+              required
+            >
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="new-res" class="form-label fw-medium" style="font-size: 14px;">Ressource</label>
+            <select
+              id="new-res"
+              name="ressource"
+              v-model="ressource"
+              @change="erreur = ''"
+              class="form-select rounded-pill px-3 py-2"
+              required
+            >
+              <option value="electricite">Électricité (seuil : 120)</option>
+              <option value="eau">Eau (seuil : 100)</option>
+              <option value="chauffage">Chauffage (seuil : 100)</option>
+              <option value="gaze">Gaz (seuil : 120)</option>
+            </select>
+          </div>
+
+          <div class="mb-3 text-start">
+            <label for="new-val" class="form-label fw-medium" style="font-size: 14px;">Valeur mesurée</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0"
+              id="new-val"
+              name="valeur"
+              v-model="valeur"
+              @input="erreur = ''"
+              class="form-control rounded-pill px-3 py-2"
+              placeholder="150.5"
+              required
+            >
+          </div>
+
+          <p v-if="depasseSeuil" style="color:#f59e0b;font-size:13px;margin:0 0 10px;text-align:left;">
+            Attention : cette valeur dépasse le seuil ({{ seuilActuel }}), une alerte sera déclenchée.
+          </p>
+
+          <p v-if="erreur" style="color:#f87171;font-size:13px;margin:0 0 10px;text-align:left;">
+            {{ erreur }}
+          </p>
+
+          <button type="submit" class="btn btn-eco w-100 mt-2" style="border-radius: 25px; padding: 12px;">
+            Enregistrer le bâtiment
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const mountEl = document.getElementById('vue-ajout-mesure');
+  if (!mountEl || !window.Vue) return;
+
+  const { createApp, ref, computed } = window.Vue;
+  const SEUILS = { electricite: 120, eau: 100, chauffage: 100, gaze: 120 };
+
+  createApp({
+    setup() {
+      const batiment = ref('');
+      const ressource = ref('electricite');
+      const valeur = ref('');
+      const erreur = ref('');
+
+      const seuilActuel = computed(() => SEUILS[ressource.value] ?? 100);
+
+      const depasseSeuil = computed(() => {
+        const num = parseFloat(valeur.value);
+        return !Number.isNaN(num) && num > seuilActuel.value;
+      });
+
+      function verifierAjout(event) {
+        const nom = batiment.value.trim();
+        const num = parseFloat(valeur.value);
+
+        if (!nom) {
+          event.preventDefault();
+          erreur.value = 'Veuillez saisir le nom du bâtiment.';
+          return;
+        }
+        if (valeur.value === '' || Number.isNaN(num) || num < 0) {
+          event.preventDefault();
+          erreur.value = 'La valeur mesurée doit être un nombre positif ou nul.';
+          return;
+        }
+        erreur.value = '';
+      }
+
+      return { batiment, ressource, valeur, erreur, seuilActuel, depasseSeuil, verifierAjout };
+    }
+  }).mount(mountEl);
+})();
+</script>
